@@ -11,7 +11,7 @@ namespace JobPosting.DAL
 {
     public class JBEntities : DbContext
     {
-        public JBEntities() : base("name = JPEntities")
+        public JBEntities() : base("name = JBEntities")
         {
             this.Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
         }
@@ -32,6 +32,7 @@ namespace JobPosting.DAL
         public DbSet<Posting> Postings { get; set; }
         public DbSet<Qualification> Qualification { get; set; }
         public DbSet<Union> Unions { get; set; }
+        public DbSet<Province> Provinces { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

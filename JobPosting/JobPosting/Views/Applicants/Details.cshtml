@@ -1,0 +1,90 @@
+﻿@model JobPosting.Models.Applicant
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Applicant</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.City.city)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.City.city)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.apFirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.apFirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.apMiddleName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.apMiddleName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.apLastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.apLastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.apPhone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.apPhone)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.apEMail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.apEMail)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.apAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.apAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.apCity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.apCity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.apPostalCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.apPostalCode)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

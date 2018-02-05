@@ -9,6 +9,7 @@ namespace JobPosting.Models
 {
     public class Applicant
     {
+        private bool subscripted = false;
         public Applicant()
         {
             this.Applications = new HashSet<Application>();
@@ -54,8 +55,18 @@ namespace JobPosting.Models
         [DisplayFormat(DataFormatString = "{0:(###) ###-####}", ApplyFormatInEditMode = true)]
         public Int64 apPhone { get; set; }
 
+        [Display(Name = "Subscripted")]
+        public bool apSubscripted {
+            get {
+                return subscripted;
+            } set {
+                subscripted = value;
+            }
+        }
+
         [Display(Name = "Email")]
-        [Required(ErrorMessage = "Email address is required.")]
+        //[Required(ErrorMessage = "Email address is required.")]
+        [StringLength(255)]
         [DataType(DataType.EmailAddress)]
         [Index("IX_Unique_Email", IsUnique = true)]
         public string apEMail { get; set; }
@@ -74,9 +85,17 @@ namespace JobPosting.Models
         [DataType(DataType.PostalCode)]
         public string apPostalCode { get; set; }
 
+        [Display(Name = "City")]
+        [Required(ErrorMessage = "You have to specify the city.")]
         public int cityID { get; set; }
 
+        [Display(Name = "User Role")]
+        [Required(ErrorMessage = "You have to specify User Role.")]
+        public int UserRoleID { get; set; }
+
         public virtual City City { get; set; }
+
+        public virtual UserRole UserRole { get; set;  }
 
         public virtual ICollection<Application> Applications { get; set; }
     }

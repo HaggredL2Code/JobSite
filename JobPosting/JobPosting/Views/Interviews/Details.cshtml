@@ -1,0 +1,42 @@
+﻿@model JobPosting.Models.Interview
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Interview</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Application.CreatedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Application.CreatedBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.interviewDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.interviewDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Accepted)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Accepted)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.InterviewID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

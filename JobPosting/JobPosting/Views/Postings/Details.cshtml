@@ -1,0 +1,58 @@
+﻿@model JobPosting.Models.Posting
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Posting</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Position.PositionCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Position.PositionCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.pstNumPosition)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pstNumPosition)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.pstJobDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pstJobDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.pstOpenDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pstOpenDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.pstEndDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pstEndDate)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

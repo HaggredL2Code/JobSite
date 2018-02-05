@@ -1,0 +1,51 @@
+﻿@model IEnumerable<JobPosting.Models.Application>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Applicant.apFirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Interview.InterviewID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Posting.pstJobDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Priority)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Applicant.apFirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Interview.InterviewID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Posting.pstJobDescription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Priority)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>

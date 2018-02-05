@@ -18,13 +18,10 @@ namespace JobPosting.Models
         public string Address
         {
             get {
-                return Street + ", " + City + ", " + Province;
+                return Street + ", " + City.city + ", " + City.Province.province;
             }
         }
 
-        [Required(ErrorMessage = "City is required.")]
-        [StringLength(50, ErrorMessage = "City can not be longer than 50 characters.")]
-        public string City { get; set; }
 
         [Required(ErrorMessage = "Street")]
         [StringLength(50, ErrorMessage = "Street can not be longer than 50 characters.")]
@@ -34,6 +31,12 @@ namespace JobPosting.Models
         [StringLength(50, ErrorMessage = "Province can not be longer than 50 characters.")]
         public string Province { get; set; }
 
+        [Required(ErrorMessage = "You need to specify City.")]
+        [Display(Name = "City")]
+        public int CityID { get; set; }
+
         public virtual ICollection<JobLocation> JobLocations { get; set; }
+
+        public virtual City City { get; set; }
     }
 }

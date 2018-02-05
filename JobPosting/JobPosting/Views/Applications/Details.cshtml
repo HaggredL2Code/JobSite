@@ -1,0 +1,50 @@
+﻿@model JobPosting.Models.Application
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Application</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Applicant.apFirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Applicant.apFirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Interview.InterviewID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Interview.InterviewID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Posting.pstJobDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Posting.pstJobDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Priority)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Priority)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

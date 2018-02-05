@@ -1,0 +1,42 @@
+﻿@model JobPosting.Models.ApplicationCart
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ApplicationCart</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Priority)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Priority)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ApplicantID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ApplicantID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PostingID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PostingID)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

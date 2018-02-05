@@ -1,0 +1,56 @@
+﻿@model JobPosting.Models.Application
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Application</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Applicant.apFirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Applicant.apFirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Interview.InterviewID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Interview.InterviewID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Posting.pstJobDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Posting.pstJobDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Priority)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Priority)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

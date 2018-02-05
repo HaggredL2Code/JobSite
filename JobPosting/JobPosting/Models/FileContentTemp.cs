@@ -9,8 +9,8 @@ namespace JobPosting.Models
 {
     public class FileContentTemp
     {
-        [Key, ForeignKey("aFile")]
-        public int FileContentID { get; set; }
+        [Key, ForeignKey("aFileTemp")]
+        public int FileContentTempID { get; set; }
 
         [ScaffoldColumn(false)]
         public byte[] Content { get; set; }
