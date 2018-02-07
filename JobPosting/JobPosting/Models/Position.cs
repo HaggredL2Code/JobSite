@@ -17,8 +17,6 @@ namespace JobPosting.Models
             this.Postings = new HashSet<Posting>();
         }
 
-       
-
         public int ID { get; set; }
 
         [Display(Name = "Job Code")]

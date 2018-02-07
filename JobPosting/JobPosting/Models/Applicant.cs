@@ -75,11 +75,6 @@ namespace JobPosting.Models
         [Required(ErrorMessage = "Address is required.")]
         public string apAddress { get; set; }
 
-        //DropDown List
-        [Display(Name = "City")]
-        [Required(ErrorMessage = "City is required.")]
-        public string apCity { get; set; }
-
         [Display(Name = "Postal Code")]
         [Required(ErrorMessage = "Postal Code is required.")]
         [DataType(DataType.PostalCode)]
