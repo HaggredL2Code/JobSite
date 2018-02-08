@@ -25,7 +25,7 @@ namespace JobPosting.DAL
         public DbSet<Interview> Interviews { get; set; }
         public DbSet<InterviewCart> InterviewCarts { get; set; }
         public DbSet<Position> Positions { get; set; }
-        public DbSet<JobGroup> JobGroup { get; set; }
+        public DbSet<JobGroup> JobGroups { get; set; }
         public DbSet<JobLocation> JobLocations { get; set; }
         public DbSet<JobRequirement> JobRequirements { get; set; }
         public DbSet<Location> Locations { get; set; }
@@ -33,6 +33,7 @@ namespace JobPosting.DAL
         public DbSet<Qualification> Qualification { get; set; }
         public DbSet<Union> Unions { get; set; }
         public DbSet<Province> Provinces { get; set; }
+        public DbSet<UserRole> UserRoles { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

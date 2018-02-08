@@ -7,7 +7,7 @@ using System.Web;
 
 namespace JobPosting.Models
 {
-    public class Applicant
+    public class Applicant : Auditable
     {
         private bool subscripted = false;
         public Applicant()
@@ -76,9 +76,9 @@ namespace JobPosting.Models
         public string apAddress { get; set; }
 
         //DropDown List
-        [Display(Name = "City")]
-        [Required(ErrorMessage = "City is required.")]
-        public string apCity { get; set; }
+        //[Display(Name = "City")]
+        //[Required(ErrorMessage = "City is required.")]
+        //public string apCity { get; set; }
 
         [Display(Name = "Postal Code")]
         [Required(ErrorMessage = "Postal Code is required.")]

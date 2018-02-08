@@ -8,7 +8,7 @@ using System.Web;
 namespace JobPosting.Models
 {
 
-    public class Position
+    public class Position : Auditable
     {
         public Position()
         {
@@ -35,9 +35,10 @@ namespace JobPosting.Models
 
 
         //In View create checkbox for days in a week
+        //Contains a list of DayOfWeek enum Type
         [Display(Name = "Day of Work")]
         [Required(ErrorMessage = "Day of Work is required.")]
-        public string PositionDayofWork { get; set; }
+        public IList<DayOfWeek> PositionDayofWork { get; set; }
 
         [Display(Name = "FTE")]
         [Required(ErrorMessage = "FTE is required.")]

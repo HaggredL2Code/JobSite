@@ -18,7 +18,7 @@ namespace JobPosting.Controllers
         // GET: JobGroups
         public ActionResult Index()
         {
-            return View(db.JobGroup.ToList());
+            return View(db.JobGroups.ToList());
         }
 
         // GET: JobGroups/Details/5
@@ -28,7 +28,7 @@ namespace JobPosting.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            JobGroup jobGroup = db.JobGroup.Find(id);
+            JobGroup jobGroup = db.JobGroups.Find(id);
             if (jobGroup == null)
             {
                 return HttpNotFound();
@@ -51,7 +51,7 @@ namespace JobPosting.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.JobGroup.Add(jobGroup);
+                db.JobGroups.Add(jobGroup);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -66,7 +66,7 @@ namespace JobPosting.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            JobGroup jobGroup = db.JobGroup.Find(id);
+            JobGroup jobGroup = db.JobGroups.Find(id);
             if (jobGroup == null)
             {
                 return HttpNotFound();
@@ -97,7 +97,7 @@ namespace JobPosting.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            JobGroup jobGroup = db.JobGroup.Find(id);
+            JobGroup jobGroup = db.JobGroups.Find(id);
             if (jobGroup == null)
             {
                 return HttpNotFound();
@@ -110,8 +110,8 @@ namespace JobPosting.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            JobGroup jobGroup = db.JobGroup.Find(id);
-            db.JobGroup.Remove(jobGroup);
+            JobGroup jobGroup = db.JobGroups.Find(id);
+            db.JobGroups.Remove(jobGroup);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
