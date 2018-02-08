@@ -46,9 +46,9 @@ namespace JobPosting.Models
         [DataType(DataType.Currency)]
         public decimal PositionSalary { get; set; }
 
-        [Display(Name = "Compensation")]
-        [Required(ErrorMessage = "Compensation is required.")]
-        public bool PositionCompensation { get; set; }
+        //[Display(Name = "Compensation")]
+       // [Required(ErrorMessage = "Compensation is required.")]
+       // public bool PositionCompensation { get; set; }
 
         //int 1-3 correspond to Hourly, Monthly, Yearly
         //In the View will need to manually create DropDown List

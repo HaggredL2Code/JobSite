@@ -56,7 +56,7 @@ namespace JobPosting.DAL.JBMigrations
 
             var applicants = new List<Applicant>
             {
-                new Applicant { apFirstName = "kevin", apMiddleName = "m", apLastName = "Marty", apPhone = 905-667-7777, apPostalCode = "L2S5G6", apEMail = "testuser@hotmail.com", apAddress = "13 placeholder lane" , apSubscripted = false, cityID = (context.Cities.Where(p=>p.city == "St.Catharines").SingleOrDefault().ID), }
+                new Applicant { apFirstName = "kevin", apMiddleName = "m", apLastName = "Marty", apPhone = 905-667-7777, apPostalCode = "L2S5G6", apEMail = "testuser@hotmail.com", apAddress = "13 placeholder lane" , apSubscripted = false, cityID = (context.Cities.Where(p=>p.city == "St.Catharines").SingleOrDefault().ID), UserRoleID = 1 }
               
             };
             applicants.ForEach(a => context.Applicants.AddOrUpdate(n => n.apEMail, a));
@@ -84,29 +84,23 @@ namespace JobPosting.DAL.JBMigrations
             
             var applications = new List<Application>
             {
-             //   new Application {  PostingID=(context.Postings.Where(p=>p. == "Ontario").SingleOrDefault().ID) }
+               new Application {  PostingID=(context.Postings.Where(p=>p.pstOpenDate == DateTime.Parse("2017-11-15")).SingleOrDefault().ID),  ApplicantID=(context.Applicants.Where(p=>p.apFirstName == "kevin").SingleOrDefault().ID)
+            }
             };
             applications.ForEach(a => context.Applications.AddOrUpdate(n => n.Applicant, a));
             SaveChanges(context);
             
             var applicationsCart = new List<ApplicationCart>
             {
-               // new ApplicationCart {  PostingID=(context.Postings.Where().SingleOrDefault().ID)},
-              // new ApplicationCart {  ApplicantID=(context.Postings.Where().SingleOrDefault().ID)}
+                new ApplicationCart {  PostingID=(context.Postings.Where(p=>p.pstOpenDate == DateTime.Parse("2017-11-15") ).SingleOrDefault().ID),  ApplicantID=(context.Applicants.Where(p=>p.apFirstName == "kevin").SingleOrDefault().ID), Priority = 1},
+             
             };
             applicationsCart.ForEach(a => context.ApplicationCarts.AddOrUpdate(n => n.ID, a));
             SaveChanges(context);
 
-            var applicationQualification = new List<ApplicationQualification>
-            {
-              //   new ApplicationQualification {  ApplicationID=(context.ApplicationQualification.Where().SingleOrDefault().ID), QualificationID =(context.ApplicationQualification.Where().SingleOrDefault().ID)}
-            };
-            applicationQualification.ForEach(a => context.ApplicationQualification.AddOrUpdate(n => n.ID, a));
-            SaveChanges(context);
-
             var interviewCart = new List<InterviewCart>
             {
-                   new InterviewCart {  ApplicationID =(context.Applications.Where(p=>p.ID == 1).SingleOrDefault().ID)}
+                   new InterviewCart {  ApplicationID =(context.Applications.Where(p=>p.ID == 1).SingleOrDefault().ID), InterviewDate = DateTime.Parse("2018-11-15")}
             };
             interviewCart.ForEach(a => context.InterviewCarts.AddOrUpdate(n => n.ApplicationID, a));
             SaveChanges(context);
@@ -121,20 +115,6 @@ namespace JobPosting.DAL.JBMigrations
             jobGroups.ForEach(a => context.JobGroup.AddOrUpdate(n => n.GroupTitle, a));
             SaveChanges(context);
 
-            var jobLocation = new List<JobLocation>
-            {
-                  // new JobLocation { LocationID = (context.JobLocations.Where().SingleOrDefault().ID) },
-            };
-            jobLocation.ForEach(a => context.JobLocations.AddOrUpdate(n => n.Location, a));
-            SaveChanges(context);
-
-            var jobRequirement = new List<JobLocation>
-            {
-                // new JobLocation { LocationID = (context.JobLocations.Where().SingleOrDefault().ID) },
-            };
-           // jobRequirement.ForEach(a => context.JobRequirements.AddOrUpdate(n => n., a));
-            SaveChanges(context);
-
             var Locations = new List<Location>
             {
                 new Location { Province = "Ontario", Street = "13 fake lane",  CityID = (context.Cities.Where(p=>p.city == "St.Catharines").SingleOrDefault().ID) }
@@ -146,8 +126,7 @@ namespace JobPosting.DAL.JBMigrations
             {
                 new Position { UnionID = (context.Unions.Where(p=>p.UnionName == "Opseu 250").SingleOrDefault().ID),  JobGroupID=(context.JobGroup.Where(p=>p.GroupTitle == "Teacher").SingleOrDefault().ID),
                  PositionSalary = 10000, PositionDescription = "basically this is a english teaching job", PositionFTE = 1, PositionCode = "10330",
-                 PositionCompensationType = 1, PositionDayofWork = "Monday-Friday",  
-                 
+                 PositionCompensationType = 1, PositionDayofWork = "Monday-Friday"  
                 }
             };
             positions.ForEach(a => context.Positions.AddOrUpdate(n => n.PositionCode, a));
@@ -157,7 +136,7 @@ namespace JobPosting.DAL.JBMigrations
             {
                 new Posting { pstNumPosition = 4, pstOpenDate = DateTime.Parse("2017-11-15"), pstEndDate=DateTime.Parse("2019-11-15")
                 , pstJobDescription = "this job will take all the skills of teaching and more as the Vice Principle you are required to" +
-                "look into many different fields of the school...", PositionID=(context.Positions.Where(p=>p.PositionCode == "110089").SingleOrDefault().ID)  }
+                "look into many different fields of the school...", PositionID=(context.Positions.Where(p=>p.PositionCode == "110089").SingleOrDefault().ID)}
             };
             postings.ForEach(a => context.Postings.AddOrUpdate(n => n.pstOpenDate, a));
             SaveChanges(context);
