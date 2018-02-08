@@ -55,6 +55,7 @@ namespace JobPosting.Models
         [DisplayFormat(DataFormatString = "{0:(###) ###-####}", ApplyFormatInEditMode = true)]
         public Int64 apPhone { get; set; }
 
+        
         [Display(Name = "Subscripted")]
         public bool apSubscripted {
             get {
@@ -63,6 +64,7 @@ namespace JobPosting.Models
                 subscripted = value;
             }
         }
+        
 
         [Display(Name = "Email")]
         //[Required(ErrorMessage = "Email address is required.")]

@@ -13,6 +13,7 @@ namespace JobPosting.Models
         //default value, when transfer data from interviewCart to Interview we dont need to give Accepted value.
         private bool accepted = false;
 
+         
         [Key, ForeignKey("Application")]
         public int InterviewID { get; set; }
 

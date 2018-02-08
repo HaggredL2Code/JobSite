@@ -206,6 +206,22 @@
     <Compile Include="Controllers\QualificationsController.cs" />
     <Compile Include="Controllers\UnionsController.cs" />
     <Compile Include="DAL\JBEntities.cs" />
+    <Compile Include="DAL\JBMigrations\201802081551367_initialconfig.cs" />
+    <Compile Include="DAL\JBMigrations\201802081551367_initialconfig.Designer.cs">
+      <DependentUpon>201802081551367_initialconfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\JBMigrations\201802081556111_initialconfig2.cs" />
+    <Compile Include="DAL\JBMigrations\201802081556111_initialconfig2.Designer.cs">
+      <DependentUpon>201802081556111_initialconfig2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\JBMigrations\201802081601109_initialconfig3.cs" />
+    <Compile Include="DAL\JBMigrations\201802081601109_initialconfig3.Designer.cs">
+      <DependentUpon>201802081601109_initialconfig3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\JBMigrations\201802081606209_initialconfig4.cs" />
+    <Compile Include="DAL\JBMigrations\201802081606209_initialconfig4.Designer.cs">
+      <DependentUpon>201802081606209_initialconfig4.cs</DependentUpon>
+    </Compile>
     <Compile Include="DAL\JBMigrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -377,6 +393,20 @@
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="DAL\JBMigrations\201802081551367_initialconfig.resx">
+      <DependentUpon>201802081551367_initialconfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DAL\JBMigrations\201802081556111_initialconfig2.resx">
+      <DependentUpon>201802081556111_initialconfig2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DAL\JBMigrations\201802081601109_initialconfig3.resx">
+      <DependentUpon>201802081601109_initialconfig3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DAL\JBMigrations\201802081606209_initialconfig4.resx">
+      <DependentUpon>201802081606209_initialconfig4.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

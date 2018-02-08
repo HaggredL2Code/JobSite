@@ -33,6 +33,7 @@ namespace JobPosting.DAL
         public DbSet<Qualification> Qualification { get; set; }
         public DbSet<Union> Unions { get; set; }
         public DbSet<Province> Provinces { get; set; }
+        public DbSet<UserRole> UserRoles { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
