@@ -222,6 +222,10 @@
     <Compile Include="DAL\JBMigrations\201802081606209_initialconfig4.Designer.cs">
       <DependentUpon>201802081606209_initialconfig4.cs</DependentUpon>
     </Compile>
+    <Compile Include="DAL\JBMigrations\201802081617035_InitialCreate5.cs" />
+    <Compile Include="DAL\JBMigrations\201802081617035_InitialCreate5.Designer.cs">
+      <DependentUpon>201802081617035_InitialCreate5.cs</DependentUpon>
+    </Compile>
     <Compile Include="DAL\JBMigrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -406,6 +410,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DAL\JBMigrations\201802081606209_initialconfig4.resx">
       <DependentUpon>201802081606209_initialconfig4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DAL\JBMigrations\201802081617035_InitialCreate5.resx">
+      <DependentUpon>201802081617035_InitialCreate5.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

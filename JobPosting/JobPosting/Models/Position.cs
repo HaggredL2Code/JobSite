@@ -35,7 +35,7 @@ namespace JobPosting.Models
         //In View create checkbox for days in a week
         [Display(Name = "Day of Work")]
         [Required(ErrorMessage = "Day of Work is required.")]
-        public string PositionDayofWork { get; set; }
+        public HashSet<DayOfWeek> PositionDayofWork { get; set; }
 
         [Display(Name = "FTE")]
         [Required(ErrorMessage = "FTE is required.")]
