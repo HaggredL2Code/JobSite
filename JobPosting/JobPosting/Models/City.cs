@@ -23,10 +23,11 @@ namespace JobPosting.Models
         [Index("IX_Unique_City", IsUnique = true)]
         public string city { get; set; }
 
-        public int provinceID { get; set; }
-
         [Display(Name = "Province")]
         [Required(ErrorMessage = "Province is required.")]
+        public int provinceID { get; set; }
+
+        
         public virtual Province Province { get; set; }
 
         public ICollection<Applicant> Applicants { get; set; }

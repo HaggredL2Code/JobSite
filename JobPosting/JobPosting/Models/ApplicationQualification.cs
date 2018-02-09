@@ -10,9 +10,11 @@ namespace JobPosting.Models
     public class ApplicationQualification
     {
         [Key, ForeignKey("Application")]
+        [Column(Order = 1)]
         public int ApplicationID { get; set; }
 
         [Key, ForeignKey("Qualification")]
+        [Column(Order = 2)]
         public int QualificationID { get; set; }
 
         public virtual Application Application { get; set; }

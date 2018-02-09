@@ -206,6 +206,10 @@
     <Compile Include="Controllers\QualificationsController.cs" />
     <Compile Include="Controllers\UnionsController.cs" />
     <Compile Include="DAL\JBEntities.cs" />
+    <Compile Include="DAL\JBMigrations\201802090211090_InitialCreate.cs" />
+    <Compile Include="DAL\JBMigrations\201802090211090_InitialCreate.Designer.cs">
+      <DependentUpon>201802090211090_InitialCreate.cs</DependentUpon>
+    </Compile>
     <Compile Include="DAL\JBMigrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -220,6 +224,7 @@
     <Compile Include="Models\Auditable.cs" />
     <Compile Include="Models\City.cs" />
     <Compile Include="Models\aFile.cs" />
+    <Compile Include="Models\Day.cs" />
     <Compile Include="Models\FileContentTemp.cs" />
     <Compile Include="Models\FileContent.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -238,6 +243,7 @@
     <Compile Include="Models\UserRole.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\DayVM.cs" />
     <Compile Include="ViewModels\PostingVM.cs" />
     <Compile Include="ViewModels\QualificationVM.cs" />
   </ItemGroup>
@@ -379,6 +385,11 @@
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="DAL\JBMigrations\201802090211090_InitialCreate.resx">
+      <DependentUpon>201802090211090_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

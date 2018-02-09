@@ -36,9 +36,9 @@ namespace JobPosting.Models
 
         //In View create checkbox for days in a week
         //Contains a list of DayOfWeek enum Type
-        [Display(Name = "Day of Work")]
-        [Required(ErrorMessage = "Day of Work is required.")]
-        public IList<DayOfWeek> PositionDayofWork { get; set; }
+        //[Display(Name = "Day of Work")]
+        //[Required(ErrorMessage = "Day of Work is required.")]
+        //public HashSet<DayOfWeek> PositionDayofWork { get; set; }
 
         [Display(Name = "FTE")]
         [Required(ErrorMessage = "FTE is required.")]
@@ -49,9 +49,9 @@ namespace JobPosting.Models
         [DataType(DataType.Currency)]
         public decimal PositionSalary { get; set; }
 
-        [Display(Name = "Compensation")]
-        [Required(ErrorMessage = "Compensation is required.")]
-        public bool PositionCompensation { get; set; }
+        //[Display(Name = "Compensation")]
+        //[Required(ErrorMessage = "Compensation is required.")]
+        //public bool PositionCompensation { get; set; }
 
         //int 1-3 correspond to Hourly, Monthly, Yearly
         //In the View will need to manually create DropDown List
@@ -78,5 +78,7 @@ namespace JobPosting.Models
         public virtual ICollection<JobRequirement> JobRequirements { get; set; }
 
         public virtual ICollection<Posting> Postings { get; set; }
+
+        public virtual ICollection<Day> Days { get; set; }
     }
 }

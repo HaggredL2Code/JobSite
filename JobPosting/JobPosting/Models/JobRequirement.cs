@@ -10,9 +10,11 @@ namespace JobPosting.Models
     public class JobRequirement
     {
         [Key, ForeignKey("Position")]
+        [Column(Order = 1)]
         public int PositionID { get; set; }
 
         [Key, ForeignKey("Qualification")]
+        [Column(Order = 2)]
         public int QualificationID { get; set; }
 
         public virtual Qualification Qualification { get; set; }

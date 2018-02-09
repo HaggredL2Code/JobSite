@@ -42,9 +42,12 @@ namespace JobPosting.Controllers
         // GET: Positions/Create
         public ActionResult Create()
         {
+            Position position = new Position();
+            position.Days = new List<Day>();
 
             PopulateDropdownList();
-            PopulateAssignedQualificationDate();
+            PopulateQualification();
+            PopulateAssignedDay(position);
             return View();
         }
 
@@ -55,7 +58,7 @@ namespace JobPosting.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,PositionCode,PositionDescription,PositionDayofWork,PositionFTE,PositionSalary,PositionCompensation,PositionCompensationType,JobGroupID,UnionID")] Position position, string[] selectedQualification)
+        public ActionResult Create([Bind(Include = "ID,PositionCode,PositionDescription,PositionFTE,PositionSalary,PositionCompensationType,JobGroupID,UnionID")] Position position, string[] selectedQualification)
         {
             try
             {
@@ -121,7 +124,8 @@ namespace JobPosting.Controllers
                 return HttpNotFound();
             }
             PopulateDropdownList(position);
-            PopulateAssignedQualificationDate();
+            PopulateQualification();
+            PopulateAssignedDay(position);
 
             return View(position);
         }
@@ -131,7 +135,7 @@ namespace JobPosting.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
-        public ActionResult EditPost(int? id, Byte[] rowVersion ,string[] selectedQualification)
+        public ActionResult EditPost(int? id, Byte[] rowVersion ,string[] selectedQualification, string[] selectedDay)
         {
             int id2;
             if (id == null)
@@ -146,11 +150,12 @@ namespace JobPosting.Controllers
                                     .Where(i => i.ID == id)
                                     .SingleOrDefault();
             if (TryUpdateModel(positionToUpdate, "",
-                new string[] { "PositionCode", "PositionDescription", "PositionDayofWork", "PositionFTE", "PositionSalary", "PositionCompensation", "PositionCompensationType", "JobGroupID", "UnionID" }))
+                new string[] { "PositionCode", "PositionDescription", /*"PositionDayofWork",*/ "PositionFTE", "PositionSalary", "PositionCompensationType", "JobGroupID", "UnionID" }))
             {
                 try
                 {
                     UpdatePositionQualification(selectedQualification, id2);
+                    UpdatePositionDay(selectedDay, positionToUpdate);
                     db.Entry(positionToUpdate).OriginalValues["RowVersion"] = rowVersion;
                     db.SaveChanges();
                     return RedirectToAction("Index");
@@ -175,17 +180,28 @@ namespace JobPosting.Controllers
                             ModelState.AddModelError("PositionCode", "Current Value: " + databaseValues.PositionCode);
                         if (databaseValues.PositionDescription != clientValues.PositionDescription)
                             ModelState.AddModelError("PositionDescription", "Current Value: " + databaseValues.PositionDescription);
-                        if (databaseValues.PositionDayofWork != clientValues.PositionDayofWork)
-                        {
-                            string day = "";
-                            foreach (var d in databaseValues.PositionDayofWork)
-                            {
-                                day += d.ToString() + ", ";
-                            }
-                            ModelState.AddModelError("PositionDatofWork", "Current Value: " + day);
-                        }
+                        //if (databaseValues.PositionDayofWork != clientValues.PositionDayofWork)
+                        //{
+                        //    string day = "";
+                        //    foreach (var d in databaseValues.PositionDayofWork)
+                        //    {
+                        //        day += d.ToString() + ", ";
+                        //    }
+                        //    ModelState.AddModelError("PositionDatofWork", "Current Value: " + day);
+                        //}
                         if (databaseValues.PositionFTE != clientValues.PositionFTE)
-                        
+                            ModelState.AddModelError("PositionFTE", "Current Value: " + databaseValues.PositionFTE);
+                        if (databaseValues.PositionSalary != clientValues.PositionSalary)
+                            ModelState.AddModelError("positionSalary", "Current Value: " + databaseValues.PositionSalary);
+                        if (databaseValues.PositionCompensationType != clientValues.PositionCompensationType)
+                            ModelState.AddModelError("PositionCompensation", "Current Value: " + databaseValues.PositionCompensationType);
+                        if (databaseValues.JobGroupID != clientValues.JobGroupID)
+                            ModelState.AddModelError("JobGroupID", "Current Value: " + db.JobGroups.Find(databaseValues.JobGroupID).GroupTitle);
+                        if (databaseValues.UnionID != clientValues.UnionID)
+                            ModelState.AddModelError("UnionID", "Current Value: " + db.Unions.Find(databaseValues.UnionID).UnionName);
+                        ModelState.AddModelError(string.Empty, "The record you attempted to edit was modified by another User. Your changes were not saved.");
+                        positionToUpdate.RowVersion = databaseValues.RowVersion;
+
                     }
                 }
             }
@@ -228,6 +244,35 @@ namespace JobPosting.Controllers
                 }
             }
         }
+        private void UpdatePositionDay(string[] selectedDay, Position positionToUpdate)
+        {
+            if (selectedDay == null)
+            {
+                positionToUpdate.Days = new List<Day>();
+                return;
+            }
+
+            var selectedDaysHS = new HashSet<string>(selectedDay);
+            var positionDays = new HashSet<int>(positionToUpdate.Days.Select(p => p.ID));
+
+            foreach (var day in db.Days)
+            {
+                if (selectedDaysHS.Contains(day.ID.ToString()))
+                {
+                    if (!positionDays.Contains(day.ID))
+                    {
+                        positionToUpdate.Days.Add(day);
+                    }
+                }
+                else
+                {
+                    if (positionDays.Contains(day.ID))
+                    {
+                        positionToUpdate.Days.Remove(day);
+                    }
+                }
+            }
+        }
 
         // GET: Positions/Delete/5
         public ActionResult Delete(int? id)
@@ -250,9 +295,24 @@ namespace JobPosting.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Position position = db.Positions.Find(id);
-            db.Positions.Remove(position);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                db.Positions.Remove(position);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch (DataException dex)
+            {
+                if (dex.InnerException.InnerException.Message.Contains("FK_"))
+                {
+                    ModelState.AddModelError("", "You cannot delete a Position that have Postings in the System.");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Unable to save changes. Try Again!");
+                }
+            }
+            return View(position);
         }
 
         private void PopulateDropdownList(Position Position = null)
@@ -261,21 +321,36 @@ namespace JobPosting.Controllers
             ViewBag.UnionID = new SelectList(db.Unions.OrderBy(u => u.UnionName), "ID", "UnionName", Position?.UnionID);
         }
 
-        private void PopulateAssignedQualificationDate()
+        private void PopulateQualification()
         {
-            var allQualifications = db.Qualification;
-            var pQualifications = new HashSet<int>(db.Qualification.Select(q => q.ID));
-            var viewModel = new List<QualificationVM>();
-            foreach (var con in allQualifications)
+            //var allQualifications = db.Qualification;
+            //var pQualifications = new HashSet<int>(db.Qualification.Select(q => q.ID));
+            //var viewModel = new List<QualificationVM>();
+            //foreach (var con in allQualifications)
+            //{
+            //    viewModel.Add(new QualificationVM
+            //    {
+            //        QualificationID = con.ID,
+            //        QualificationName = con.QlfDescription,
+            //        Assigned = pQualifications.Contains(con.ID)
+            //    });
+            //}
+            ViewBag.Qualifications = db.Qualification;
+        }
+        private void PopulateAssignedDay(Position position)
+        {
+            var allDays = db.Days;
+            var pDays = new HashSet<int>(position.Days.Select(d => d.ID));
+            var viewModel = new List<DayVM>();
+            foreach (var con in allDays)
             {
-                viewModel.Add(new QualificationVM
+                viewModel.Add(new DayVM
                 {
-                    QualificationID = con.ID,
-                    QualificationName = con.QlfDescription,
-                    Assigned = pQualifications.Contains(con.ID)
+                    DayID = con.ID,
+                    dayName = con.dayName,
+                    Assigned = pDays.Contains(con.ID)
                 });
             }
-            ViewBag.Qualifications = viewModel;
         }
 
         protected override void Dispose(bool disposing)

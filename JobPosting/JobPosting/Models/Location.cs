@@ -27,9 +27,9 @@ namespace JobPosting.Models
         [StringLength(50, ErrorMessage = "Street can not be longer than 50 characters.")]
         public string Street { get; set; }
 
-        [Required(ErrorMessage = "Province")]
-        [StringLength(50, ErrorMessage = "Province can not be longer than 50 characters.")]
-        public string Province { get; set; }
+        //[Required(ErrorMessage = "Province")]
+        //[StringLength(50, ErrorMessage = "Province can not be longer than 50 characters.")]
+        //public string Province { get; set; }
 
         [Required(ErrorMessage = "You need to specify City.")]
         [Display(Name = "City")]

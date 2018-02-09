@@ -34,6 +34,7 @@ namespace JobPosting.DAL
         public DbSet<Union> Unions { get; set; }
         public DbSet<Province> Provinces { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
+        public DbSet<Day> Days { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
