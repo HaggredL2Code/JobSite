@@ -15,7 +15,8 @@
         <h4>Position</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.ID)
+            @Html.HiddenFor(model => model.ID)
+            @Html.HiddenFor(model => model.RowVersion)
 
         <div class="form-group">
             @Html.LabelFor(model => model.PositionCode, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -33,13 +34,13 @@
             </div>
         </div>
 
-        <div class="form-group">
+        @*<div class="form-group">
             @Html.LabelFor(model => model.PositionDayofWork, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.PositionDayofWork, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.PositionDayofWork, "", new { @class = "text-danger" })
             </div>
-        </div>
+        </div>*@
 
         <div class="form-group">
             @Html.LabelFor(model => model.PositionFTE, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -57,7 +58,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        @*<div class="form-group">
             @Html.LabelFor(model => model.PositionCompensation, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <div class="checkbox">
@@ -65,7 +66,7 @@
                     @Html.ValidationMessageFor(model => model.PositionCompensation, "", new { @class = "text-danger" })
                 </div>
             </div>
-        </div>
+        </div>*@
 
         <div class="form-group">
             @Html.LabelFor(model => model.PositionCompensationType, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -78,7 +79,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.JobGroupID, "JobGroupID", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("JobGroupID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("JobGroupID", null, "Select a Job Type", htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.JobGroupID, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -86,10 +87,111 @@
         <div class="form-group">
             @Html.LabelFor(model => model.UnionID, "UnionID", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("UnionID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("UnionID", null, "Select a Union", htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.UnionID, "", new { @class = "text-danger" })
             </div>
         </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Requirements</label>
+            <div class="col-md-offset-2 col-md-10">
+                <table>
+                    <tr>
+                        @{
+                            int cnt = 0;
+                            IEnumerable<JobPosting.Models.JobLocation> positionLocations = ViewBag.JobLocations;
+                            List<int> LocationList = new List<int>();
+                            foreach (var l in positionLocations.Select(p => p.LocationID))
+                            {
+                                LocationList.Add(l);
+                            }
+                            bool Assigned = false;
+                            foreach (var l in ViewBag.Locations)
+                            {
+                                Assigned = (LocationList.Contains(l.ID)) ? true : false;
+
+                                if (cnt++ % 3 == 0)
+                                {
+                                    @:</tr><tr>
+                                }
+                                @:<td>
+                                    <input type="checkbox"
+                                           name="selectedLocation"
+                                           value="@l.ID"
+                                            @(Html.Raw(Assigned ? "checked=\"checked\"" : "")) />
+                                    @l.Address @:&nbsp;&nbsp;
+                                    @:</td>
+                            }
+                            @:</tr>
+                        }
+                    </table>
+                </div>
+            </div>
+
+         <div class="form-group">
+            <label class="control-label col-md-2">Day of Work</label>
+            <div class="col-md-offset-2 col-md-10">
+                <table>
+                    <tr>
+                        @{
+                            int cnt1 = 0;
+                            List<JobPosting.ViewModels.DayVM> days = ViewBag.Day;
+                            foreach (var d in days)
+                            {
+                                if (cnt1++ % 3 == 0)
+                                {
+                                    @:</tr><tr>
+                                }
+                                @:<td>
+                                    <input type="checkbox"
+                                           name="selectedDay"
+                                           value="@d.DayID"
+                                            @(Html.Raw(d.Assigned ? "checked=\"checked\"" : "")) />
+                                    @d.dayName @:&nbsp;&nbsp;
+                                    @:</td>
+                            }
+                            @:</tr>
+                        }
+                    </table>
+                </div>
+            </div>
+
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Requirements</label>
+            <div class="col-md-offset-2 col-md-10">
+                <table>
+                    <tr>
+                        @{
+                            int cnt2 = 0;
+                            IEnumerable<JobPosting.Models.JobRequirement> positionRequirements = ViewBag.JobRequirements;
+                            List<int> requirementList = new List<int>();
+                            foreach (var p in positionRequirements.Select(p => p.QualificationID))
+                            {
+                                requirementList.Add(p);
+                            }
+                            bool Assigned2 = false;
+                            foreach (var q in ViewBag.Qualifications)
+                            {
+                                Assigned2 = (requirementList.Contains(q.ID)) ? true : false;
+
+                                if (cnt2++ % 3 == 0)
+                                {
+                                    @:</tr><tr>
+                                }
+                                @:<td>
+                                    <input type="checkbox"
+                                           name="selectedQualification"
+                                           value="@q.ID"
+                                            @(Html.Raw(Assigned2 ? "checked=\"checked\"" : "")) />
+                                    @q.QlfDescription @:&nbsp;&nbsp;
+                                    @:</td>
+                            }
+                            @:</tr>
+                        }
+                    </table>
+                </div>
+            </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

@@ -21,6 +21,8 @@ namespace JobPosting.Controllers
         public ActionResult Index()
         {
             var positions = db.Positions.Include(p => p.JobGroup).Include(p => p.Union);
+            ViewBag.JobRequirements = db.JobRequirements;
+            ViewBag.JobLocations = db.JobLocations;
             return View(positions.ToList());
         }
 
@@ -36,6 +38,7 @@ namespace JobPosting.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.JobRequirements = db.JobRequirements;
             return View(position);
         }
 
@@ -47,18 +50,20 @@ namespace JobPosting.Controllers
 
             PopulateDropdownList();
             PopulateQualification();
+            ViewBag.JobLocations = db.JobLocations;
             PopulateAssignedDay(position);
+
             return View();
         }
 
-        
+
 
         // POST: Positions/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,PositionCode,PositionDescription,PositionFTE,PositionSalary,PositionCompensationType,JobGroupID,UnionID")] Position position, string[] selectedQualification)
+        public ActionResult Create([Bind(Include = "ID,PositionCode,PositionDescription,PositionFTE,PositionSalary,PositionCompensationType,JobGroupID,UnionID")] Position position, string[] selectedQualification, string[] selectedDay, string[] selectedLocation)
         {
             try
             {
@@ -66,17 +71,37 @@ namespace JobPosting.Controllers
                 {
                     position.JobRequirements = new List<JobRequirement>();
 
-                    
+
                     foreach (var r in selectedQualification)
                     {
-                        var qualificateToAdd = db.Qualification.Find(int.Parse(r)).ID;
+                        var qualificateToAdd = db.Qualification.Find(int.Parse(r));
                         JobRequirement jobRequirement = new JobRequirement
                         {
+                            Position = position,
+                            Qualification = qualificateToAdd,
                             PositionID = position.ID,
-                            QualificationID = qualificateToAdd
+                            QualificationID = qualificateToAdd.ID
                         };
                         db.JobRequirements.Add(jobRequirement);
 
+                    }
+                    foreach (var l in selectedLocation)
+                    {
+                        var locationToAdd = db.Locations.Find(int.Parse(l));
+                        JobLocation jobLocation = new JobLocation
+                        {
+                            Position = position,
+                            Location = locationToAdd,
+                            PositionID = position.ID,
+                            LocationID = locationToAdd.ID
+                        };
+                        db.JobLocations.Add(jobLocation);
+
+                    }
+                    foreach (var d in selectedDay)
+                    {
+                        var dayToAdd = db.Days.Find(int.Parse(d));
+                        position.Days.Add(dayToAdd);
                     }
 
                 }
@@ -125,8 +150,12 @@ namespace JobPosting.Controllers
             }
             PopulateDropdownList(position);
             PopulateQualification();
+            ViewBag.Locations = db.Locations;
             PopulateAssignedDay(position);
 
+            int realID = id.Value;
+            ViewBag.JobRequirements = db.JobRequirements.Where(j => j.PositionID == realID);
+            ViewBag.JobLocations = db.JobLocations.Where(l => l.PositionID == realID);
             return View(position);
         }
 
@@ -135,14 +164,15 @@ namespace JobPosting.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
-        public ActionResult EditPost(int? id, Byte[] rowVersion ,string[] selectedQualification, string[] selectedDay)
+        public ActionResult EditPost(int? id, Byte[] rowVersion, string[] selectedQualification, string[] selectedDay, string[] selectedLocation)
         {
             int id2;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            else {
+            else
+            {
                 id2 = id.Value; // convert int? to int
             }
             var positionToUpdate = db.Positions
@@ -150,15 +180,19 @@ namespace JobPosting.Controllers
                                     .Where(i => i.ID == id)
                                     .SingleOrDefault();
             if (TryUpdateModel(positionToUpdate, "",
-                new string[] { "PositionCode", "PositionDescription", /*"PositionDayofWork",*/ "PositionFTE", "PositionSalary", "PositionCompensationType", "JobGroupID", "UnionID" }))
+                new string[] { "PositionCode", "PositionDescription", "PositionFTE", "PositionSalary", "PositionCompensationType", "JobGroupID", "UnionID" }))
             {
                 try
                 {
-                    UpdatePositionQualification(selectedQualification, id2);
+                    UpdatePositionQualification(selectedQualification, id2, positionToUpdate);
                     UpdatePositionDay(selectedDay, positionToUpdate);
+                    UpdateLocation(selectedLocation, id2, positionToUpdate);
                     db.Entry(positionToUpdate).OriginalValues["RowVersion"] = rowVersion;
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
+                    if (ModelState.IsValid)
+                    {
+                        db.SaveChanges();
+                        return RedirectToAction("Index");
+                    }
                 }
                 catch (RetryLimitExceededException)
                 {
@@ -205,15 +239,74 @@ namespace JobPosting.Controllers
                     }
                 }
             }
-            
+
             PopulateDropdownList(positionToUpdate);
+            PopulateQualification();
+            ViewBag.Locations = db.Locations;
+            PopulateAssignedDay(positionToUpdate);
+            int realID = id.Value;
+            ViewBag.JobRequirements = db.JobRequirements.Where(j => j.PositionID == realID);
+            ViewBag.JobLocations = db.JobLocations.Where(l => l.PositionID == realID);
             return View(positionToUpdate);
         }
 
-        private void UpdatePositionQualification(string[] selectedQualification, int id)
+        private void UpdateLocation(string[] selectedLocation, int id, Position positionToUpdate)
         {
+            int[] _selectedLocation = Array.ConvertAll(selectedLocation, int.Parse);
+            var LocationToUpdate = db.Locations
+                                    .Include(l => l.JobLocations)
+                                    .Where(l => _selectedLocation.Contains(l.ID));
+            if (selectedLocation == null)
+            {
+                positionToUpdate.JobLocations = new List<JobLocation>();
+                return;
+            }
+
+            var selectedLocationHS = new HashSet<string>(selectedLocation);
+            var positionLocations = new HashSet<int>(db.JobLocations.Where(l => l.PositionID == id).Select(l => l.LocationID));
+
+            foreach (var l in db.Locations)
+            {
+                foreach (var l2 in LocationToUpdate)
+                {
+                    JobLocation jobLocation = new JobLocation
+                    {
+                        Position = positionToUpdate,
+                        Location = l2,
+                        PositionID = id,
+                        LocationID = l2.ID
+                    };
+
+                    if (selectedLocationHS.Contains(l.ID.ToString()))
+                    {
+                        if (!positionLocations.Contains(l.ID))
+                        {
+                            db.JobLocations.Add(jobLocation);
+                        }
+                    }
+                    else
+                    {
+                        if (positionLocations.Contains(l.ID))
+                        {
+                            db.JobLocations.Remove(jobLocation);
+
+                        }
+                    }
+                }
+
+            }
+        }
+
+        private void UpdatePositionQualification(string[] selectedQualification, int id, Position positionToUpdate)
+        {
+            int[] _selectedQualification = Array.ConvertAll(selectedQualification, int.Parse);
+            var QualificationToUpdate = db.Qualification
+                                    .Include(q => q.JobRequirements)
+                                    .Where(q => _selectedQualification.Contains(q.ID));
             if (selectedQualification == null)
             {
+                positionToUpdate.JobRequirements = new List<JobRequirement>();
+
                 return;
             }
             var selectQualificationsHS = new HashSet<string>(selectedQualification);
@@ -221,27 +314,33 @@ namespace JobPosting.Controllers
 
             foreach (var q in db.Qualification)
             {
-                JobRequirement jobRequirement = new JobRequirement
+                foreach (var q2 in QualificationToUpdate)
                 {
-                    PositionID = id,
-                    QualificationID = q.ID
-                };
-
-                if (selectQualificationsHS.Contains(q.ID.ToString()))
-                {
-                   
-                    if (!PositionQualifications.Contains(q.ID))
-                    { 
-                        db.JobRequirements.Add(jobRequirement);
-                    }
-                }
-                else
-                {
-                    if (PositionQualifications.Contains(q.ID))
+                    JobRequirement jobRequirement = new JobRequirement
                     {
-                        db.JobRequirements.Remove(jobRequirement);
+                        Position = positionToUpdate,
+                        Qualification = q2,
+                        PositionID = id,
+                        QualificationID = q2.ID
+                    };
+
+                    if (selectQualificationsHS.Contains(q.ID.ToString()))
+                    {
+
+                        if (!PositionQualifications.Contains(q.ID))
+                        {
+                            db.JobRequirements.Add(jobRequirement);
+                        }
+                    }
+                    else
+                    {
+                        if (PositionQualifications.Contains(q.ID))
+                        {
+                            db.JobRequirements.Remove(jobRequirement);
+                        }
                     }
                 }
+
             }
         }
         private void UpdatePositionDay(string[] selectedDay, Position positionToUpdate)
@@ -351,6 +450,8 @@ namespace JobPosting.Controllers
                     Assigned = pDays.Contains(con.ID)
                 });
             }
+
+            ViewBag.Day = viewModel;
         }
 
         protected override void Dispose(bool disposing)

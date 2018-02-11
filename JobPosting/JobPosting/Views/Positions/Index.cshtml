@@ -24,58 +24,85 @@
             @Html.DisplayNameFor(model => model.PositionDescription)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.PositionDayofWork)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.PositionFTE)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.PositionSalary)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PositionCompensation)
-        </th>
+        @*<th>
+                @Html.DisplayNameFor(model => model.PositionCompensation)
+            </th>*@
         <th>
             @Html.DisplayNameFor(model => model.PositionCompensationType)
+        </th>
+        <th>
+            Location
+        </th>
+        <th>
+            Day of Work
+        </th>
+        <th>
+            Requirements
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.JobGroup.GroupTitle)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Union.UnionName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PositionCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PositionDescription)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PositionDayofWork)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PositionFTE)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PositionSalary)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PositionCompensation)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PositionCompensationType)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.JobGroup.GroupTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Union.UnionName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PositionCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PositionDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PositionFTE)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PositionSalary)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PositionCompensationType)
+            </td>
+            <td>
+                @{
+                    IEnumerable<JobPosting.Models.JobLocation> jobLocations = ViewBag.JobLocations;
+                    foreach (var l in jobLocations.Where(j => j.PositionID == item.ID))
+                    {
+                        @Html.DisplayFor(loItem => l.Location.Address) <br />
+                    }
+                }
+            </td>
+            <td>
+                @{
+                    foreach (var day in item.Days)
+                    {
+                        @: @day.dayName <br />
+                    }
+                }
+            </td>
+            <td>
+                @{
+                    IEnumerable<JobPosting.Models.JobRequirement> jobRequirements = ViewBag.JobRequirements;
+                    foreach (var r in jobRequirements.Where(j => j.PositionID == item.ID))
+                    {
+                        @Html.DisplayFor(reItem => r.Qualification.QlfDescription) <br />
+                    }
+                }
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+            </td>
+        </tr>
+    }
 
 </table>
