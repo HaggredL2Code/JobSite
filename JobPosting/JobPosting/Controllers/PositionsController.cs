@@ -21,8 +21,8 @@ namespace JobPosting.Controllers
         public ActionResult Index()
         {
             var positions = db.Positions.Include(p => p.JobGroup).Include(p => p.Union);
-            ViewBag.JobRequirements = db.JobRequirements;
-            ViewBag.JobLocations = db.JobLocations;
+            ViewBag.JobRequirements = db.JobRequirements.OrderBy(a => a.QualificationID);
+            ViewBag.JobLocations = db.JobLocations.OrderBy(a => a.LocationID);
             return View(positions.ToList());
         }
 
@@ -38,7 +38,8 @@ namespace JobPosting.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.JobRequirements = db.JobRequirements;
+            ViewBag.JobRequirements = db.JobRequirements.Where(j => j.PositionID == id);
+            ViewBag.JobLocations = db.JobLocations.Where(jl => jl.PositionID == id);
             return View(position);
         }
 
@@ -50,7 +51,7 @@ namespace JobPosting.Controllers
 
             PopulateDropdownList();
             PopulateQualification();
-            ViewBag.Locations = db.Locations;
+            ViewBag.Locations = db.Locations.OrderBy(a => a.City.city);
             PopulateAssignedDay(position);
 
             return View();
@@ -396,6 +397,8 @@ namespace JobPosting.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.JobRequirements = db.JobRequirements.Where(j => j.PositionID == id).OrderBy(a => a.QualificationID);
+            ViewBag.JobLocations = db.JobLocations.Where(jl => jl.PositionID == id);
             return View(position);
         }
 
@@ -422,6 +425,8 @@ namespace JobPosting.Controllers
                     ModelState.AddModelError("", "Unable to save changes. Try Again!");
                 }
             }
+            ViewBag.JobRequirements = db.JobRequirements.Where(j => j.PositionID == id).OrderBy(a => a.QualificationID);
+            ViewBag.JobLocations = db.JobLocations.Where(jl => jl.PositionID == id);
             return View(position);
         }
 
@@ -445,12 +450,12 @@ namespace JobPosting.Controllers
             //        Assigned = pQualifications.Contains(con.ID)
             //    });
             //}
-            ViewBag.Qualifications = db.Qualification;
+            ViewBag.Qualifications = db.Qualification.OrderBy(q => q.QlfDescription);
         }
         private void PopulateAssignedDay(Position position)
         {
             var allDays = db.Days;
-            var pDays = new HashSet<int>(position.Days.Select(d => d.ID));
+            var pDays = new HashSet<int>(position.Days.OrderBy(d => d.dayOrder).Select(d => d.ID));
             var viewModel = new List<DayVM>();
             foreach (var con in allDays)
             {

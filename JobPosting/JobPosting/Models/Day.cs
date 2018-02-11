@@ -19,6 +19,9 @@ namespace JobPosting.Models
         [Index("IX_Unique_Day", IsUnique = true)]
         public string dayName { get; set; }
 
+        
+        public int dayOrder { get; set; }
+
         public virtual ICollection<Position> Positions { get; set; }
     }
 }

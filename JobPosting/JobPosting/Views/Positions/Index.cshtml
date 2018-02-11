@@ -69,7 +69,19 @@
                 @Html.DisplayFor(modelItem => item.PositionSalary)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PositionCompensationType)
+                @if (item.PositionCompensationType == 1)
+                {
+                    @:Hourly
+                }
+                else if (item.PositionCompensationType == 2)
+                {
+                    @:Monthly
+                }
+                else if (item.PositionCompensationType == 3)
+                {
+                    @:Yearly
+                }
+
             </td>
             <td>
                 @{

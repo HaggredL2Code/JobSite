@@ -7,24 +7,9 @@
 <h2>Details</h2>
 
 <div>
-    <h4>Position</h4>
+    <h4>@Model.PositionDescription</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.JobGroup.GroupTitle)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.JobGroup.GroupTitle)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Union.UnionName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Union.UnionName)
-        </dd>
 
         <dt>
             @Html.DisplayNameFor(model => model.PositionCode)
@@ -43,12 +28,21 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.PositionDayofWork)
+            @Html.DisplayNameFor(model => model.JobGroup.GroupTitle)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.PositionDayofWork)
+            @Html.DisplayFor(model => model.JobGroup.GroupTitle)
         </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Union.UnionName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Union.UnionName)
+        </dd>
+
 
         <dt>
             @Html.DisplayNameFor(model => model.PositionFTE)
@@ -67,20 +61,54 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.PositionCompensation)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PositionCompensation)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.PositionCompensationType)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.PositionCompensationType)
         </dd>
+
+        <dt>
+            Location
+        </dt>
+
+        <dd>
+            @{
+            IEnumerable<JobPosting.Models.JobLocation> jobLocations = ViewBag.JobLocations;
+            foreach (var l in jobLocations)
+            {
+                @: @Html.DisplayFor(lModel => l.Location.Address) <br />
+            }
+            }
+        </dd>
+
+        <dt>
+            Day of Work
+        </dt>
+
+        <dd>
+            @foreach (var d in Model.Days)
+            {
+            @: @Html.DisplayFor(dModel => d.dayName) <br />
+            }
+        </dd>
+
+
+        <dt>
+            Requirements
+        </dt>
+
+        <dd>
+            @{
+            IEnumerable<JobPosting.Models.JobRequirement> jobRequirements = ViewBag.jobRequirements;
+            foreach (var r in jobRequirements)
+            {
+                @: @Html.DisplayFor(rModel => r.Qualification.QlfDescription) <br />
+        }
+            }
+        </dd>
+
+
 
     </dl>
 </div>

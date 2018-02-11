@@ -156,11 +156,11 @@ namespace JobPosting.DAL.JBMigrations
                              PositionSalary = 10000, PositionDescription = "basically this is a english teaching job", PositionFTE = 1, PositionCode = "10330",
                              PositionCompensationType = 1, Days = new List<Day>
                                                                 {
-                                                                    new Day { dayName = "Monday"},
-                                                                    new Day { dayName = "Tuesday"},
-                                                                    new Day { dayName = "Wednessday"},
-                                                                    new Day { dayName = "Thrusday"},
-                                                                    new Day { dayName = "Friday"},
+                                                                    new Day { dayName = "Monday", dayOrder = 1},
+                                                                    new Day { dayName = "Tuesday", dayOrder = 2},
+                                                                    new Day { dayName = "Wednesday", dayOrder = 3},
+                                                                    new Day { dayName = "Thursday", dayOrder = 4},
+                                                                    new Day { dayName = "Friday", dayOrder = 5},
                                                                 }
                         },
 
@@ -168,8 +168,8 @@ namespace JobPosting.DAL.JBMigrations
                              PositionSalary = 15000, PositionDescription = "basically this is a IT guy job", PositionFTE = 1, PositionCode = "10331",
                              PositionCompensationType = 1, Days = new List<Day>
                                                                 {
-                                                                    new Day { dayName = "Saturday"},
-                                                                    new Day { dayName = "Sunday"}
+                                                                    new Day { dayName = "Saturday", dayOrder = 6},
+                                                                    new Day { dayName = "Sunday", dayOrder = 7}
                                                                 }
                         }
                         };
