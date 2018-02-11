@@ -50,7 +50,7 @@ namespace JobPosting.Controllers
 
             PopulateDropdownList();
             PopulateQualification();
-            ViewBag.JobLocations = db.JobLocations;
+            ViewBag.Locations = db.Locations;
             PopulateAssignedDay(position);
 
             return View();
@@ -69,7 +69,8 @@ namespace JobPosting.Controllers
             {
                 if (selectedQualification != null)
                 {
-                    position.JobRequirements = new List<JobRequirement>();
+    
+                    position.Days = new List<Day>();
 
 
                     foreach (var r in selectedQualification)
@@ -252,29 +253,30 @@ namespace JobPosting.Controllers
 
         private void UpdateLocation(string[] selectedLocation, int id, Position positionToUpdate)
         {
-            int[] _selectedLocation = Array.ConvertAll(selectedLocation, int.Parse);
-            var LocationToUpdate = db.Locations
-                                    .Include(l => l.JobLocations)
-                                    .Where(l => _selectedLocation.Contains(l.ID));
+
             if (selectedLocation == null)
             {
                 positionToUpdate.JobLocations = new List<JobLocation>();
                 return;
             }
+            //int[] _selectedLocation = Array.ConvertAll(selectedLocation, int.Parse);
+            //var LocationToUpdate = db.Locations.AsNoTracking()
+            //                        .Include(l => l.JobLocations)
+            //                        .Where(l => _selectedLocation.Contains(l.ID));
 
             var selectedLocationHS = new HashSet<string>(selectedLocation);
             var positionLocations = new HashSet<int>(db.JobLocations.Where(l => l.PositionID == id).Select(l => l.LocationID));
 
             foreach (var l in db.Locations)
             {
-                foreach (var l2 in LocationToUpdate)
-                {
+                //foreach (var l2 in LocationToUpdate)
+                //{
                     JobLocation jobLocation = new JobLocation
                     {
-                        Position = positionToUpdate,
-                        Location = l2,
+                        //Position = positionToUpdate,
+                        //Location = l2,
                         PositionID = id,
-                        LocationID = l2.ID
+                        LocationID = l.ID
                     };
 
                     if (selectedLocationHS.Contains(l.ID.ToString()))
@@ -288,40 +290,43 @@ namespace JobPosting.Controllers
                     {
                         if (positionLocations.Contains(l.ID))
                         {
-                            db.JobLocations.Remove(jobLocation);
-
+                            var selectedItem = (from a in db.JobLocations
+                                                where a.PositionID == id && a.LocationID == l.ID
+                                                select a).Single();
+                            db.JobLocations.Remove(selectedItem);
                         }
                     }
-                }
+                //}
 
             }
         }
 
         private void UpdatePositionQualification(string[] selectedQualification, int id, Position positionToUpdate)
         {
-            int[] _selectedQualification = Array.ConvertAll(selectedQualification, int.Parse);
-            var QualificationToUpdate = db.Qualification
-                                    .Include(q => q.JobRequirements)
-                                    .Where(q => _selectedQualification.Contains(q.ID));
             if (selectedQualification == null)
             {
                 positionToUpdate.JobRequirements = new List<JobRequirement>();
 
                 return;
             }
+
+            //int[] _selectedQualification = Array.ConvertAll(selectedQualification, int.Parse);
+            //var QualificationToUpdate = db.Qualification.AsNoTracking()
+            //                        .Include(q => q.JobRequirements)
+            //                        .Where(q => _selectedQualification.Contains(q.ID));
             var selectQualificationsHS = new HashSet<string>(selectedQualification);
             var PositionQualifications = new HashSet<int>(db.JobRequirements.Where(j => j.PositionID == id).Select(j => j.QualificationID));
 
             foreach (var q in db.Qualification)
             {
-                foreach (var q2 in QualificationToUpdate)
-                {
+                //foreach (var q2 in QualificationToUpdate)
+                //{
                     JobRequirement jobRequirement = new JobRequirement
                     {
-                        Position = positionToUpdate,
-                        Qualification = q2,
+                        //Position = positionToUpdate,
+                        //Qualification = q2,
                         PositionID = id,
-                        QualificationID = q2.ID
+                        QualificationID = q.ID
                     };
 
                     if (selectQualificationsHS.Contains(q.ID.ToString()))
@@ -336,10 +341,13 @@ namespace JobPosting.Controllers
                     {
                         if (PositionQualifications.Contains(q.ID))
                         {
-                            db.JobRequirements.Remove(jobRequirement);
+                            var selectedItem = (from a in db.JobRequirements
+                                                where a.PositionID == id && a.QualificationID == q.ID
+                                                select a).Single();
+                            db.JobRequirements.Remove(selectedItem);
                         }
                     }
-                }
+                //}
 
             }
         }
