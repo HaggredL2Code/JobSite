@@ -269,12 +269,13 @@ namespace JobPosting.Controllers
 
             foreach (var l in db.Locations)
             {
-                //foreach (var l2 in LocationToUpdate)
+                //foreach (var l2 in selectedLocationHS)
                 //{
+                    var LocationToUpdate = db.Locations.Find(l.ID);
                     JobLocation jobLocation = new JobLocation
                     {
-                        //Position = positionToUpdate,
-                        //Location = l2,
+                        Position = positionToUpdate,
+                        Location = LocationToUpdate,
                         PositionID = id,
                         LocationID = l.ID
                     };
@@ -296,7 +297,7 @@ namespace JobPosting.Controllers
                             db.JobLocations.Remove(selectedItem);
                         }
                     }
-                //}
+                
 
             }
         }
@@ -319,12 +320,13 @@ namespace JobPosting.Controllers
 
             foreach (var q in db.Qualification)
             {
-                //foreach (var q2 in QualificationToUpdate)
+                //foreach (var q2 in selectQualificationsHS)
                 //{
+                    var QualificationToUpdate = db.Qualification.Find(q.ID);
                     JobRequirement jobRequirement = new JobRequirement
                     {
-                        //Position = positionToUpdate,
-                        //Qualification = q2,
+                        Position = positionToUpdate,
+                        Qualification = QualificationToUpdate,
                         PositionID = id,
                         QualificationID = q.ID
                     };
@@ -336,6 +338,7 @@ namespace JobPosting.Controllers
                         {
                             db.JobRequirements.Add(jobRequirement);
                         }
+                        
                     }
                     else
                     {
