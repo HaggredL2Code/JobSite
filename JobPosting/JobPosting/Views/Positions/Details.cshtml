@@ -65,7 +65,18 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.PositionCompensationType)
+            @if (Model.PositionCompensationType == 1)
+            {
+               @: Hourly
+            }
+            else if (Model.PositionCompensationType == 2)
+            {
+                @:Monthly
+            }
+            else if (Model.PositionCompensationType == 3)
+            {
+                @:Yearly
+            }
         </dd>
 
         <dt>

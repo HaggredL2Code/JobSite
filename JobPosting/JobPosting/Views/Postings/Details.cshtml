@@ -19,11 +19,60 @@
         </dd>
 
         <dt>
+            @Html.DisplayNameFor(model => model.Position.PositionDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Position.PositionDescription)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.pstNumPosition)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.pstNumPosition)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Position.PositionCompensationType)
+        </dt>
+
+        <dd>
+            @if (Model.Position.PositionCompensationType == 1)
+            {
+               @: Hourly
+            }
+            else if (Model.Position.PositionCompensationType == 2)
+            {
+                @:Monthly
+            }
+            else if (Model.Position.PositionCompensationType == 3)
+            {
+                @:Yearly
+            }
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Position.PositionSalary)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Position.PositionSalary)
+        </dd>
+
+         <dt>
+            Location
+        </dt>
+
+        <dd>
+            @{
+                IEnumerable<JobPosting.Models.JobLocation> jobLocations = Model.Position.JobLocations;
+                foreach (var l in jobLocations)
+                {
+                @: @Html.DisplayFor(lModel => l.Location.Address) <br />
+            }
+            }
         </dd>
 
         <dt>
@@ -34,6 +83,33 @@
             @Html.DisplayFor(model => model.pstJobDescription)
         </dd>
 
+
+        <dt>
+            Day of Work
+        </dt>
+
+        <dd>
+            @foreach (var d in Model.Position.Days)
+            {
+            @: @Html.DisplayFor(dModel => d.dayName) <br />
+            }
+        </dd>
+
+
+        <dt>
+            Requirements
+        </dt>
+
+        <dd>
+            @{
+                IEnumerable<JobPosting.Models.JobRequirement> jobRequirements = Model.Position.JobRequirements;
+                foreach (var r in jobRequirements)
+                {
+                @: @Html.DisplayFor(rModel => r.Qualification.QlfDescription) <br />
+        }
+            }
+        </dd>
+
         <dt>
             @Html.DisplayNameFor(model => model.pstOpenDate)
         </dt>
@@ -42,17 +118,18 @@
             @Html.DisplayFor(model => model.pstOpenDate)
         </dd>
 
-        <dt>
+        @*<dt>
             @Html.DisplayNameFor(model => model.pstEndDate)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.pstEndDate)
-        </dd>
+        </dd>*@
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Apply", "Create", "Applications", new { id = Model.ID }, new { @class = "btn btn-primary"}) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+
