@@ -39,6 +39,7 @@ namespace JobPosting.Controllers
         // GET: Locations/Create
         public ActionResult Create()
         {
+            PopulateDropdownList();
             return View();
         }
 
@@ -47,7 +48,7 @@ namespace JobPosting.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,City,Street,Province")] Location location)
+        public ActionResult Create([Bind(Include = "ID,CityID,Street")] Location location)
         {
             if (ModelState.IsValid)
             {
@@ -55,7 +56,7 @@ namespace JobPosting.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
+            PopulateDropdownList(location);
             return View(location);
         }
 
@@ -71,6 +72,7 @@ namespace JobPosting.Controllers
             {
                 return HttpNotFound();
             }
+            PopulateDropdownList(location);
             return View(location);
         }
 
@@ -79,7 +81,7 @@ namespace JobPosting.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,City,Street,Province")] Location location)
+        public ActionResult Edit([Bind(Include = "ID,CityID,Street")] Location location)
         {
             if (ModelState.IsValid)
             {
@@ -87,6 +89,7 @@ namespace JobPosting.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            PopulateDropdownList(location);
             return View(location);
         }
 
@@ -114,6 +117,11 @@ namespace JobPosting.Controllers
             db.Locations.Remove(location);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        private void PopulateDropdownList(Location location = null)
+        {
+            ViewBag.CityID = new SelectList(db.Cities.OrderBy(c => c.city), "ID", "city", location?.CityID);
         }
 
         protected override void Dispose(bool disposing)

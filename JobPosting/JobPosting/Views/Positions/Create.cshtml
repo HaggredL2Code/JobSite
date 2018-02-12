@@ -66,7 +66,7 @@
         </div>*@
 
     <div class="form-group">
-        @Html.LabelFor(model => model.PositionCompensationType, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.PositionCompensationType, "Compensation Type",htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.DropDownList("PositionCompensationType", new SelectListItem[]
                                     {
@@ -79,7 +79,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.JobGroupID, "JobGroupID", htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.JobGroupID, "Job Type", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.DropDownList("JobGroupID", null, "Select a Job Type", htmlAttributes: new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.JobGroupID, "", new { @class = "text-danger" })
@@ -87,7 +87,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.UnionID, "UnionID", htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.UnionID, "Union", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.DropDownList("UnionID", null, "Select a Union", htmlAttributes: new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.UnionID, "", new { @class = "text-danger" })

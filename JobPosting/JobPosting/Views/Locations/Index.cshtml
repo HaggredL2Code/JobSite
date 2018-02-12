@@ -12,13 +12,13 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.City)
+            @Html.DisplayNameFor(model => model.City.city)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Street)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Province)
+            @Html.DisplayNameFor(model => model.City.Province.province)
         </th>
         <th></th>
     </tr>
@@ -26,13 +26,13 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.City)
+            @Html.DisplayFor(modelItem => item.City.city)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Street)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Province)
+            @Html.DisplayFor(modelItem => item.City.Province.province)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
