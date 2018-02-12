@@ -41,7 +41,6 @@ namespace JobPosting.Controllers
         public ActionResult Create()
         {
             ViewBag.ApplicantID = new SelectList(db.Applicants, "ID", "apFirstName");
-            ViewBag.ID = new SelectList(db.Interviews, "InterviewID", "InterviewID");
             ViewBag.PostingID = new SelectList(db.Postings, "ID", "pstJobDescription");
             return View();
         }

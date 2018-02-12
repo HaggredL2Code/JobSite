@@ -33,6 +33,8 @@ namespace JobPosting.Models
             }
         }
 
+        [Key]
+        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
 
         [Display(Name = "First Name")]

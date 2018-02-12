@@ -31,6 +31,7 @@ namespace JobPosting.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Posting posting = db.Postings.Find(id);
             if (posting == null)
             {

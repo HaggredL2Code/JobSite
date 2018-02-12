@@ -15,16 +15,14 @@
             @Html.DisplayNameFor(model => model.Position.PositionCode)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.Position.PositionDescription)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.pstNumPosition)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.pstJobDescription)
-        </th>
+
         <th>
             @Html.DisplayNameFor(model => model.pstOpenDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.pstEndDate)
         </th>
         <th></th>
     </tr>
@@ -35,21 +33,19 @@
             @Html.DisplayFor(modelItem => item.Position.PositionCode)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.pstNumPosition)
+            @Html.ActionLink(item.Position.PositionDescription.ToString(), "Details", new { id = item.ID})
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.pstJobDescription)
+            @Html.DisplayFor(modelItem => item.pstNumPosition)
         </td>
+
         <td>
             @Html.DisplayFor(modelItem => item.pstOpenDate)
         </td>
+
         <td>
-            @Html.DisplayFor(modelItem => item.pstEndDate)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.ID })
         </td>
     </tr>
 }

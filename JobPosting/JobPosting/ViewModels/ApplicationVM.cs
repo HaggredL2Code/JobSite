@@ -7,7 +7,7 @@ using JobPosting.DAL;
 
 namespace JobPosting.ViewModels
 {
-    public class PostingVM
+    public class ApplicationVM
     {
         public IEnumerable<Posting> postings { get; set; }
 
@@ -26,5 +26,7 @@ namespace JobPosting.ViewModels
         public IEnumerable<JobLocation> JobLocation { get; set; }
 
         public IEnumerable<JobRequirement> jobRequirements { get; set; }
+
+        public IEnumerable<Interview> Interview { get; set; }
     }
 }

@@ -33,6 +33,7 @@ namespace JobPosting.Models
         [Required(ErrorMessage = "You have to specify Applicant.")]
         public int ApplicantID { get; set; }
 
+
         public virtual Posting Posting { get; set; }
 
         public virtual Applicant Applicant { get; set; }
