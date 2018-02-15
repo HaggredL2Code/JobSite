@@ -18,7 +18,7 @@ namespace JobPosting.Controllers
         // GET: Archieves
         public ActionResult Index()
         {
-            return View(db.Archieves.ToList());
+            return View(db.Archives.ToList());
         }
 
         // GET: Archieves/Details/5
@@ -28,12 +28,12 @@ namespace JobPosting.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Archieve archieve = db.Archieves.Find(id);
-            if (archieve == null)
+            Archive archive = db.Archives.Find(id);
+            if (archive == null)
             {
                 return HttpNotFound();
             }
-            return View(archieve);
+            return View(archive);
         }
 
         // GET: Archieves/Create
@@ -47,16 +47,16 @@ namespace JobPosting.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,EmployeeName,EmployeePhone,EmployeeAddress,EmployeePosition")] Archieve archieve)
+        public ActionResult Create([Bind(Include = "ID,EmployeeName,EmployeePhone,EmployeeAddress,EmployeePosition")] Archive archive)
         {
             if (ModelState.IsValid)
             {
-                db.Archieves.Add(archieve);
+                db.Archives.Add(archive);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(archieve);
+            return View(archive);
         }
 
         // GET: Archieves/Edit/5
@@ -66,12 +66,12 @@ namespace JobPosting.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Archieve archieve = db.Archieves.Find(id);
-            if (archieve == null)
+            Archive archive = db.Archives.Find(id);
+            if (archive == null)
             {
                 return HttpNotFound();
             }
-            return View(archieve);
+            return View(archive);
         }
 
         // POST: Archieves/Edit/5
@@ -79,15 +79,15 @@ namespace JobPosting.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,EmployeeName,EmployeePhone,EmployeeAddress,EmployeePosition")] Archieve archieve)
+        public ActionResult Edit([Bind(Include = "ID,EmployeeName,EmployeePhone,EmployeeAddress,EmployeePosition")] Archive archive)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(archieve).State = EntityState.Modified;
+                db.Entry(archive).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(archieve);
+            return View(archive);
         }
 
         // GET: Archieves/Delete/5
@@ -97,12 +97,12 @@ namespace JobPosting.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Archieve archieve = db.Archieves.Find(id);
-            if (archieve == null)
+            Archive archive = db.Archives.Find(id);
+            if (archive == null)
             {
                 return HttpNotFound();
             }
-            return View(archieve);
+            return View(archive);
         }
 
         // POST: Archieves/Delete/5
@@ -110,8 +110,8 @@ namespace JobPosting.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Archieve archieve = db.Archieves.Find(id);
-            db.Archieves.Remove(archieve);
+            Archive archive = db.Archives.Find(id);
+            db.Archives.Remove(archive);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

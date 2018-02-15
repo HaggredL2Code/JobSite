@@ -33,18 +33,18 @@
             @Html.DisplayFor(modelItem => item.Position.PositionCode)
         </td>
         <td>
-            @Html.ActionLink(item.Position.PositionDescription.ToString(), "Details", new { id = item.ID})
+            @Html.DisplayFor(modelitem => item.Position.PositionDescription)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.pstNumPosition)
         </td>
-
         <td>
             @Html.DisplayFor(modelItem => item.pstOpenDate)
         </td>
 
         <td>
             @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id = item.ID }) |
             @Html.ActionLink("Delete", "Delete", new { id = item.ID })
         </td>
     </tr>

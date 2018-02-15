@@ -183,7 +183,7 @@ namespace JobPosting.DAL.JBMigrations
                             new Location { Address = "24 placeholder street, St.Catharines, ON"},
                             new Location { Address = "13 placeholder lane, Wellend, ON"}
                         };
-            Locations.ForEach(a => context.Locations.AddOrUpdate(n => n.ID, a));
+            Locations.ForEach(a => context.Locations.AddOrUpdate(n => n.Address, a));
             SaveChanges(context);
 
 

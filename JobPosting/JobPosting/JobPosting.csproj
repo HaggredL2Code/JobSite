@@ -203,9 +203,9 @@
     <Compile Include="Controllers\QualificationsController.cs" />
     <Compile Include="Controllers\UnionsController.cs" />
     <Compile Include="DAL\JBEntities.cs" />
-    <Compile Include="DAL\JBMigrations\201802112115094_InitialCreate.cs" />
-    <Compile Include="DAL\JBMigrations\201802112115094_InitialCreate.Designer.cs">
-      <DependentUpon>201802112115094_InitialCreate.cs</DependentUpon>
+    <Compile Include="DAL\JBMigrations\201802151512128_InitialCreate.cs" />
+    <Compile Include="DAL\JBMigrations\201802151512128_InitialCreate.Designer.cs">
+      <DependentUpon>201802151512128_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="DAL\JBMigrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
@@ -217,7 +217,7 @@
     <Compile Include="Models\Application.cs" />
     <Compile Include="Models\ApplicationCart.cs" />
     <Compile Include="Models\ApplicationQualification.cs" />
-    <Compile Include="Models\Archieve.cs" />
+    <Compile Include="Models\Archive.cs" />
     <Compile Include="Models\Auditable.cs" />
     <Compile Include="Models\aFile.cs" />
     <Compile Include="Models\Day.cs" />
@@ -366,8 +366,8 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="DAL\JBMigrations\201802112115094_InitialCreate.resx">
-      <DependentUpon>201802112115094_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="DAL\JBMigrations\201802151512128_InitialCreate.resx">
+      <DependentUpon>201802151512128_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

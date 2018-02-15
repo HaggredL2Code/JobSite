@@ -235,7 +235,7 @@ C:\Users\Administrator\Documents\GitHub\JobSite\JobPosting\JobPosting\bin\Micros
 C:\Users\Administrator\Documents\GitHub\JobSite\JobPosting\JobPosting\bin\Microsoft.AI.WindowsServer.xml
 C:\Users\Administrator\Documents\GitHub\JobSite\JobPosting\JobPosting\bin\Microsoft.AI.Web.xml
 C:\Users\Administrator\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.csprojResolveAssemblyReference.cache
-C:\Users\Administrator\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.DAL.JBMigrations.InitialCreate.resources
-C:\Users\Administrator\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.csproj.GenerateResource.Cache
 C:\Users\Administrator\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.dll
 C:\Users\Administrator\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.pdb
+C:\Users\Administrator\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.DAL.JBMigrations.InitialCreate.resources
+C:\Users\Administrator\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.csproj.GenerateResource.Cache
