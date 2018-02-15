@@ -38,8 +38,6 @@ namespace JobPosting.Models
 
         public virtual Applicant Applicant { get; set; }
 
-        public virtual Interview Interview { get; set; }
-
         //Qualifications that an Applicant have
         public virtual ICollection<ApplicationQualification> ApplicationsQualifications { get; set; }
 

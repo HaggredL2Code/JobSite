@@ -18,7 +18,7 @@ namespace JobPosting.Controllers
         // GET: Applications
         public ActionResult Index()
         {
-            var applications = db.Applications.Include(a => a.Applicant).Include(a => a.Interview).Include(a => a.Posting);
+            var applications = db.Applications.Include(a => a.Applicant).Include(a => a.Posting);
             return View(applications.ToList());
         }
 
@@ -60,7 +60,6 @@ namespace JobPosting.Controllers
             }
 
             ViewBag.ApplicantID = new SelectList(db.Applicants, "ID", "apFirstName", application.ApplicantID);
-            ViewBag.ID = new SelectList(db.Interviews, "InterviewID", "InterviewID", application.ID);
             ViewBag.PostingID = new SelectList(db.Postings, "ID", "pstJobDescription", application.PostingID);
             return View(application);
         }
@@ -78,7 +77,7 @@ namespace JobPosting.Controllers
                 return HttpNotFound();
             }
             ViewBag.ApplicantID = new SelectList(db.Applicants, "ID", "apFirstName", application.ApplicantID);
-            ViewBag.ID = new SelectList(db.Interviews, "InterviewID", "InterviewID", application.ID);
+
             ViewBag.PostingID = new SelectList(db.Postings, "ID", "pstJobDescription", application.PostingID);
             return View(application);
         }
@@ -97,7 +96,6 @@ namespace JobPosting.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.ApplicantID = new SelectList(db.Applicants, "ID", "apFirstName", application.ApplicantID);
-            ViewBag.ID = new SelectList(db.Interviews, "InterviewID", "InterviewID", application.ID);
             ViewBag.PostingID = new SelectList(db.Postings, "ID", "pstJobDescription", application.PostingID);
             return View(application);
         }

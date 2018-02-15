@@ -39,7 +39,6 @@ namespace JobPosting.Controllers
         // GET: Locations/Create
         public ActionResult Create()
         {
-            PopulateDropdownList();
             return View();
         }
 
@@ -56,7 +55,6 @@ namespace JobPosting.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            PopulateDropdownList(location);
             return View(location);
         }
 
@@ -72,7 +70,6 @@ namespace JobPosting.Controllers
             {
                 return HttpNotFound();
             }
-            PopulateDropdownList(location);
             return View(location);
         }
 
@@ -89,7 +86,6 @@ namespace JobPosting.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            PopulateDropdownList(location);
             return View(location);
         }
 
@@ -119,10 +115,6 @@ namespace JobPosting.Controllers
             return RedirectToAction("Index");
         }
 
-        private void PopulateDropdownList(Location location = null)
-        {
-            ViewBag.CityID = new SelectList(db.Cities.OrderBy(c => c.city), "ID", "city", location?.CityID);
-        }
 
         protected override void Dispose(bool disposing)
         {

@@ -19,8 +19,8 @@ namespace JobPosting.Controllers
         // GET: Applicants
         public ActionResult Index()
         {
-            var applicants = db.Applicants.Include(a => a.City);
-            return View(applicants.ToList());
+
+            return View();
         }
 
         // GET: Applicants/Details/5
@@ -41,7 +41,7 @@ namespace JobPosting.Controllers
         // GET: Applicants/Create
         public ActionResult Create()
         {
-            ViewBag.cityID = new SelectList(db.Cities, "ID", "city");
+
             return View();
         }
 
@@ -73,7 +73,7 @@ namespace JobPosting.Controllers
                 }
             }
 
-            ViewBag.cityID = new SelectList(db.Cities, "ID", "city", applicant.cityID);
+ 
             return View(applicant);
         }
 
@@ -89,7 +89,7 @@ namespace JobPosting.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.cityID = new SelectList(db.Cities, "ID", "city", applicant.cityID);
+
             return View(applicant);
         }
 
@@ -142,8 +142,6 @@ namespace JobPosting.Controllers
                             ModelState.AddModelError("apAddress", "Current Value: " + databaseValues.apAddress);
                         if (databaseValues.apPostalCode != clientValues.apPostalCode)
                             ModelState.AddModelError("apPostalCode", "Current Value: " + databaseValues.apPostalCode);
-                        if (databaseValues.cityID != clientValues.cityID)
-                            ModelState.AddModelError("cityID", "Current Value: " + db.Cities.Find(databaseValues.cityID).city);
                         if (databaseValues.UserRoleID != clientValues.UserRoleID)
                             ModelState.AddModelError("UserRoleID", "Current Value: " + db.UserRoles.Find(databaseValues.UserRoleID).RoleTitle);
                         ModelState.AddModelError(string.Empty, "The record you attempted to edit was modified by another User. Your changes were not saved.");
@@ -163,7 +161,6 @@ namespace JobPosting.Controllers
                 }
             }
            
-            ViewBag.cityID = new SelectList(db.Cities, "ID", "city", applicantToUpdate.cityID);
             return View(applicantToUpdate);
         }
 

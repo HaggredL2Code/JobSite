@@ -20,11 +20,8 @@ namespace JobPosting.DAL
         public DbSet<Application> Applications { get; set; }
         public DbSet<ApplicationCart> ApplicationCarts { get; set; }
         public DbSet<ApplicationQualification> ApplicationQualification { get; set; }
-        public DbSet<Archieve> Archieves { get; set; }
-        public DbSet<City> Cities { get; set; }
-        public DbSet<Interview> Interviews { get; set; }
-        public DbSet<InterviewCart> InterviewCarts { get; set; }
-        public DbSet<Position> Positions { get; set; }
+        public DbSet<Archieve> Archieves { get; set; }      
+       public DbSet<Position> Positions { get; set; }
         public DbSet<JobGroup> JobGroups { get; set; }
         public DbSet<JobLocation> JobLocations { get; set; }
         public DbSet<JobRequirement> JobRequirements { get; set; }
@@ -32,7 +29,6 @@ namespace JobPosting.DAL
         public DbSet<Posting> Postings { get; set; }
         public DbSet<Qualification> Qualification { get; set; }
         public DbSet<Union> Unions { get; set; }
-        public DbSet<Province> Provinces { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<Day> Days { get; set; }
 
@@ -83,11 +79,6 @@ namespace JobPosting.DAL
 
             modelBuilder.Entity<Application>()
                 .HasMany(a => a.ApplicationsQualifications)
-                .WithRequired(p => p.Application)
-                .WillCascadeOnDelete(true);
-
-            modelBuilder.Entity<Application>()
-                .HasOptional(w => w.Interview)
                 .WithRequired(p => p.Application)
                 .WillCascadeOnDelete(true);
 

@@ -9,6 +9,7 @@ namespace JobPosting.Models
 {
     public class Applicant : Auditable
     {
+        
         private bool subscripted = false;
         public Applicant()
         {
@@ -87,18 +88,12 @@ namespace JobPosting.Models
         [DataType(DataType.PostalCode)]
         public string apPostalCode { get; set; }
 
-        [Display(Name = "City")]
-        [Required(ErrorMessage = "You have to specify the city.")]
-        public int cityID { get; set; }
-
         [Display(Name = "User Role")]
         [Required(ErrorMessage = "You have to specify User Role.")]
         public int UserRoleID { get; set; }
 
-        public virtual City City { get; set; }
-
         public virtual UserRole UserRole { get; set;  }
-
+       
         public virtual ICollection<Application> Applications { get; set; }
     }
 }

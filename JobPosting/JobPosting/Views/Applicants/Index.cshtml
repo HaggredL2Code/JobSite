@@ -12,9 +12,6 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.City.city)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.apFirstName)
         </th>
         <th>
@@ -32,9 +29,7 @@
         <th>
             @Html.DisplayNameFor(model => model.apAddress)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.apCity)
-        </th>
+ 
         <th>
             @Html.DisplayNameFor(model => model.apPostalCode)
         </th>
@@ -43,9 +38,6 @@
 
 @foreach (var item in Model) {
     <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.City.city)
-        </td>
         <td>
             @Html.DisplayFor(modelItem => item.apFirstName)
         </td>
@@ -63,9 +55,6 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.apAddress)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.apCity)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.apPostalCode)

@@ -51,7 +51,6 @@ namespace JobPosting.Controllers
 
             PopulateDropdownList();
             PopulateQualification();
-            ViewBag.Locations = db.Locations.OrderBy(a => a.City.city);
             PopulateAssignedDay(position);
 
             return View();

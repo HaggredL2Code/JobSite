@@ -66,13 +66,6 @@ namespace JobPosting.DAL.JBMigrations
             //    );
             //
 
-            var provinces = new List<Province>
-            {
-                new Province { province = "Ontario"},
-                new Province { province = "Qubec"}
-            };
-            provinces.ForEach(a => context.Provinces.AddOrUpdate(n => n.province, a));
-            SaveChanges(context);
 
             var unions = new List<Union>
                  {
@@ -118,24 +111,13 @@ namespace JobPosting.DAL.JBMigrations
             SaveChanges(context);
 
 
-            var cities = new List<City>
-            {
-                new City { city = "St.Catharines", provinceID=1 },
-                new City { city = "Wellend", provinceID=1},
-                new City { city = "Fort Erie", provinceID=1},
-                new City { city = "Niagara Falls", provinceID=1}
-
-            };
-            cities.ForEach(a => context.Cities.AddOrUpdate(n => n.city, a));
-            SaveChanges(context);
-
 
 
             var applicants = new List<Applicant>
             {
-                new Applicant { apFirstName = "Kevin", apMiddleName = "m", apLastName = "Marty", apPhone = 9056677777, apPostalCode = "L2S5G6", apEMail = "testuser@hotmail.com", apAddress = "13 fake lane" , apSubscripted = false,  cityID = (context.Cities.Where(p=>p.city == "Wellend").SingleOrDefault().ID), UserRoleID = (context.UserRoles.Where(p=>p.RoleTitle == "User").SingleOrDefault().ID) },
-                new Applicant { apFirstName = "Bob", apMiddleName = "m", apLastName = "Doom", apPhone = 9056675555, apPostalCode = "L2S5G7", apEMail = "testuser1@hotmail.com", apAddress = "13 fake lane" , apSubscripted = false,  cityID = (context.Cities.Where(p=>p.city == "St.Catharines").SingleOrDefault().ID), UserRoleID = (context.UserRoles.Where(p=>p.RoleTitle == "User").SingleOrDefault().ID) },
-                new Applicant { apFirstName = "Robert", apMiddleName = "D", apLastName = "McKnight", apPhone = 9056676666, apPostalCode = "L2S5G8", apEMail = "testuser2@hotmail.com", apAddress = "13 placeholder street" , apSubscripted = false, cityID = (context.Cities.Where(p=>p.city == "St.Catharines").SingleOrDefault().ID), UserRoleID = (context.UserRoles.Where(p=>p.RoleTitle == "User").SingleOrDefault().ID) }
+                new Applicant { apFirstName = "Kevin", apMiddleName = "m", apLastName = "Marty", apPhone = 9056677777, apPostalCode = "L2S5G6", apEMail = "testuser@hotmail.com", apAddress = "13 fake lane" , apSubscripted = false, UserRoleID = (context.UserRoles.Where(p=>p.RoleTitle == "User").SingleOrDefault().ID) },
+                new Applicant { apFirstName = "Bob", apMiddleName = "m", apLastName = "Doom", apPhone = 9056675555, apPostalCode = "L2S5G7", apEMail = "testuser1@hotmail.com", apAddress = "13 fake lane" , apSubscripted = false, UserRoleID = (context.UserRoles.Where(p=>p.RoleTitle == "User").SingleOrDefault().ID) },
+                new Applicant { apFirstName = "Robert", apMiddleName = "D", apLastName = "McKnight", apPhone = 9056676666, apPostalCode = "L2S5G8", apEMail = "testuser2@hotmail.com", apAddress = "13 placeholder street" , apSubscripted = false, UserRoleID = (context.UserRoles.Where(p=>p.RoleTitle == "User").SingleOrDefault().ID) }
 
             };
             applicants.ForEach(a => context.Applicants.AddOrUpdate(n => n.apEMail, a));
@@ -196,20 +178,10 @@ namespace JobPosting.DAL.JBMigrations
             SaveChanges(context);
 
 
-
-
-            var interviews = new List<Interview>
-                               {
-                                   new Interview { interviewDate =  DateTime.Parse("2018-12-15"), Accepted = true, InterviewID = 1}
-
-                               };
-            interviews.ForEach(a => context.Interviews.AddOrUpdate(n => n.InterviewID, a));
-            SaveChanges(context);
-
             var Locations = new List<Location>
                         {
-                            new Location {Street = "13 fake lane",  CityID = (context.Cities.Where(p=>p.city == "St.Catharines").SingleOrDefault().ID) },
-                            new Location {Street = "13 placeholder street",  CityID = (context.Cities.Where(p=>p.city == "St.Catharines").SingleOrDefault().ID) }
+                            new Location { Address = "24 placeholder street, St.Catharines, ON"},
+                            new Location { Address = "13 placeholder lane, Wellend, ON"}
                         };
             Locations.ForEach(a => context.Locations.AddOrUpdate(n => n.ID, a));
             SaveChanges(context);
@@ -244,13 +216,6 @@ namespace JobPosting.DAL.JBMigrations
             applicationQualifications.ForEach(a => context.ApplicationQualification.AddOrUpdate(n => new { n.ApplicationID, n.QualificationID }, a));
             SaveChanges(context);
 
-
-            var interviewCart = new List<InterviewCart>
-                        {
-                               new InterviewCart {  ApplicationID = 1, InterviewDate = DateTime.Parse("2018-11-15")}
-                        };
-            interviewCart.ForEach(a => context.InterviewCarts.AddOrUpdate(n => n.ApplicationID, a));
-            SaveChanges(context);
 
             var applicationsCart = new List<ApplicationCart>
                         {

@@ -26,7 +26,5 @@ namespace JobPosting.ViewModels
         public IEnumerable<JobLocation> JobLocation { get; set; }
 
         public IEnumerable<JobRequirement> jobRequirements { get; set; }
-
-        public IEnumerable<Interview> Interview { get; set; }
     }
 }
