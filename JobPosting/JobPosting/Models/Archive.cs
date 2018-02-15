@@ -7,7 +7,7 @@ using System.Web;
 namespace JobPosting.Models
 {
     //Archieve will not have any connection with other tables
-    public class Archieve
+    public class Archive
     {
         public int ID { get; set; }
 
