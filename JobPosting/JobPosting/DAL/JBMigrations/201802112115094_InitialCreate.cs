@@ -301,7 +301,7 @@ namespace JobPosting.DAL.JBMigrations
                 .Index(t => t.FileContentTempID);
             
             CreateTable(
-                "dbo.Archieve",
+                "dbo.Archive",
                 c => new
                     {
                         ID = c.Int(nullable: false, identity: true),
@@ -395,7 +395,7 @@ namespace JobPosting.DAL.JBMigrations
             DropIndex("dbo.Applicant", "IX_Unique_Email");
             DropTable("dbo.DayPosition");
             DropTable("dbo.InterviewCart");
-            DropTable("dbo.Archieve");
+            DropTable("dbo.Archive");
             DropTable("dbo.FileContentTemp");
             DropTable("dbo.aFileTemp");
             DropTable("dbo.ApplicationCart");
