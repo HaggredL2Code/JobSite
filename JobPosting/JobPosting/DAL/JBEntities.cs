@@ -20,7 +20,7 @@ namespace JobPosting.DAL
         public DbSet<Application> Applications { get; set; }
         public DbSet<ApplicationCart> ApplicationCarts { get; set; }
         public DbSet<ApplicationQualification> ApplicationQualification { get; set; }
-        public DbSet<Archieve> Archieves { get; set; }      
+        public DbSet<Archive> Archives { get; set; }      
        public DbSet<Position> Positions { get; set; }
         public DbSet<JobGroup> JobGroups { get; set; }
         public DbSet<JobLocation> JobLocations { get; set; }

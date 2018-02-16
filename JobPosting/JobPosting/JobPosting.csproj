@@ -193,7 +193,7 @@
     <Compile Include="Controllers\ApplicantsController.cs" />
     <Compile Include="Controllers\ApplicationCartsController.cs" />
     <Compile Include="Controllers\ApplicationsController.cs" />
-    <Compile Include="Controllers\ArchievesController.cs" />
+    <Compile Include="Controllers\ArchivesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JobGroupsController.cs" />
     <Compile Include="Controllers\LocationsController.cs" />
@@ -217,7 +217,7 @@
     <Compile Include="Models\Application.cs" />
     <Compile Include="Models\ApplicationCart.cs" />
     <Compile Include="Models\ApplicationQualification.cs" />
-    <Compile Include="Models\Archieve.cs" />
+    <Compile Include="Models\Archive.cs" />
     <Compile Include="Models\Auditable.cs" />
     <Compile Include="Models\aFile.cs" />
     <Compile Include="Models\Day.cs" />

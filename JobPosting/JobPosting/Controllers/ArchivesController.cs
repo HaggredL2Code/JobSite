@@ -11,47 +11,47 @@ using JobPosting.Models;
 
 namespace JobPosting.Controllers
 {
-    public class ArchievesController : Controller
+    public class ArchivesController : Controller
     {
         private JBEntities db = new JBEntities();
 
-        // GET: Archieves
+        // GET: Archives
         public ActionResult Index()
         {
-            return View(db.Archieves.ToList());
+            return View(db.Archives.ToList());
         }
 
-        // GET: Archieves/Details/5
+        // GET: Archives/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Archieve archieve = db.Archieves.Find(id);
-            if (archieve == null)
+            Archive archive = db.Archives.Find(id);
+            if (archive == null)
             {
                 return HttpNotFound();
             }
-            return View(archieve);
+            return View(archive);
         }
 
-        // GET: Archieves/Create
+        // GET: Archives/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Archieves/Create
+        // POST: Archives/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,EmployeeName,EmployeePhone,EmployeeAddress,EmployeePosition")] Archieve archieve)
+        public ActionResult Create([Bind(Include = "ID,EmployeeName,EmployeePhone,EmployeeAddress,EmployeePosition")] Archive archieve)
         {
             if (ModelState.IsValid)
             {
-                db.Archieves.Add(archieve);
+                db.Archives.Add(archieve);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -59,45 +59,45 @@ namespace JobPosting.Controllers
             return View(archieve);
         }
 
-        // GET: Archieves/Edit/5
+        // GET: Archives/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Archieve archieve = db.Archieves.Find(id);
-            if (archieve == null)
+            Archive archive = db.Archives.Find(id);
+            if (archive == null)
             {
                 return HttpNotFound();
             }
-            return View(archieve);
+            return View(archive);
         }
 
-        // POST: Archieves/Edit/5
+        // POST: Archives/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,EmployeeName,EmployeePhone,EmployeeAddress,EmployeePosition")] Archieve archieve)
+        public ActionResult Edit([Bind(Include = "ID,EmployeeName,EmployeePhone,EmployeeAddress,EmployeePosition")] Archive archive)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(archieve).State = EntityState.Modified;
+                db.Entry(archive).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(archieve);
+            return View(archive);
         }
 
-        // GET: Archieves/Delete/5
+        // GET: Archives/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Archieve archieve = db.Archieves.Find(id);
+            Archive archieve = db.Archives.Find(id);
             if (archieve == null)
             {
                 return HttpNotFound();
@@ -105,13 +105,13 @@ namespace JobPosting.Controllers
             return View(archieve);
         }
 
-        // POST: Archieves/Delete/5
+        // POST: Archives/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Archieve archieve = db.Archieves.Find(id);
-            db.Archieves.Remove(archieve);
+            Archive archieve = db.Archives.Find(id);
+            db.Archives.Remove(archieve);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
