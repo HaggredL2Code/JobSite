@@ -360,3 +360,6 @@ C:\Users\Jacob\Documents\Community Sponsored Project\JobSite\JobPosting\JobPosti
 C:\Users\Jacob\Documents\Community Sponsored Project\JobSite\JobPosting\JobPosting\bin\Microsoft.AI.ServerTelemetryChannel.xml
 C:\Users\Jacob\Documents\Community Sponsored Project\JobSite\JobPosting\JobPosting\bin\Microsoft.AI.WindowsServer.xml
 C:\Users\Jacob\Documents\Community Sponsored Project\JobSite\JobPosting\JobPosting\bin\Microsoft.AI.Web.xml
+C:\Users\jacob\Documents\Community Sponsored Project\JobSite\JobPosting\JobPosting\bin\NLog.config
+C:\Users\jacob\Documents\Community Sponsored Project\JobSite\JobPosting\JobPosting\bin\NLog.dll
+C:\Users\jacob\Documents\Community Sponsored Project\JobSite\JobPosting\JobPosting\bin\NLog.xml

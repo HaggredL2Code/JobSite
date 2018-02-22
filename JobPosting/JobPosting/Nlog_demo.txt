@@ -1,0 +1,4 @@
+2018-02-22 10:24:41.6763|INFO|DemoLogger|Sample informational message
+2018-02-22 10:24:41.7084|WARN|DemoLogger|Sample warning message
+2018-02-22 10:24:41.7084|ERROR|DemoLogger|Sample error message
+2018-02-22 10:24:41.7084|FATAL|DemoLogger|Sample fatal error message
