@@ -12,7 +12,7 @@ namespace JobPosting.Models
     {
         public ApplicationCart()
         {
-            this.aFileTemps = new HashSet<aFileTemp>();
+            this.BinaryFileTemps = new HashSet<BinaryFileTemp>();
         }
 
         public int ID { get; set; }
@@ -26,6 +26,6 @@ namespace JobPosting.Models
         //take ID from posting (auto)
         public int PostingID { get; set; }
 
-        public virtual ICollection<aFileTemp> aFileTemps { get; set; }
+        public virtual ICollection<BinaryFileTemp> BinaryFileTemps { get; set; }
     }
 }

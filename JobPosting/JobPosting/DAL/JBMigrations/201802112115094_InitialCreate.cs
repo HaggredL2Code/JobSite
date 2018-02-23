@@ -56,7 +56,7 @@ namespace JobPosting.DAL.JBMigrations
                 .Index(t => t.ApplicantID);
             
             CreateTable(
-                "dbo.aFile",
+                "dbo.BinaryFile",
                 c => new
                     {
                         ID = c.Int(nullable: false, identity: true),
@@ -77,7 +77,7 @@ namespace JobPosting.DAL.JBMigrations
                         MimeType = c.String(maxLength: 256),
                     })
                 .PrimaryKey(t => t.FileContentID)
-                .ForeignKey("dbo.aFile", t => t.FileContentID, cascadeDelete: true)
+                .ForeignKey("dbo.BinaryFile", t => t.FileContentID, cascadeDelete: true)
                 .Index(t => t.FileContentID);
             
             CreateTable(
@@ -276,7 +276,7 @@ namespace JobPosting.DAL.JBMigrations
                 .PrimaryKey(t => t.ID);
             
             CreateTable(
-                "dbo.aFileTemp",
+                "dbo.BinaryFileTemp",
                 c => new
                     {
                         ID = c.Int(nullable: false, identity: true),
@@ -297,7 +297,7 @@ namespace JobPosting.DAL.JBMigrations
                         MimeType = c.String(maxLength: 256),
                     })
                 .PrimaryKey(t => t.FileContentTempID)
-                .ForeignKey("dbo.aFileTemp", t => t.FileContentTempID, cascadeDelete: true)
+                .ForeignKey("dbo.BinaryFileTemp", t => t.FileContentTempID, cascadeDelete: true)
                 .Index(t => t.FileContentTempID);
             
             CreateTable(
@@ -339,8 +339,8 @@ namespace JobPosting.DAL.JBMigrations
         
         public override void Down()
         {
-            DropForeignKey("dbo.aFileTemp", "ApplicationCartID", "dbo.ApplicationCart");
-            DropForeignKey("dbo.FileContentTemp", "FileContentTempID", "dbo.aFileTemp");
+            DropForeignKey("dbo.BinaryFileTemp", "ApplicationCartID", "dbo.ApplicationCart");
+            DropForeignKey("dbo.FileContentTemp", "FileContentTempID", "dbo.BinaryFileTemp");
             DropForeignKey("dbo.Applicant", "UserRoleID", "dbo.UserRole");
             DropForeignKey("dbo.Application", "ApplicantID", "dbo.Applicant");
             DropForeignKey("dbo.Interview", "InterviewID", "dbo.Application");
@@ -359,12 +359,12 @@ namespace JobPosting.DAL.JBMigrations
             DropForeignKey("dbo.Position", "JobGroupID", "dbo.JobGroup");
             DropForeignKey("dbo.DayPosition", "Position_ID", "dbo.Position");
             DropForeignKey("dbo.DayPosition", "Day_ID", "dbo.Day");
-            DropForeignKey("dbo.aFile", "ApplicationID", "dbo.Application");
-            DropForeignKey("dbo.FileContent", "FileContentID", "dbo.aFile");
+            DropForeignKey("dbo.BinaryFile", "ApplicationID", "dbo.Application");
+            DropForeignKey("dbo.FileContent", "FileContentID", "dbo.BinaryFile");
             DropIndex("dbo.DayPosition", new[] { "Position_ID" });
             DropIndex("dbo.DayPosition", new[] { "Day_ID" });
             DropIndex("dbo.FileContentTemp", new[] { "FileContentTempID" });
-            DropIndex("dbo.aFileTemp", new[] { "ApplicationCartID" });
+            DropIndex("dbo.BinaryFileTemp", new[] { "ApplicationCartID" });
             DropIndex("dbo.UserRole", "IX_Unique_Role");
             DropIndex("dbo.Interview", new[] { "InterviewID" });
             DropIndex("dbo.Union", "IX_Unique_Name");
@@ -387,7 +387,7 @@ namespace JobPosting.DAL.JBMigrations
             DropIndex("dbo.ApplicationQualification", new[] { "QualificationID" });
             DropIndex("dbo.ApplicationQualification", new[] { "ApplicationID" });
             DropIndex("dbo.FileContent", new[] { "FileContentID" });
-            DropIndex("dbo.aFile", new[] { "ApplicationID" });
+            DropIndex("dbo.BinaryFile", new[] { "ApplicationID" });
             DropIndex("dbo.Application", new[] { "ApplicantID" });
             DropIndex("dbo.Application", new[] { "PostingID" });
             DropIndex("dbo.Applicant", new[] { "UserRoleID" });
@@ -397,7 +397,7 @@ namespace JobPosting.DAL.JBMigrations
             DropTable("dbo.InterviewCart");
             DropTable("dbo.Archive");
             DropTable("dbo.FileContentTemp");
-            DropTable("dbo.aFileTemp");
+            DropTable("dbo.BinaryFileTemp");
             DropTable("dbo.ApplicationCart");
             DropTable("dbo.UserRole");
             DropTable("dbo.Interview");
@@ -414,7 +414,7 @@ namespace JobPosting.DAL.JBMigrations
             DropTable("dbo.Qualification");
             DropTable("dbo.ApplicationQualification");
             DropTable("dbo.FileContent");
-            DropTable("dbo.aFile");
+            DropTable("dbo.BinaryFile");
             DropTable("dbo.Application");
             DropTable("dbo.Applicant");
         }

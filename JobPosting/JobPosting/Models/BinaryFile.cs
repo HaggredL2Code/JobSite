@@ -6,13 +6,13 @@ using System.Web;
 
 namespace JobPosting.Models
 {
-    public class aFile
+    public class BinaryFile
     {
         public int ID { get; set; }
 
         [Display(Name = "File Name")]
         [StringLength(256)]
-        public string fileName { get; set; }
+        public string FileName { get; set; }
 
         [StringLength(256)]
         public string Description { get; set; }

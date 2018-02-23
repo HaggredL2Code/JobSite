@@ -73,7 +73,7 @@ namespace JobPosting.DAL
                 .WillCascadeOnDelete(true);
 
             modelBuilder.Entity<Application>()
-                .HasMany(a => a.aFiles)
+                .HasMany(a => a.BinaryFiles)
                 .WithRequired(p => p.Application)
                 .WillCascadeOnDelete(true);
 
@@ -82,19 +82,19 @@ namespace JobPosting.DAL
                 .WithRequired(p => p.Application)
                 .WillCascadeOnDelete(true);
 
-            modelBuilder.Entity<aFile>()
+            modelBuilder.Entity<BinaryFile>()
                 .HasOptional(w => w.FileContent)
-                .WithRequired(p => p.aFile)
+                .WithRequired(p => p.BinaryFile)
                 .WillCascadeOnDelete(true);
 
             modelBuilder.Entity<ApplicationCart>()
-                .HasMany(a => a.aFileTemps)
+                .HasMany(a => a.BinaryFileTemps)
                 .WithRequired(p => p.ApplicationCart)
                 .WillCascadeOnDelete(true);
 
-            modelBuilder.Entity<aFileTemp>()
+            modelBuilder.Entity<BinaryFileTemp>()
                 .HasOptional(w => w.FileContentTemp)
-                .WithRequired(p => p.aFileTemp)
+                .WithRequired(p => p.BinaryFileTemp)
                 .WillCascadeOnDelete(true);
         }
 

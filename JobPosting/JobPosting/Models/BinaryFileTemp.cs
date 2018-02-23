@@ -8,14 +8,14 @@ namespace JobPosting.Models
 {
     //A temporary File table
     //CASCADE delete on ApplicationCart (Will be deleted when Applicant click Apply All Application )
-    //All the File will be transfered to the aFile table 
-    public class aFileTemp
+    //All the File will be transfered to the BinaryFile table 
+    public class BinaryFileTemp
     {
         public int ID { get; set; }
 
         [Display(Name = "File Name")]
         [StringLength(256)]
-        public string fileName { get; set; }
+        public string FileName { get; set; }
 
         [StringLength(256)]
         public string Description { get; set; }

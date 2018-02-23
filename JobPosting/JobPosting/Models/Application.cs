@@ -13,7 +13,7 @@ namespace JobPosting.Models
 
         public Application()
         {
-            this.aFiles = new HashSet<aFile>();
+            this.BinaryFiles = new HashSet<BinaryFile>();
             this.ApplicationsQualifications = new HashSet<ApplicationQualification>();
         }
 
@@ -41,6 +41,6 @@ namespace JobPosting.Models
         //Qualifications that an Applicant have
         public virtual ICollection<ApplicationQualification> ApplicationsQualifications { get; set; }
 
-        public virtual ICollection<aFile> aFiles { get; set; }
+        public virtual ICollection<BinaryFile> BinaryFiles { get; set; }
     }
 }

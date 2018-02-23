@@ -9,7 +9,7 @@ namespace JobPosting.Models
 {
     public class FileContent
     {
-        [Key, ForeignKey("aFile")]
+        [Key, ForeignKey("BinaryFile")]
         public int FileContentID { get; set; }
 
         [ScaffoldColumn(false)]
@@ -19,6 +19,6 @@ namespace JobPosting.Models
         [ScaffoldColumn(false)]
         public string MimeType { get; set; }
 
-        public virtual aFile aFile { get; set; }
+        public virtual BinaryFile BinaryFile { get; set; }
     }
 }
