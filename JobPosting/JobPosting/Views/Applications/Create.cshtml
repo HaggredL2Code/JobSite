@@ -2,49 +2,137 @@
 
 @{
     ViewBag.Title = "Create";
+    var postingID = ViewBag.postingID;
+    var applicantID = ViewBag.applicantID;
 }
 
 <h2>Create</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("Create", "Applications", FormMethod.Post, new { enctype = "multipart/form-data"}))
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Application</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Priority, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Priority, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Priority, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.PostingID, "Posting", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("PostingID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.PostingID, "", new { @class = "text-danger" })
-            </div>
-        </div>
+<div class="form-horizontal">
+    <h4>Application</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        @{
+            IEnumerable<JobPosting.Models.Posting> posting = ViewBag.posting;
+            foreach (var l in posting)
+            {
+                <dt>
+                    @Html.DisplayNameFor(lItem => l.Position.JobGroup.GroupTitle)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(lItem => l.Position.JobGroup.GroupTitle)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(lItem => l.Position.PositionCode)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(lItem => l.Position.PositionCode)
+                </dd>
+                <dt>
+                    Locations
+                </dt>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ApplicantID, "Applicant", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("ApplicantID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ApplicantID, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                foreach (var a in l.Position.JobLocations)
+                {
+                    <dd>
+                        @Html.DisplayFor(aItem => a.Location.Address)
+                    </dd>
+                }
+                <dt>
+                    Qualifications
+                </dt>
+                foreach (var q in l.Position.JobRequirements)
+                {
+                    <dd>
+                        @Html.DisplayFor(qItem => q.Qualification.QlfDescription)
+                    </dd>
+                }
+                <dt>
+                    @Html.DisplayNameFor(lItem => l.Position.PositionCompensationType)
+                </dt>
+                <dd>
+                    @if (l.Position.PositionCompensationType == 1)
+                    {
+                        @: Hourly
+                    }
+                    else if (l.Position.PositionCompensationType == 2)
+                    {
+                        @: Monthly
+                    }
+                    else
+                    {
+                        @: Yearly
+                    }
+                </dd>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
+                <dt>
+                    @Html.DisplayNameFor(lItem => l.pstJobDescription)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(lItem => l.pstJobDescription)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(lItem => l.pstNumPosition)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(lItem => l.pstNumPosition)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(lItem => l.Position.PositionFTE)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(lItem => l.Position.PositionFTE)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(lItem => l.Position.PositionSalary)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(lItem => l.Position.PositionSalary)
+                </dd>
+
+
+            }
+        }
+    </dl>
+
+    <hr />
+    <input type="hidden" name="PostingID" value="@postingID">
+    <input type="hidden" name="ApplicantID" value="@applicantID">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group">
+        <label class="control-label col-md-2">
+            Upload Resumes/Letters:
+        </label>
+        <div class="col-md-10">
+            <input type="file" class="" name="theFiles" multiple="multiple" /><br />
         </div>
     </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Priority, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Priority, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Priority, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+</div>
 }
 
 <div>
