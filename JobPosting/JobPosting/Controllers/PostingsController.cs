@@ -13,6 +13,7 @@ using JobPosting.ViewModels;
 
 namespace JobPosting.Controllers
 {
+    [Authorize]
     public class PostingsController : Controller
     {
         private JBEntities db = new JBEntities();
@@ -102,6 +103,10 @@ namespace JobPosting.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var postingToUpdate = db.Postings.Find(id);
+            if (postingToUpdate.CreatedBy != User.Identity.Name)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
             if (TryUpdateModel(postingToUpdate, "",
                 new string[] { "pstNumPosition", "pstJobDescription", "pstOpenDate", "pstEndDate", "PositionID" }))
             {

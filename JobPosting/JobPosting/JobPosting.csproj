@@ -203,9 +203,9 @@
     <Compile Include="Controllers\QualificationsController.cs" />
     <Compile Include="Controllers\UnionsController.cs" />
     <Compile Include="DAL\JBEntities.cs" />
-    <Compile Include="DAL\JBMigrations\201802112115094_InitialCreate.cs" />
-    <Compile Include="DAL\JBMigrations\201802112115094_InitialCreate.Designer.cs">
-      <DependentUpon>201802112115094_InitialCreate.cs</DependentUpon>
+    <Compile Include="DAL\JBMigrations\201803011626145_InitialCreate.cs" />
+    <Compile Include="DAL\JBMigrations\201803011626145_InitialCreate.Designer.cs">
+      <DependentUpon>201803011626145_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="DAL\JBMigrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
@@ -299,10 +299,8 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Applicants\Create.cshtml" />
-    <Content Include="Views\Applicants\Delete.cshtml" />
     <Content Include="Views\Applicants\Details.cshtml" />
     <Content Include="Views\Applicants\Edit.cshtml" />
-    <Content Include="Views\Applicants\Index.cshtml" />
     <Content Include="Views\Applications\Create.cshtml" />
     <Content Include="Views\Applications\Delete.cshtml" />
     <Content Include="Views\Applications\Details.cshtml" />
@@ -366,8 +364,8 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="DAL\JBMigrations\201802112115094_InitialCreate.resx">
-      <DependentUpon>201802112115094_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="DAL\JBMigrations\201803011626145_InitialCreate.resx">
+      <DependentUpon>201803011626145_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -12,6 +12,7 @@ using JobPosting.Models;
 
 namespace JobPosting.Controllers
 {
+    [Authorize]
     public class ApplicantsController : Controller
     {
         private JBEntities db = new JBEntities();
@@ -24,16 +25,13 @@ namespace JobPosting.Controllers
         }
 
         // GET: Applicants/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details()
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Applicant applicant = db.Applicants.Find(id);
+            Applicant applicant = db.Applicants.Where(a => a.apEMail == User.Identity.Name).SingleOrDefault();
+
             if (applicant == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("Create");
             }
             return View(applicant);
         }
@@ -50,7 +48,7 @@ namespace JobPosting.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,apFirstName,apMiddleName,apLastName,apPhone,apSubscripted,apEMail,apAddress,apCity,apPostalCode,cityID, UserRoleID")] Applicant applicant)
+        public ActionResult Create([Bind(Include = "ID,apFirstName,apMiddleName,apLastName,apPhone,apSubscripted,apEMail,apAddress,apPostalCode, UserRoleID")] Applicant applicant)
         {
             try
             {
@@ -58,7 +56,7 @@ namespace JobPosting.Controllers
                 {
                     db.Applicants.Add(applicant);
                     db.SaveChanges();
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Details");
                 }
             }
             catch (DataException dex)
@@ -165,38 +163,38 @@ namespace JobPosting.Controllers
         }
 
         // GET: Applicants/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Applicant applicant = db.Applicants.Find(id);
-            if (applicant == null)
-            {
-                return HttpNotFound();
-            }
-            return View(applicant);
-        }
+        //public ActionResult Delete(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Applicant applicant = db.Applicants.Find(id);
+        //    if (applicant == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(applicant);
+        //}
 
-        // POST: Applicants/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Applicant applicant = db.Applicants.Find(id);
-            try
-            {
-                db.Applicants.Remove(applicant);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            catch (DataException)
-            {
-                ModelState.AddModelError("", "Unable To save changes. Try Again!");
-            }
-            return View(applicant);
-        }
+        //// POST: Applicants/Delete/5
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult DeleteConfirmed(int id)
+        //{
+        //    Applicant applicant = db.Applicants.Find(id);
+        //    try
+        //    {
+        //        db.Applicants.Remove(applicant);
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+        //    catch (DataException)
+        //    {
+        //        ModelState.AddModelError("", "Unable To save changes. Try Again!");
+        //    }
+        //    return View(applicant);
+        //}
 
         protected override void Dispose(bool disposing)
         {

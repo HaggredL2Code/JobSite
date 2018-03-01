@@ -4,10 +4,14 @@
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
     @Html.AntiForgeryToken()
-
+        var userName = (Session["userName"] != null) ? Session["userName"] : User.Identity.Name;
     <ul class="nav navbar-nav navbar-right">
-        <li>
-            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+        <li class="dropdown"><a href="#" data-toggle="dropdown" class="dropdown-toggle">Welcome @userName - Menu<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li>@Html.ActionLink("Change Security Settings", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
+                <li class="divider"></li>
+                <li>@Html.ActionLink("Manage Profile", "Details", "Applicants")</li>
+            </ul>
         </li>
         <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
     </ul>
