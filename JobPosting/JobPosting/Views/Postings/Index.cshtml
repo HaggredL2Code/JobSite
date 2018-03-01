@@ -28,6 +28,14 @@
     </tr>
 
 @foreach (var item in Model) {
+    bool flag = true;
+    if (User.IsInRole("Hiring Team") || User.IsInRole("User"))
+    {
+        if (item.CreatedBy != User.Identity.Name)
+        {
+            flag = false;
+        }
+    }
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Position.PositionCode)
@@ -42,11 +50,13 @@
         <td>
             @Html.DisplayFor(modelItem => item.pstOpenDate)
         </td>
-
+        @if (flag)
+        {
         <td>
             @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
             @Html.ActionLink("Delete", "Delete", new { id = item.ID })
         </td>
+        }
     </tr>
 }
 

@@ -42,6 +42,7 @@ namespace JobPosting.Controllers
         }
 
         // GET: Postings/Create
+        [Authorize(Roles = "Admin, Manager, Hiring Team")]
         public ActionResult Create()
         {
             PopulateDropdownList();
@@ -55,6 +56,7 @@ namespace JobPosting.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, Manager, Hiring Team")]
         public ActionResult Create([Bind(Include = "ID,pstNumPosition,pstJobDescription,pstOpenDate,pstEndDate,PositionID,CreatedBy,CreatedOn,UpdatedBy,UpdatedOn,RowVersion")] Posting posting)
         {
             try
@@ -76,6 +78,7 @@ namespace JobPosting.Controllers
         }
 
         // GET: Postings/Edit/5
+        [Authorize(Roles = "Admin, Manager, Hiring Team")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -96,6 +99,7 @@ namespace JobPosting.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, Manager, Hiring Team")]
         public ActionResult EditPost(int? id, Byte[] rowVersion)
         {
             if (id == null)
@@ -103,9 +107,12 @@ namespace JobPosting.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var postingToUpdate = db.Postings.Find(id);
-            if (postingToUpdate.CreatedBy != User.Identity.Name)
+            if (User.IsInRole("Hiring Team"))
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (postingToUpdate.CreatedBy != User.Identity.Name)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadGateway);
+                }
             }
             if (TryUpdateModel(postingToUpdate, "",
                 new string[] { "pstNumPosition", "pstJobDescription", "pstOpenDate", "pstEndDate", "PositionID" }))
@@ -156,6 +163,7 @@ namespace JobPosting.Controllers
         }
 
         // GET: Postings/Delete/5
+        [Authorize(Roles = "Admin, Manager, Hiring Team")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -163,16 +171,25 @@ namespace JobPosting.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Posting posting = db.Postings.Find(id);
+            if (User.IsInRole("Hiring Team"))
+            {
+                if (posting.CreatedBy != User.Identity.Name)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadGateway);
+                }
+            }
             if (posting == null)
             {
                 return HttpNotFound();
             }
+
             return View(posting);
         }
 
         // POST: Postings/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, Manager, Hiring Team")]
         public ActionResult DeleteConfirmed(int id)
         {
             Posting posting = db.Postings.Find(id);
