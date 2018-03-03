@@ -20,7 +20,7 @@ namespace JobPosting.Controllers
         // GET: Applications
         public ActionResult Index()
         {
-            var applications = db.Applications.Include(a => a.Applicant).Include(a => a.Posting);
+            IQueryable<Application> applications = db.Applications.Include(a => a.Applicant).Include(a => a.Posting).Include(a => a.BinaryFiles);
             return View(applications.ToList());
         }
 
@@ -183,6 +183,12 @@ namespace JobPosting.Controllers
             db.Applications.Remove(application);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public FileContentResult Download(int id)
+        {
+            var resumeFile = db.BinaryFiles.Include(f => f.FileContent).Where(f => f.ID == id).SingleOrDefault();
+            return File(resumeFile.FileContent.Content, resumeFile.FileContent.MimeType, resumeFile.FileName);
         }
 
         protected override void Dispose(bool disposing)

@@ -21,7 +21,7 @@ namespace JobPosting.DAL
         public DbSet<ApplicationCart> ApplicationCarts { get; set; }
         public DbSet<ApplicationQualification> ApplicationQualification { get; set; }
         public DbSet<Archive> Archives { get; set; }      
-       public DbSet<Position> Positions { get; set; }
+        public DbSet<Position> Positions { get; set; }
         public DbSet<JobGroup> JobGroups { get; set; }
         public DbSet<JobLocation> JobLocations { get; set; }
         public DbSet<JobRequirement> JobRequirements { get; set; }
@@ -31,6 +31,7 @@ namespace JobPosting.DAL
         public DbSet<Union> Unions { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<Day> Days { get; set; }
+        public DbSet<BinaryFile> BinaryFiles { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
