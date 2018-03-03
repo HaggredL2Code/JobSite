@@ -9,7 +9,7 @@ namespace JobPosting.ViewModels
 {
     public class ApplicationVM
     {
-        public IEnumerable<Posting> postings { get; set; }
+        public IList<Posting> postings { get; set; }
 
         public IEnumerable<Qualification> qualifications { get; set; }
 

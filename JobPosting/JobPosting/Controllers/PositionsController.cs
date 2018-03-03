@@ -13,6 +13,7 @@ using JobPosting.ViewModels;
 
 namespace JobPosting.Controllers
 {
+    [Authorize(Roles = "Admin, Manager, Hiring Team")]
     public class PositionsController : Controller
     {
         private JBEntities db = new JBEntities();

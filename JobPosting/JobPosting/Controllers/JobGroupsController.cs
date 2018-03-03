@@ -11,6 +11,7 @@ using JobPosting.Models;
 
 namespace JobPosting.Controllers
 {
+    [Authorize(Roles = "Admin, Manager, Hiring Team")]
     public class JobGroupsController : Controller
     {
         private JBEntities db = new JBEntities();

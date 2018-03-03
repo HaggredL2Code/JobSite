@@ -34,8 +34,8 @@ namespace JobPosting.Models
             }
         }
 
-        [Key]
-        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
+        //[Key]
+        //[DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
 
         [Display(Name = "First Name")]
@@ -53,9 +53,10 @@ namespace JobPosting.Models
         public string apLastName { get; set; }
 
         [Display(Name = "Phone Number")]
-        [RegularExpression("^\\d{10}$", ErrorMessage = "Invalid Phone Number.")]
+        [Required(ErrorMessage = "Phone number is required")]
+        [RegularExpression("^\\d{10}$", ErrorMessage = "Please enter a valid 10-digit phone number (no spaces).")]
         [DataType(DataType.PhoneNumber)]
-        [DisplayFormat(DataFormatString = "{0:(###) ###-####}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:(###) ###-####}", ApplyFormatInEditMode = false)]
         public Int64 apPhone { get; set; }
 
         [Display(Name = "Subscripted")]

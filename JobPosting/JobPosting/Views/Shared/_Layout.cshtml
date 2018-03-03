@@ -24,11 +24,15 @@
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    @if (!User.IsInRole("User"))
+                    {
                     <li>@Html.ActionLink("Job Type", "Index", "JobGroups")</li>
                     <li>@Html.ActionLink("Location", "Index", "Locations")</li>
                     <li>@Html.ActionLink("Qualification", "Index", "Qualifications")</li>
                     <li>@Html.ActionLink("Position", "Index", "Positions")</li>
+                    }
                     <li>@Html.ActionLink("Job Posting", "Index", "Postings")</li>
+                    
                     
                 </ul>
                 @Html.Partial("_LoginPartial")
