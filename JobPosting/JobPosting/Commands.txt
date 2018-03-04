@@ -1,0 +1,3 @@
+﻿Add-Migration -ConfigurationTypeName JobPosting.DAL.JBMigrations.Configuration -Name InitialCreate
+Update-Database -ConfigurationTypeName JobPosting.DAL.JBMigrations.Configuration
+Update-Database -ConfigurationTypeName JobPosting.DAL.Securitymigrations.Configuration
