@@ -18,26 +18,25 @@
     <hr />
     <dl class="dl-horizontal">
         @{
-            IEnumerable<JobPosting.Models.Posting> posting = ViewBag.posting;
-            foreach (var l in posting)
-            {
+            JobPosting.Models.Posting posting = ViewBag.posting;
+
                 <dt>
-                    @Html.DisplayNameFor(lItem => l.Position.JobGroup.GroupTitle)
+                    @Html.DisplayNameFor(lItem => posting.Position.JobGroup.GroupTitle)
                 </dt>
                 <dd>
-                    @Html.DisplayFor(lItem => l.Position.JobGroup.GroupTitle)
+                    @Html.DisplayFor(lItem => posting.Position.JobGroup.GroupTitle)
                 </dd>
                 <dt>
-                    @Html.DisplayNameFor(lItem => l.Position.PositionCode)
+                    @Html.DisplayNameFor(lItem => posting.Position.PositionCode)
                 </dt>
                 <dd>
-                    @Html.DisplayFor(lItem => l.Position.PositionCode)
+                    @Html.DisplayFor(lItem => posting.Position.PositionCode)
                 </dd>
                 <dt>
                     Locations
                 </dt>
 
-                foreach (var a in l.Position.JobLocations)
+                foreach (var a in posting.Position.JobLocations)
                 {
                     <dd>
                         @Html.DisplayFor(aItem => a.Location.Address)
@@ -46,21 +45,21 @@
                 <dt>
                     Qualifications
                 </dt>
-                foreach (var q in l.Position.JobRequirements)
+                foreach (var q in posting.Position.JobRequirements)
                 {
                     <dd>
                         @Html.DisplayFor(qItem => q.Qualification.QlfDescription)
                     </dd>
                 }
                 <dt>
-                    @Html.DisplayNameFor(lItem => l.Position.PositionCompensationType)
+                    @Html.DisplayNameFor(lItem => posting.Position.PositionCompensationType)
                 </dt>
                 <dd>
-                    @if (l.Position.PositionCompensationType == 1)
+                    @if (posting.Position.PositionCompensationType == 1)
                     {
                         @: Hourly
                     }
-                    else if (l.Position.PositionCompensationType == 2)
+                    else if (posting.Position.PositionCompensationType == 2)
                     {
                         @: Monthly
                     }
@@ -71,35 +70,35 @@
                 </dd>
 
                 <dt>
-                    @Html.DisplayNameFor(lItem => l.pstJobDescription)
+                    @Html.DisplayNameFor(lItem => posting.pstJobDescription)
                 </dt>
                 <dd>
-                    @Html.DisplayFor(lItem => l.pstJobDescription)
+                    @Html.DisplayFor(lItem => posting.pstJobDescription)
                 </dd>
 
                 <dt>
-                    @Html.DisplayNameFor(lItem => l.pstNumPosition)
+                    @Html.DisplayNameFor(lItem => posting.pstNumPosition)
                 </dt>
                 <dd>
-                    @Html.DisplayFor(lItem => l.pstNumPosition)
+                    @Html.DisplayFor(lItem => posting.pstNumPosition)
                 </dd>
 
                 <dt>
-                    @Html.DisplayNameFor(lItem => l.Position.PositionFTE)
+                    @Html.DisplayNameFor(lItem => posting.Position.PositionFTE)
                 </dt>
                 <dd>
-                    @Html.DisplayFor(lItem => l.Position.PositionFTE)
+                    @Html.DisplayFor(lItem => posting.Position.PositionFTE)
                 </dd>
 
                 <dt>
-                    @Html.DisplayNameFor(lItem => l.Position.PositionSalary)
+                    @Html.DisplayNameFor(lItem => posting.Position.PositionSalary)
                 </dt>
                 <dd>
-                    @Html.DisplayFor(lItem => l.Position.PositionSalary)
+                    @Html.DisplayFor(lItem => posting.Position.PositionSalary)
                 </dd>
 
 
-            }
+            
         }
     </dl>
 
@@ -125,7 +124,35 @@
         </div>
     </div>
 
-
+    <div class="form-group">
+            <label class="control-label col-md-2">Requirements</label>
+            <div class="col-md-offset-2 col-md-10">
+                <table>
+                    <tr>
+                        @{
+                            int cnt = 0;
+                            var qualificationName = ViewBag.QualificationName;
+                            var index = 0;
+                            foreach (var jr in ViewBag.jobRequirements)
+                            {
+                                
+                                if (cnt++ % 3 == 0)
+                                {
+                                    @:</tr><tr>
+                                }
+                                @:<td>
+                                    <input type="checkbox"
+                                           name="selectedQualification"
+                                           value="@jr.QualificationID" />
+                                    @qualificationName[index] @:&nbsp;&nbsp;
+                                    @:</td>
+                                index += 1;
+                            }
+                            @:</tr>
+                        }
+                    </table>
+                </div>
+            </div>
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">

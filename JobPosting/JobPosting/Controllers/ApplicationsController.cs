@@ -20,7 +20,7 @@ namespace JobPosting.Controllers
         // GET: Applications
         public ActionResult Index()
         {
-            IQueryable<Application> applications = db.Applications.Include(a => a.Applicant).Include(a => a.Posting).Include(a => a.BinaryFiles);
+            IQueryable<Application> applications = db.Applications.Include(a => a.Applicant).Include(a => a.Posting).Include(a => a.BinaryFiles).Include(a => a.ApplicationsQualifications);
             return View(applications.ToList());
         }
 
@@ -42,35 +42,75 @@ namespace JobPosting.Controllers
         // GET: Applications/Create
         public ActionResult Create(int? id)
         {
-            //ViewBag.ApplicantID = new SelectList(db.Applicants, "ID", "apFirstName");
-            //ViewBag.PostingID = new SelectList(db.Postings, "ID", "pstJobDescription");
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var posting = (from p in db.Postings
                            where p.ID == id
-                           select p).ToList();
+                           select p).ToList().SingleOrDefault();
             var applicant = db.Applicants.Where(a => a.apEMail == User.Identity.Name).Select(a => a.ID).SingleOrDefault();
 
+            
 
             ViewBag.posting = posting;
             ViewBag.applicantID = applicant;
             ViewBag.postingId = id;
+            PopulateJobRequirements(posting.PositionID);
             return View();
         }
+
+        private void PopulateJobRequirements(int positionID)
+        {
+            List<string> QualificationName = new List<string>();
+            var jobRequirements = db.JobRequirements.Where(jr => jr.PositionID == positionID);
+            foreach (var jr in jobRequirements)
+            {
+                QualificationName.Add(jr.Qualification.QlfDescription);
+                
+            }
+            ViewBag.jobRequirements = jobRequirements; //used to get ID of requirements
+            ViewBag.qualificationName = QualificationName; //used to display Desc of qualifications
+
+        }
+
+
+
+
+
 
         // POST: Applications/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Priority,PostingID,ApplicantID")] Application application, int? id, IEnumerable<HttpPostedFileBase> theFiles)
+        public ActionResult Create([Bind(Include = "ID,Priority,PostingID,ApplicantID")] Application application, int? id, IEnumerable<HttpPostedFileBase> theFiles, string[] selectedQualification)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
             bool Valid = true;
             var applicationToCheck = db.Applications.Where(a => a.PostingID == application.PostingID && a.ApplicantID == application.ApplicantID).SingleOrDefault();
             try
             {
+                if (selectedQualification != null) // null exception
+                {
+                    foreach (var q in selectedQualification) // loop through each value of the array
+                    {
+                        var qualificateToAdd = db.Qualification.Find(int.Parse(q)); // receive record from dataset by the id
+                        // create new ApplicationQualification Object to add to the ApplicationQualification table
+                        ApplicationQualification applicationQualification = new ApplicationQualification
+                        {
+                            Application = application,
+                            ApplicationID = application.ID,
+                            Qualification = qualificateToAdd,
+                            QualificationID = qualificateToAdd.ID
+                        };
+                        db.ApplicationQualification.Add(applicationQualification);
+                    }
+                }
                 if (ModelState.IsValid)
                 {
                     AddDocuments(ref application, out Valid, theFiles);
@@ -81,6 +121,8 @@ namespace JobPosting.Controllers
                         {
                             db.Applications.Remove(applicationToCheck);
                         }
+                       
+
                         db.Applications.Add(application);
                         db.SaveChanges();
                         return RedirectToAction("Index", "Postings");
