@@ -103,8 +103,8 @@
     </dl>
 
     <hr />
-    <input type="hidden" name="PostingID" value="@postingID">
-    <input type="hidden" name="ApplicantID" value="@applicantID">
+    <input type="hidden" name="PostingID" id="PostingID" value="@postingID">
+    <input type="hidden" name="ApplicantID" id="ApplicantID" value="@applicantID">
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
     <div class="form-group">
@@ -143,6 +143,7 @@
                                 @:<td>
                                     <input type="checkbox"
                                            name="selectedQualification"
+                                           id="selectedQualification"
                                            value="@jr.QualificationID" />
                                     @qualificationName[index] @:&nbsp;&nbsp;
                                     @:</td>
@@ -158,9 +159,68 @@
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" value="Create" class="btn btn-default" />
         </div>
+        <div class="col-md-offset-2 col-md-10">
+            <input type="button" value="Add to Cart" class="btn btn-default" id="btnAddToCart" />
+        </div>
+
+        <p id="test">abc</p>
+        <script src="~/Scripts/jquery-1.10.2.js"></script>
+        <script>
+            $(document).ready(function () {
+                var ApplicationsCart = [];
+                if (sessionStorage.getItem("ApplicationsCart") != null) {
+                    ApplicationsCart = JSON.parse(sessionStorage.getItem("ApplicationsCart"));
+                }
+                var selectedQualification = [];
+                var count = 0;
+                
+                $("#btnAddToCart").click(function () {
+                    $("#selectedQualification:checked").each(function (e) {
+                        selectedQualification.push($(this).val());
+                    })
+
+                    ApplicationsCart.push({
+                        Priority: $("#Priority").val(),
+                        PostingID: $("#PostingID").val(),
+                        ApplicantID: $("#ApplicantID").val(),
+                        selectedQualification: selectedQualification
+                        
+                    })
+
+
+                    var jsonStr = JSON.stringify(ApplicationsCart);
+                    sessionStorage.setItem("ApplicationsCart", jsonStr);
+                    
+                    
+
+                    var cartValue = sessionStorage.getItem("ApplicationsCart");
+                    var cartObj = JSON.parse(cartValue);
+                    //selectedQualification.forEach(function (e) {
+                    //    $("#test").text("The last Value: " + e)
+                    //})
+                    cartObj.forEach(function (e) {
+                        count += 1
+                        //$("#test").text("ApplicantID: " + e.ApplicantID + " PostingID: " + e.PostingID + " Priority: " + e.Priority + " SelecctedQualification: " + e.selectedQualification);
+                        $("#test").text(count)
+                    })
+                    
+                });
+                
+                
+            }
+            )
+
+            
+
+        </script>
     </div>
+
+
 </div>
 }
+
+
+
 
 <div>
     @Html.ActionLink("Back to List", "Index")
