@@ -13,7 +13,7 @@ namespace JobPosting.DAL.JBMigrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201803011626145_InitialCreate"; }
+            get { return "201803040104233_InitialCreate"; }
         }
         
         string IMigrationMetadata.Source

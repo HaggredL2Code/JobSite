@@ -11,9 +11,20 @@
 </p>
 <table class="table">
     <tr>
+
         <th>
-            @Html.DisplayNameFor(model => model.Applicant.apFirstName)
+            @Html.DisplayNameFor(model => model.Posting.Position.PositionCode)
         </th>
+        
+        <th>
+            @Html.DisplayNameFor(model => model.Posting.Position.PositionDescription)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Applicant.apFullName)
+        </th>
+
+        
  
         <th>
             @Html.DisplayNameFor(model => model.Posting.pstJobDescription)
@@ -21,13 +32,24 @@
         <th>
             @Html.DisplayNameFor(model => model.Priority)
         </th>
+        <th>
+            Resume
+        </th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Applicant.apFirstName)
+            @Html.DisplayFor(modelItem => item.Posting.Position.PositionCode)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Posting.Position.PositionDescription)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Applicant.apFullName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Posting.pstJobDescription)
@@ -36,9 +58,15 @@
             @Html.DisplayFor(modelItem => item.Priority)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @foreach (var f in item.BinaryFiles)
+            {
+                @: @Html.ActionLink(f.FileName, "Download", new { id = f.ID})
+            }
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.ID })
         </td>
     </tr>
 }

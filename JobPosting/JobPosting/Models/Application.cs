@@ -10,7 +10,7 @@ namespace JobPosting.Models
     //Only let Applicant delete their own Application
     public class Application : Auditable
     {
-
+        private DateTime applyDate = DateTime.Now;
         public Application()
         {
             this.BinaryFiles = new HashSet<BinaryFile>();
@@ -32,6 +32,16 @@ namespace JobPosting.Models
         [Display(Name = "Applicant")]
         [Required(ErrorMessage = "You have to specify Applicant.")]
         public int ApplicantID { get; set; }
+
+        //[Display(Name = "Apply Date")]
+        //public DateTime ApplyDate
+        //{
+        //    get { return applyDate; }
+        //    set
+        //    {
+        //        value = applyDate;
+        //    }
+        //}
 
 
         public virtual Posting Posting { get; set; }

@@ -20,7 +20,7 @@ namespace JobPosting.Controllers
         // GET: Applications
         public ActionResult Index()
         {
-            var applications = db.Applications.Include(a => a.Applicant).Include(a => a.Posting);
+            IQueryable<Application> applications = db.Applications.Include(a => a.Applicant).Include(a => a.Posting).Include(a => a.BinaryFiles);
             return View(applications.ToList());
         }
 
@@ -67,14 +67,25 @@ namespace JobPosting.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Priority,PostingID,ApplicantID")] Application application, int? id, IEnumerable<HttpPostedFileBase> theFiles)
         {
+            bool Valid = true;
+            var applicationToCheck = db.Applications.Where(a => a.PostingID == application.PostingID && a.ApplicantID == application.ApplicantID).SingleOrDefault();
             try
             {
                 if (ModelState.IsValid)
                 {
-                    AddDocuments(ref application, theFiles);
-                    db.Applications.Add(application);
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
+                    AddDocuments(ref application, out Valid, theFiles);
+
+                    if (Valid)
+                    {
+                        if (applicationToCheck != null)
+                        {
+                            db.Applications.Remove(applicationToCheck);
+                        }
+                        db.Applications.Add(application);
+                        db.SaveChanges();
+                        return RedirectToAction("Index", "Postings");
+                    }
+                    ModelState.AddModelError("", "You only be able to submit PDF or MS Word files.");
                 }
             }
             catch (DataException)
@@ -93,31 +104,40 @@ namespace JobPosting.Controllers
             return View(application);
         }
 
-        private void AddDocuments(ref Application application, IEnumerable<HttpPostedFileBase> docs)
+        private void AddDocuments(ref Application application,  out bool Valid,IEnumerable<HttpPostedFileBase> docs)
         {
+            Valid = true;
             foreach (var f in docs)
             {
                 if (f != null)
                 {
                     string mimeType = f.ContentType;
-                    string fileName = Path.GetFileName(f.FileName);
-                    int fileLength = f.ContentLength;
-                    if (!(fileName == "" || fileLength == 0))
+                    if (mimeType == "application/pdf" || mimeType == "application/msword" || mimeType == "application/vnd.openxmlformats-officedocument.wordprocessingml.document" || mimeType == "application/vnd.openxmlformats-officedocument.wordprocessingml.template")
                     {
-                        Stream fileStream = f.InputStream;
-                        byte[] fileData = new byte[fileLength];
-                        fileStream.Read(fileData, 0, fileLength);
+                        Valid = true;
 
-                        BinaryFile newFile = new BinaryFile
+                        string fileName = Path.GetFileName(f.FileName);
+                        int fileLength = f.ContentLength;
+                        if (!(fileName == "" || fileLength == 0))
                         {
-                            FileContent = new FileContent
+                            Stream fileStream = f.InputStream;
+                            byte[] fileData = new byte[fileLength];
+                            fileStream.Read(fileData, 0, fileLength);
+
+                            BinaryFile newFile = new BinaryFile
                             {
-                                Content = fileData,
-                                MimeType = mimeType
-                            },
-                            FileName = fileName
-                        };
-                        application.BinaryFiles.Add(newFile);
+                                FileContent = new FileContent
+                                {
+                                    Content = fileData,
+                                    MimeType = mimeType
+                                },
+                                FileName = fileName
+                            };
+                            application.BinaryFiles.Add(newFile);
+                        }
+                    }
+                    else {
+                        Valid = false;
                     }
                 }
             }
@@ -183,6 +203,12 @@ namespace JobPosting.Controllers
             db.Applications.Remove(application);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public FileContentResult Download(int id)
+        {
+            var resumeFile = db.BinaryFiles.Include(f => f.FileContent).Where(f => f.ID == id).SingleOrDefault();
+            return File(resumeFile.FileContent.Content, resumeFile.FileContent.MimeType, resumeFile.FileName);
         }
 
         protected override void Dispose(bool disposing)

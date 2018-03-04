@@ -357,7 +357,7 @@ C:\Users\Jacob\Documents\Community Sponsored Project\JobSite\JobPosting\JobPosti
 C:\Users\Jacob\Documents\Community Sponsored Project\JobSite\JobPosting\JobPosting\bin\Microsoft.AI.ServerTelemetryChannel.xml
 C:\Users\Jacob\Documents\Community Sponsored Project\JobSite\JobPosting\JobPosting\bin\Microsoft.AI.WindowsServer.xml
 C:\Users\Jacob\Documents\Community Sponsored Project\JobSite\JobPosting\JobPosting\bin\Microsoft.AI.Web.xml
-C:\Users\pevip\OneDrive\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.DAL.JBMigrations.InitialCreate.resources
 C:\Users\pevip\OneDrive\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.csproj.GenerateResource.Cache
 C:\Users\pevip\OneDrive\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.DAL.Securitymigrations.InitialCreate.resources
 C:\Users\pevip\OneDrive\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.csprojResolveAssemblyReference.cache
+C:\Users\pevip\OneDrive\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.DAL.JBMigrations.InitialCreate.resources
