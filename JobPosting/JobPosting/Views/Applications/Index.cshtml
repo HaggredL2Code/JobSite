@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Index";
+    
 }
 
 <h2>Index</h2>
@@ -33,6 +34,9 @@
             @Html.DisplayNameFor(model => model.Priority)
         </th>
         <th>
+            Applicant's Qualifications
+        </th>
+        <th>
             Resume
         </th>
         <th></th>
@@ -56,6 +60,29 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Priority)
+        </td>
+        <td>
+            
+            @foreach (var jq in item.Posting.Position.JobRequirements)
+            {
+                bool flag = true;
+                foreach (var aq in item.ApplicationsQualifications)
+                {
+                    if (jq.QualificationID == aq.QualificationID)
+                    {
+
+                        <p style="color:green">@jq.Qualification.QlfDescription</p>
+                        flag = false;
+                        break;
+                    }
+
+                }
+                if (flag)
+                {
+                    <p style="color:red">@jq.Qualification.QlfDescription</p>
+                }
+
+            }
         </td>
         <td>
             @foreach (var f in item.BinaryFiles)
