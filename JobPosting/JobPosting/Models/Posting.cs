@@ -12,6 +12,9 @@ namespace JobPosting.Models
 
         public Posting() {
             this.Applications = new HashSet<Application>();
+            this.JobRequirements = new HashSet<JobRequirement>();
+            this.JobLocations = new HashSet<JobLocation>();
+            this.Days = new HashSet<Day>();
         }
 
         public int ID { get; set; }
@@ -29,6 +32,14 @@ namespace JobPosting.Models
         [Range(1,9999, ErrorMessage = "Invalid Number of Position.")]
         public int pstNumPosition { get; set; }
 
+        [Display(Name = "FTE")]
+        [Required(ErrorMessage = "FTE is required.")]
+        public decimal pstFTE { get; set; }
+
+        [Display(Name = "Salary")]
+        [Required(ErrorMessage = "Salary is required.")]
+        [DataType(DataType.Currency)]
+        public decimal pstSalary { get; set; }
 
         //Job Description is used to tell the Applicant that
         //what the applicant will do in that particular job.
@@ -62,6 +73,12 @@ namespace JobPosting.Models
         public virtual Position Position { get; set; }
 
         public virtual ICollection<Application> Applications { get; set; }
+
+        public virtual ICollection<JobRequirement> JobRequirements { get; set; }
+
+        public virtual ICollection<JobLocation> JobLocations { get; set; }
+
+        public virtual ICollection<Day> Days { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

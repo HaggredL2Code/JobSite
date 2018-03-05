@@ -35,13 +35,29 @@
         </dd>
 
         <dt>
+            @Html.DisplayNameFor(model => model.pstFTE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pstFTE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.pstSalary)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pstSalary)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.Position.PositionCompensationType)
         </dt>
 
         <dd>
             @if (Model.Position.PositionCompensationType == 1)
             {
-               @: Hourly
+                @: Hourly
             }
             else if (Model.Position.PositionCompensationType == 2)
             {
@@ -53,13 +69,7 @@
             }
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Position.PositionSalary)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Position.PositionSalary)
-        </dd>
+        
 
          <dt>
             Location
@@ -67,7 +77,7 @@
 
         <dd>
             @{
-                IEnumerable<JobPosting.Models.JobLocation> jobLocations = Model.Position.JobLocations;
+                IEnumerable<JobPosting.Models.JobLocation> jobLocations = ViewBag.JobLocations;
                 foreach (var l in jobLocations)
                 {
                 @: @Html.DisplayFor(lModel => l.Location.Address) <br />
@@ -89,7 +99,7 @@
         </dt>
 
         <dd>
-            @foreach (var d in Model.Position.Days)
+            @foreach (var d in Model.Days)
             {
             @: @Html.DisplayFor(dModel => d.dayName) <br />
             }
@@ -102,7 +112,7 @@
 
         <dd>
             @{
-                IEnumerable<JobPosting.Models.JobRequirement> jobRequirements = Model.Position.JobRequirements;
+                IEnumerable<JobPosting.Models.JobRequirement> jobRequirements = ViewBag.JobRequirements;
                 foreach (var r in jobRequirements)
                 {
                 @: @Html.DisplayFor(rModel => r.Qualification.QlfDescription) <br />

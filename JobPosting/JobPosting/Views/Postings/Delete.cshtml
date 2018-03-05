@@ -28,11 +28,46 @@
         </dd>
 
         <dt>
+            @Html.DisplayNameFor(model => model.pstFTE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pstFTE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.pstSalary)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pstSalary)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.pstJobDescription)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.pstJobDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Position.PositionCompensationType)
+        </dt>
+
+        <dd>
+            @if (Model.Position.PositionCompensationType == 1)
+            {
+                @: Hourly
+            }
+            else if (Model.Position.PositionCompensationType == 2)
+            {
+                @:Monthly
+            }
+            else if (Model.Position.PositionCompensationType == 3)
+            {
+                @:Yearly
+            }
         </dd>
 
         <dt>

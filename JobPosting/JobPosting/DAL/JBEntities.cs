@@ -53,14 +53,14 @@ namespace JobPosting.DAL
                 .WithRequired(p => p.Position)
                 .WillCascadeOnDelete(true);
 
-            modelBuilder.Entity<Position>()
-                .HasMany(po => po.JobRequirements)
-                .WithRequired(p => p.Position)
+            modelBuilder.Entity<Posting>()
+                .HasMany(po => po.JobLocations)
+                .WithRequired(p => p.Posting)
                 .WillCascadeOnDelete(true);
 
-            modelBuilder.Entity<Position>()
-                .HasMany(po => po.JobLocations)
-                .WithRequired(p => p.Position)
+            modelBuilder.Entity<Posting>()
+                .HasMany(po => po.JobRequirements)
+                .WithRequired(p => p.Posting)
                 .WillCascadeOnDelete(true);
 
             //modelBuilder.Entity<Posting>()

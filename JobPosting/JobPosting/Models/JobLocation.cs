@@ -10,11 +10,11 @@ namespace JobPosting.Models
         
         public int ID { get; set; }
 
-        public int PositionID { get; set; }
+        public int PostingID { get; set; }
 
         public int LocationID { get; set; }
 
-        public virtual Position Position { get; set; }
+        public virtual Posting Posting { get; set; }
 
         public virtual Location Location { get; set; }
     }

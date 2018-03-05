@@ -22,6 +22,6 @@ namespace JobPosting.Models
         
         public int dayOrder { get; set; }
 
-        public virtual ICollection<Position> Positions { get; set; }
+        public virtual ICollection<Posting> Postings { get; set; }
     }
 }

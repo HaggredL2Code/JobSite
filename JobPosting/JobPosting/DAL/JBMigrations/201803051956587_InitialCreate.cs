@@ -79,14 +79,70 @@ namespace JobPosting.DAL.JBMigrations
                 "dbo.JobRequirement",
                 c => new
                     {
-                        PositionID = c.Int(nullable: false),
+                        PostingID = c.Int(nullable: false),
                         QualificationID = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => new { t.PositionID, t.QualificationID })
-                .ForeignKey("dbo.Position", t => t.PositionID, cascadeDelete: true)
+                .PrimaryKey(t => new { t.PostingID, t.QualificationID })
+                .ForeignKey("dbo.Posting", t => t.PostingID, cascadeDelete: true)
                 .ForeignKey("dbo.Qualification", t => t.QualificationID)
-                .Index(t => t.PositionID)
+                .Index(t => t.PostingID)
                 .Index(t => t.QualificationID);
+            
+            CreateTable(
+                "dbo.Posting",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        pstNumPosition = c.Int(nullable: false),
+                        pstFTE = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        pstSalary = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        pstJobDescription = c.String(nullable: false),
+                        pstOpenDate = c.DateTime(nullable: false),
+                        pstEndDate = c.DateTime(nullable: false),
+                        PositionID = c.Int(nullable: false),
+                        CreatedBy = c.String(maxLength: 256),
+                        CreatedOn = c.DateTime(),
+                        UpdatedBy = c.String(maxLength: 256),
+                        UpdatedOn = c.DateTime(),
+                        RowVersion = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.Position", t => t.PositionID, cascadeDelete: true)
+                .Index(t => t.PositionID);
+            
+            CreateTable(
+                "dbo.Day",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        dayName = c.String(nullable: false, maxLength: 50),
+                        dayOrder = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.ID)
+                .Index(t => t.dayName, unique: true, name: "IX_Unique_Day");
+            
+            CreateTable(
+                "dbo.JobLocation",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        PostingID = c.Int(nullable: false),
+                        LocationID = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.Location", t => t.LocationID, cascadeDelete: true)
+                .ForeignKey("dbo.Posting", t => t.PostingID, cascadeDelete: true)
+                .Index(t => t.PostingID)
+                .Index(t => t.LocationID);
+            
+            CreateTable(
+                "dbo.Location",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        Address = c.String(),
+                    })
+                .PrimaryKey(t => t.ID);
             
             CreateTable(
                 "dbo.Position",
@@ -95,8 +151,6 @@ namespace JobPosting.DAL.JBMigrations
                         ID = c.Int(nullable: false, identity: true),
                         PositionCode = c.String(nullable: false, maxLength: 5),
                         PositionDescription = c.String(nullable: false, maxLength: 50),
-                        PositionFTE = c.Decimal(nullable: false, precision: 18, scale: 2),
-                        PositionSalary = c.Decimal(nullable: false, precision: 18, scale: 2),
                         PositionCompensationType = c.Short(nullable: false),
                         JobGroupID = c.Int(nullable: false),
                         UnionID = c.Int(nullable: false),
@@ -115,17 +169,6 @@ namespace JobPosting.DAL.JBMigrations
                 .Index(t => t.UnionID);
             
             CreateTable(
-                "dbo.Day",
-                c => new
-                    {
-                        ID = c.Int(nullable: false, identity: true),
-                        dayName = c.String(nullable: false, maxLength: 50),
-                        dayOrder = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => t.ID)
-                .Index(t => t.dayName, unique: true, name: "IX_Unique_Day");
-            
-            CreateTable(
                 "dbo.JobGroup",
                 c => new
                     {
@@ -134,49 +177,6 @@ namespace JobPosting.DAL.JBMigrations
                     })
                 .PrimaryKey(t => t.ID)
                 .Index(t => t.GroupTitle, unique: true, name: "IX_Unique_Title");
-            
-            CreateTable(
-                "dbo.JobLocation",
-                c => new
-                    {
-                        ID = c.Int(nullable: false, identity: true),
-                        PositionID = c.Int(nullable: false),
-                        LocationID = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => t.ID)
-                .ForeignKey("dbo.Location", t => t.LocationID, cascadeDelete: true)
-                .ForeignKey("dbo.Position", t => t.PositionID, cascadeDelete: true)
-                .Index(t => t.PositionID)
-                .Index(t => t.LocationID);
-            
-            CreateTable(
-                "dbo.Location",
-                c => new
-                    {
-                        ID = c.Int(nullable: false, identity: true),
-                        Address = c.String(),
-                    })
-                .PrimaryKey(t => t.ID);
-            
-            CreateTable(
-                "dbo.Posting",
-                c => new
-                    {
-                        ID = c.Int(nullable: false, identity: true),
-                        pstNumPosition = c.Int(nullable: false),
-                        pstJobDescription = c.String(nullable: false),
-                        pstOpenDate = c.DateTime(nullable: false),
-                        pstEndDate = c.DateTime(nullable: false),
-                        PositionID = c.Int(nullable: false),
-                        CreatedBy = c.String(maxLength: 256),
-                        CreatedOn = c.DateTime(),
-                        UpdatedBy = c.String(maxLength: 256),
-                        UpdatedOn = c.DateTime(),
-                        RowVersion = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
-                    })
-                .PrimaryKey(t => t.ID)
-                .ForeignKey("dbo.Position", t => t.PositionID, cascadeDelete: true)
-                .Index(t => t.PositionID);
             
             CreateTable(
                 "dbo.Union",
@@ -272,17 +272,17 @@ namespace JobPosting.DAL.JBMigrations
                 .PrimaryKey(t => t.ID);
             
             CreateTable(
-                "dbo.DayPosition",
+                "dbo.DayPosting",
                 c => new
                     {
                         Day_ID = c.Int(nullable: false),
-                        Position_ID = c.Int(nullable: false),
+                        Posting_ID = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => new { t.Day_ID, t.Position_ID })
+                .PrimaryKey(t => new { t.Day_ID, t.Posting_ID })
                 .ForeignKey("dbo.Day", t => t.Day_ID, cascadeDelete: true)
-                .ForeignKey("dbo.Position", t => t.Position_ID, cascadeDelete: true)
+                .ForeignKey("dbo.Posting", t => t.Posting_ID, cascadeDelete: true)
                 .Index(t => t.Day_ID)
-                .Index(t => t.Position_ID);
+                .Index(t => t.Posting_ID);
             
         }
         
@@ -299,32 +299,32 @@ namespace JobPosting.DAL.JBMigrations
             DropForeignKey("dbo.JobRequirement", "QualificationID", "dbo.Qualification");
             DropForeignKey("dbo.Position", "UnionID", "dbo.Union");
             DropForeignKey("dbo.Posting", "PositionID", "dbo.Position");
-            DropForeignKey("dbo.Application", "PostingID", "dbo.Posting");
-            DropForeignKey("dbo.JobRequirement", "PositionID", "dbo.Position");
-            DropForeignKey("dbo.JobLocation", "PositionID", "dbo.Position");
-            DropForeignKey("dbo.JobLocation", "LocationID", "dbo.Location");
             DropForeignKey("dbo.Position", "JobGroupID", "dbo.JobGroup");
-            DropForeignKey("dbo.DayPosition", "Position_ID", "dbo.Position");
-            DropForeignKey("dbo.DayPosition", "Day_ID", "dbo.Day");
-            DropIndex("dbo.DayPosition", new[] { "Position_ID" });
-            DropIndex("dbo.DayPosition", new[] { "Day_ID" });
+            DropForeignKey("dbo.JobRequirement", "PostingID", "dbo.Posting");
+            DropForeignKey("dbo.JobLocation", "PostingID", "dbo.Posting");
+            DropForeignKey("dbo.JobLocation", "LocationID", "dbo.Location");
+            DropForeignKey("dbo.DayPosting", "Posting_ID", "dbo.Posting");
+            DropForeignKey("dbo.DayPosting", "Day_ID", "dbo.Day");
+            DropForeignKey("dbo.Application", "PostingID", "dbo.Posting");
+            DropIndex("dbo.DayPosting", new[] { "Posting_ID" });
+            DropIndex("dbo.DayPosting", new[] { "Day_ID" });
             DropIndex("dbo.FileContentTemp", new[] { "FileContentTempID" });
             DropIndex("dbo.BinaryFileTemp", new[] { "ApplicationCartID" });
             DropIndex("dbo.UserRole", "IX_Unique_Role");
             DropIndex("dbo.FileContent", new[] { "FileContentID" });
             DropIndex("dbo.BinaryFile", new[] { "ApplicationID" });
             DropIndex("dbo.Union", "IX_Unique_Name");
-            DropIndex("dbo.Posting", new[] { "PositionID" });
-            DropIndex("dbo.JobLocation", new[] { "LocationID" });
-            DropIndex("dbo.JobLocation", new[] { "PositionID" });
             DropIndex("dbo.JobGroup", "IX_Unique_Title");
-            DropIndex("dbo.Day", "IX_Unique_Day");
             DropIndex("dbo.Position", new[] { "UnionID" });
             DropIndex("dbo.Position", new[] { "JobGroupID" });
             DropIndex("dbo.Position", "IX_Unique_Desc");
             DropIndex("dbo.Position", "IX_Unique_Code");
+            DropIndex("dbo.JobLocation", new[] { "LocationID" });
+            DropIndex("dbo.JobLocation", new[] { "PostingID" });
+            DropIndex("dbo.Day", "IX_Unique_Day");
+            DropIndex("dbo.Posting", new[] { "PositionID" });
             DropIndex("dbo.JobRequirement", new[] { "QualificationID" });
-            DropIndex("dbo.JobRequirement", new[] { "PositionID" });
+            DropIndex("dbo.JobRequirement", new[] { "PostingID" });
             DropIndex("dbo.Qualification", "IX_Unique_QlfDesc");
             DropIndex("dbo.ApplicationQualification", new[] { "QualificationID" });
             DropIndex("dbo.ApplicationQualification", new[] { "ApplicationID" });
@@ -332,7 +332,7 @@ namespace JobPosting.DAL.JBMigrations
             DropIndex("dbo.Application", new[] { "PostingID" });
             DropIndex("dbo.Applicant", new[] { "UserRoleID" });
             DropIndex("dbo.Applicant", "IX_Unique_Email");
-            DropTable("dbo.DayPosition");
+            DropTable("dbo.DayPosting");
             DropTable("dbo.Archive");
             DropTable("dbo.FileContentTemp");
             DropTable("dbo.BinaryFileTemp");
@@ -341,12 +341,12 @@ namespace JobPosting.DAL.JBMigrations
             DropTable("dbo.FileContent");
             DropTable("dbo.BinaryFile");
             DropTable("dbo.Union");
-            DropTable("dbo.Posting");
+            DropTable("dbo.JobGroup");
+            DropTable("dbo.Position");
             DropTable("dbo.Location");
             DropTable("dbo.JobLocation");
-            DropTable("dbo.JobGroup");
             DropTable("dbo.Day");
-            DropTable("dbo.Position");
+            DropTable("dbo.Posting");
             DropTable("dbo.JobRequirement");
             DropTable("dbo.Qualification");
             DropTable("dbo.ApplicationQualification");

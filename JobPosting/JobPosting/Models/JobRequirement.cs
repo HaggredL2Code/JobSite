@@ -9,9 +9,9 @@ namespace JobPosting.Models
 {
     public class JobRequirement
     {
-        [Key, ForeignKey("Position")]
+        [Key, ForeignKey("Posting")]
         [Column(Order = 1)]
-        public int PositionID { get; set; }
+        public int PostingID { get; set; }
 
         [Key, ForeignKey("Qualification")]
         [Column(Order = 2)]
@@ -19,6 +19,6 @@ namespace JobPosting.Models
 
         public virtual Qualification Qualification { get; set; }
 
-        public virtual Position Position { get; set; }
+        public virtual Posting Posting { get; set; }
     }
 }

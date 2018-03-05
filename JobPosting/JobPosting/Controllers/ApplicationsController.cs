@@ -57,14 +57,14 @@ namespace JobPosting.Controllers
             ViewBag.posting = posting;
             ViewBag.applicantID = applicant;
             ViewBag.postingId = id;
-            PopulateJobRequirements(posting.PositionID);
+            PopulateJobRequirements(posting.ID);
             return View();
         }
 
-        private void PopulateJobRequirements(int positionID)
+        private void PopulateJobRequirements(int postingID)
         {
             List<string> QualificationName = new List<string>();
-            var jobRequirements = db.JobRequirements.Where(jr => jr.PositionID == positionID);
+            var jobRequirements = db.JobRequirements.Where(jr => jr.PostingID == postingID);
             foreach (var jr in jobRequirements)
             {
                 QualificationName.Add(jr.Qualification.QlfDescription);

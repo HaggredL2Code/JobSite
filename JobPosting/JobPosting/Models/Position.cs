@@ -12,8 +12,6 @@ namespace JobPosting.Models
     {
         public Position()
         {
-            this.JobLocations = new HashSet<JobLocation>();
-            this.JobRequirements = new HashSet<JobRequirement>();
             this.Postings = new HashSet<Posting>();
         }
 
@@ -40,14 +38,6 @@ namespace JobPosting.Models
         //[Required(ErrorMessage = "Day of Work is required.")]
         //public HashSet<DayOfWeek> PositionDayofWork { get; set; }
 
-        [Display(Name = "FTE")]
-        [Required(ErrorMessage = "FTE is required.")]
-        public decimal PositionFTE { get; set; }
-
-        [Display(Name = "Salary")]
-        [Required(ErrorMessage = "Salary is required.")]
-        [DataType(DataType.Currency)]
-        public decimal PositionSalary { get; set; }
 
         //[Display(Name = "Compensation")]
         //[Required(ErrorMessage = "Compensation is required.")]
@@ -73,12 +63,7 @@ namespace JobPosting.Models
 
         public virtual Union Union { get; set; }
 
-        public virtual ICollection<JobLocation> JobLocations { get; set; }
-
-        public virtual ICollection<JobRequirement> JobRequirements { get; set; }
-
         public virtual ICollection<Posting> Postings { get; set; }
 
-        public virtual ICollection<Day> Days { get; set; }
     }
 }
