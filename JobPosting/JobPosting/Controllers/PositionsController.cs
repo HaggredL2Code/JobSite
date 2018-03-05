@@ -48,8 +48,11 @@ namespace JobPosting.Controllers
 
             if (Location.HasValue)
             {
-             //   var positionID = db.JobLocations.Where(j => j.LocationID == Location).Select(p => p.PositionID).ToArray();
-             //   positions = positions.Where(p => p.ID.Equals( new {positionID}));
+                var positionID = (from jl in db.JobLocations
+                                  where jl.LocationID == Location
+                                  select jl.PositionID
+                                  ).ToArray();
+                positions = positions.Where(p => positionID.Contains(p.ID));
             }
 
 
