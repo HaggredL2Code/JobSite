@@ -19,14 +19,29 @@ namespace JobPosting.Controllers
         private JBEntities db = new JBEntities();
 
         // GET: Postings
-        public ActionResult Index(string SearchString)
+        public ActionResult Index(string SearchPosition, int? PositionID, int? JobGroupID)
         {
-            var postings = db.Postings.Include(p => p.Position);
+            PopulateDropdownList();
 
-            if (!String.IsNullOrEmpty(SearchString))
+            var postings = db.Postings.Include(p => p.Position).Include(p=>p.Position.JobGroup);
+
+
+            if (PositionID.HasValue)
             {
-                postings = postings.Where(u => u.Position.PositionCode.ToUpper().Contains(SearchString.ToUpper()));
+                postings = postings.Where(u => u.PositionID == PositionID);
+
             }
+            if (JobGroupID.HasValue)
+            {
+                postings = postings.Where(u => u.Position.JobGroupID == JobGroupID);
+
+            }
+            if (!String.IsNullOrEmpty(SearchPosition))
+            {
+                postings = postings.Where(p => p.Position.PositionCode.ToUpper().Contains(SearchPosition.ToUpper()));
+            }
+
+            postings = postings.OrderBy(p => p.pstEndDate);
 
             return View(postings.ToList());
         }
@@ -216,6 +231,8 @@ namespace JobPosting.Controllers
         private void PopulateDropdownList(Posting posting = null)
         {
             ViewBag.PositionID = new SelectList(db.Positions.OrderBy(p => p.PositionDescription), "ID", "PositionDescription", posting?.PositionID);
+            ViewBag.JobGroupID = new SelectList(db.JobGroups.OrderBy(p => p.GroupTitle), "ID", "GroupTitle", posting?.Position.JobGroupID);
+
         }
 
         protected override void Dispose(bool disposing)

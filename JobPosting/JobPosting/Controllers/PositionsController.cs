@@ -19,12 +19,68 @@ namespace JobPosting.Controllers
         private JBEntities db = new JBEntities();
 
         // GET: Positions
-        public ActionResult Index()
+        public ActionResult Index(int? Location, int? PaymentTypeID,string SearchPosCode,int? UnionID, int? JobGroupID, string SearchSalLower, string SearchSalHigher)
         {
+            PopulateDropdownList();
             var positions = db.Positions.Include(p => p.JobGroup).Include(p => p.Union);
             ViewBag.JobRequirements = db.JobRequirements.OrderBy(a => a.QualificationID);
             ViewBag.JobLocations = db.JobLocations.OrderBy(a => a.LocationID);
-            return View(positions.ToList());
+
+            if (UnionID.HasValue)
+            {
+                positions = positions.Where(u => u.UnionID == UnionID);
+
+            }
+            if (JobGroupID.HasValue)
+            {
+                positions = positions.Where(u => u.JobGroupID == JobGroupID);
+
+            }
+            if (PaymentTypeID.HasValue)
+            {
+                positions = positions.Where(u => u.PositionCompensationType == PaymentTypeID);
+            }
+
+            if (PaymentTypeID.HasValue)
+            {
+                positions = positions.Where(u => u.PositionCompensationType == PaymentTypeID);
+            }
+
+            if (Location.HasValue)
+            {
+             //   var positionID = db.JobLocations.Where(j => j.LocationID == Location).Select(p => p.PositionID).ToArray();
+             //   positions = positions.Where(p => p.ID.Equals( new {positionID}));
+            }
+
+
+            if (!String.IsNullOrEmpty(SearchPosCode))
+            {
+                positions = positions.Where(p => p.PositionCode.ToUpper().Contains(SearchPosCode.ToUpper()));
+            }
+
+            if (!String.IsNullOrEmpty(SearchSalLower))
+            {
+                decimal salary = 0;
+                if(decimal.TryParse(SearchSalLower,out salary))
+                {
+                    positions = positions.Where(p => p.PositionSalary >= salary);
+                }
+                
+            }
+            if (!String.IsNullOrEmpty(SearchSalHigher))
+            {
+                decimal salary = 0;
+                if (decimal.TryParse(SearchSalHigher, out salary))
+                {
+                    positions = positions.Where(p => p.PositionSalary <= salary);
+                }
+
+            }
+
+
+
+
+                return View(positions.ToList());
         }
 
         // GET: Positions/Details/5
@@ -434,6 +490,8 @@ namespace JobPosting.Controllers
         {
             ViewBag.JobGroupID = new SelectList(db.JobGroups.OrderBy(j => j.GroupTitle), "ID", "GroupTitle", Position?.JobGroupID);
             ViewBag.UnionID = new SelectList(db.Unions.OrderBy(u => u.UnionName), "ID", "UnionName", Position?.UnionID);
+            ViewBag.Location = new SelectList(db.Locations.OrderBy(l => l.Address), "ID", "Address");
+
         }
 
         private void PopulateQualification()

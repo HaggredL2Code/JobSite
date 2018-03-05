@@ -135,7 +135,7 @@ namespace JobPosting.DAL.JBMigrations
             var positions = new List<Position>
                         {
                             new Position { UnionID = (context.Unions.Where(p=>p.UnionName == "Opseu 250").SingleOrDefault().ID),  JobGroupID=(context.JobGroups.Where(p=>p.GroupTitle == "Teacher").SingleOrDefault().ID),
-                             PositionSalary = 10000, PositionDescription = "basically this is a english teaching job", PositionFTE = 1, PositionCode = "10330",
+                             PositionSalary = 10000, PositionDescription = "English Teaching 3rd Grade", PositionFTE = 1, PositionCode = "10330",
                              PositionCompensationType = 1, Days = new List<Day>
                                                                 {
                                                                     new Day { dayName = "Monday", dayOrder = 1},
@@ -147,7 +147,7 @@ namespace JobPosting.DAL.JBMigrations
                         },
 
                             new Position { UnionID = (context.Unions.Where(p=>p.UnionName == "Opseu 270").SingleOrDefault().ID),  JobGroupID=(context.JobGroups.Where(p=>p.GroupTitle == "Technical Support").SingleOrDefault().ID),
-                             PositionSalary = 15000, PositionDescription = "basically this is a IT guy job", PositionFTE = 1, PositionCode = "10331",
+                             PositionSalary = 15000, PositionDescription = "IT Systems Management", PositionFTE = 1, PositionCode = "10331",
                              PositionCompensationType = 1, Days = new List<Day>
                                                                 {
                                                                     new Day { dayName = "Saturday", dayOrder = 6},

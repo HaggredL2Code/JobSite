@@ -482,3 +482,4 @@ E:\Jobsite1\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.DAL.Securitymigra
 E:\Jobsite1\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.csproj.GenerateResource.Cache
 E:\Jobsite1\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.dll
 E:\Jobsite1\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.pdb
+C:\Users\Administrator\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.DAL.Securitymigrations.InitialCreate.resources
