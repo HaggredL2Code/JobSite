@@ -112,7 +112,7 @@
             Upload Resumes/Letters:
         </label>
         <div class="col-md-10">
-            <input type="file" class="" name="theFiles" multiple="multiple" /><br />
+            <input type="file" class="" name="theFiles" id="theFiles" multiple="multiple" /><br />
         </div>
     </div>
 
@@ -165,33 +165,60 @@
 
         <p id="test">abc</p>
         <script src="~/Scripts/jquery-1.10.2.js"></script>
-        <script>
+        <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+        <script type="text/javascript">
             $(document).ready(function () {
                 var ApplicationsCart = [];
+
                 if (sessionStorage.getItem("ApplicationsCart") != null) {
                     ApplicationsCart = JSON.parse(sessionStorage.getItem("ApplicationsCart"));
                 }
+
+                //preprocessing file
                 var selectedQualification = [];
                 var count = 0;
-                
+                var control = document.getElementById("theFiles");
+                var resume = [];
+                $("#theFiles").change(function (e) {
+                    var files = control.files;
+                    resume = [];
+                    var fileInfo;
+                    for (var i = 0; i < files.length; i++) {
+                        var file = new Blob([files[i]]);
+                        fileInfo = files[i];
+                        var r = new FileReader();
+                        r.readAsArrayBuffer(file);
+                        r.onload = function () {
+                            var arrayBuffer = this.result,
+                                bytes = new Uint8Array(arrayBuffer);
+                            console.log(bytes);
+                            resume.push({
+                                fileName: fileInfo.name,
+                                content: bytes,
+                                mimeType: fileInfo.type
+                            });
+                            console.log(resume);
+                        };
+                    }
+                });
                 $("#btnAddToCart").click(function () {
                     $("#selectedQualification:checked").each(function (e) {
                         selectedQualification.push($(this).val());
                     })
-
+                    
                     ApplicationsCart.push({
                         Priority: $("#Priority").val(),
                         PostingID: $("#PostingID").val(),
                         ApplicantID: $("#ApplicantID").val(),
-                        selectedQualification: selectedQualification
-                        
-                    })
+                        selectedQualification: selectedQualification,
+                        Resume: resume
 
+                    });
+
+                    console.log(ApplicationsCart);
 
                     var jsonStr = JSON.stringify(ApplicationsCart);
                     sessionStorage.setItem("ApplicationsCart", jsonStr);
-                    
-                    
 
                     var cartValue = sessionStorage.getItem("ApplicationsCart");
                     var cartObj = JSON.parse(cartValue);
@@ -203,14 +230,12 @@
                         //$("#test").text("ApplicantID: " + e.ApplicantID + " PostingID: " + e.PostingID + " Priority: " + e.Priority + " SelecctedQualification: " + e.selectedQualification);
                         $("#test").text(count)
                     })
-                    
+
                 });
-                
-                
+
+
             }
             )
-
-            
 
         </script>
     </div>
