@@ -51,19 +51,19 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Position.PositionCompensationType)
+            @Html.DisplayNameFor(model => model.pstCompensationType)
         </dt>
 
         <dd>
-            @if (Model.Position.PositionCompensationType == 1)
+            @if (Model.pstCompensationType == 1)
             {
                 @: Hourly
             }
-            else if (Model.Position.PositionCompensationType == 2)
+            else if (Model.pstCompensationType == 2)
             {
                 @:Monthly
             }
-            else if (Model.Position.PositionCompensationType == 3)
+            else if (Model.pstCompensationType == 3)
             {
                 @:Yearly
             }

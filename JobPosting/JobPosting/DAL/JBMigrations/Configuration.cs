@@ -135,11 +135,11 @@ namespace JobPosting.DAL.JBMigrations
             var positions = new List<Position>
                         {
                             new Position { UnionID = (context.Unions.Where(p=>p.UnionName == "Opseu 250").SingleOrDefault().ID),  JobGroupID=(context.JobGroups.Where(p=>p.GroupTitle == "Teacher").SingleOrDefault().ID),
-                             PositionDescription = "basically this is a english teaching job", PositionCode = "10330", PositionCompensationType = 1
+                             PositionDescription = "basically this is a english teaching job", PositionCode = "10330"
                         },
 
                             new Position { UnionID = (context.Unions.Where(p=>p.UnionName == "Opseu 270").SingleOrDefault().ID),  JobGroupID=(context.JobGroups.Where(p=>p.GroupTitle == "Technical Support").SingleOrDefault().ID),
-                                PositionDescription = "basically this is a IT guy job", PositionCode = "10331", PositionCompensationType = 1
+                                PositionDescription = "basically this is a IT guy job", PositionCode = "10331"
                         }
                         };
             positions.ForEach(a => context.Positions.AddOrUpdate(n => n.PositionCode, a));
@@ -149,16 +149,16 @@ namespace JobPosting.DAL.JBMigrations
                         {
                              new Posting { pstNumPosition = 1, pstEndDate = DateTime.Parse("2019-11-15")
                            , pstJobDescription = "this job will take all the skills of teaching and more as the Vice Principle you are required to" +
-                            "look into many different fields of the school...", PositionID=1, pstFTE = 1.0m, pstSalary = 15.00m, Days = new List<Day>
-                                                                                                {
-                                                                                                    new Day { dayName = "Monday", dayOrder = 1},
-                                                                                                    new Day { dayName = "Tuesday", dayOrder = 2},
-                                                                                                    new Day { dayName = "Wednesday", dayOrder = 3},
-                                                                                                    new Day { dayName = "Thursday", dayOrder = 4},
-                                                                                                    new Day { dayName = "Friday", dayOrder = 5},
-                                                                                                    new Day { dayName = "Saturday", dayOrder = 6},
-                                                                                                    new Day { dayName = "Sunday", dayOrder = 7}
-                                                                                                }}
+                            "look into many different fields of the school...", PositionID=1, pstFTE = 1.0m, pstSalary = 15.00m, pstCompensationType = 1, Days = new List<Day>
+                                                                                                                                                            {
+                                                                                                                                                                new Day { dayName = "Monday", dayOrder = 1},
+                                                                                                                                                                new Day { dayName = "Tuesday", dayOrder = 2},
+                                                                                                                                                                new Day { dayName = "Wednesday", dayOrder = 3},
+                                                                                                                                                                new Day { dayName = "Thursday", dayOrder = 4},
+                                                                                                                                                                new Day { dayName = "Friday", dayOrder = 5},
+                                                                                                                                                                new Day { dayName = "Saturday", dayOrder = 6},
+                                                                                                                                                                new Day { dayName = "Sunday", dayOrder = 7}
+                                                                                                                                                            }}
                         };
             postings.ForEach(a => context.Postings.AddOrUpdate(n => n.ID, a));
             SaveChanges(context);

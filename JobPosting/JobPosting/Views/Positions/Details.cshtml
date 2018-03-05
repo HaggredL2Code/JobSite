@@ -1,0 +1,51 @@
+﻿@model JobPosting.Models.Position
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Position</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.JobGroup.GroupTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.JobGroup.GroupTitle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Union.UnionName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Union.UnionName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PositionCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PositionCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PositionDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PositionDescription)
+        </dd>
+
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -36,7 +36,7 @@
                     Locations
                 </dt>
 
-                foreach (var a in posting.Position.JobLocations)
+                foreach (var a in posting.JobLocations)
                 {
                     <dd>
                         @Html.DisplayFor(aItem => a.Location.Address)
@@ -45,21 +45,21 @@
                 <dt>
                     Qualifications
                 </dt>
-                foreach (var q in posting.Position.JobRequirements)
+                foreach (var q in posting.JobRequirements)
                 {
                     <dd>
                         @Html.DisplayFor(qItem => q.Qualification.QlfDescription)
                     </dd>
                 }
                 <dt>
-                    @Html.DisplayNameFor(lItem => posting.Position.PositionCompensationType)
+                    @Html.DisplayNameFor(lItem => posting.pstCompensationType)
                 </dt>
                 <dd>
-                    @if (posting.Position.PositionCompensationType == 1)
+                    @if (posting.pstCompensationType == 1)
                     {
                         @: Hourly
                     }
-                    else if (posting.Position.PositionCompensationType == 2)
+                    else if (posting.pstCompensationType == 2)
                     {
                         @: Monthly
                     }
@@ -84,17 +84,17 @@
                 </dd>
 
                 <dt>
-                    @Html.DisplayNameFor(lItem => posting.Position.PositionFTE)
+                    @Html.DisplayNameFor(lItem => posting.pstFTE)
                 </dt>
                 <dd>
-                    @Html.DisplayFor(lItem => posting.Position.PositionFTE)
+                    @Html.DisplayFor(lItem => posting.pstFTE)
                 </dd>
 
                 <dt>
-                    @Html.DisplayNameFor(lItem => posting.Position.PositionSalary)
+                    @Html.DisplayNameFor(lItem => posting.pstSalary)
                 </dt>
                 <dd>
-                    @Html.DisplayFor(lItem => posting.Position.PositionSalary)
+                    @Html.DisplayFor(lItem => posting.pstSalary)
                 </dd>
 
 

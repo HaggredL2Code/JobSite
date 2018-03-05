@@ -41,6 +41,11 @@ namespace JobPosting.Models
         [DataType(DataType.Currency)]
         public decimal pstSalary { get; set; }
 
+        [Display(Name = "Job Compensation Type")]
+        [Required(ErrorMessage = "Job Compensation Type is required.")]
+        [Range(1, 3, ErrorMessage = "Invalid Job Compensation Type.")]
+        public Int16 pstCompensationType { get; set; }
+
         //Job Description is used to tell the Applicant that
         //what the applicant will do in that particular job.
         [Display(Name = "Job Description")]

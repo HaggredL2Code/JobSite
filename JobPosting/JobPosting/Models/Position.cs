@@ -45,10 +45,10 @@ namespace JobPosting.Models
 
         //int 1-3 correspond to Hourly, Monthly, Yearly
         //In the View will need to manually create DropDown List
-        [Display(Name = "Job Compensation Type")]
-        [Required(ErrorMessage = "Job Compensation Type is required.")]
-        [Range(1,3, ErrorMessage = "Invalid Job Compensation Type.")]
-        public Int16 PositionCompensationType { get; set; }
+        //[Display(Name = "Job Compensation Type")]
+        //[Required(ErrorMessage = "Job Compensation Type is required.")]
+        //[Range(1,3, ErrorMessage = "Invalid Job Compensation Type.")]
+        //public Int16 PositionCompensationType { get; set; }
 
 
         [Required(ErrorMessage = "You have to specify the Job Group.")]

@@ -67,7 +67,7 @@ namespace JobPosting.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin, Manager, Hiring Team")]
-        public ActionResult Create([Bind(Include = "ID,pstNumPosition,pstFTE,pstSalary,pstJobDescription,pstOpenDate,pstEndDate,PositionID,CreatedBy,CreatedOn,UpdatedBy,UpdatedOn,RowVersion")] Posting posting, string[] selectedQualification, string[] selectedDay, string[] selectedLocation)
+        public ActionResult Create([Bind(Include = "ID,pstNumPosition,pstFTE,pstSalary,pstCompensationType,pstJobDescription,pstOpenDate,pstEndDate,PositionID,CreatedBy,CreatedOn,UpdatedBy,UpdatedOn,RowVersion")] Posting posting, string[] selectedQualification, string[] selectedDay, string[] selectedLocation)
         {
             try
             {
@@ -193,7 +193,7 @@ namespace JobPosting.Controllers
                 }
             }
             if (TryUpdateModel(postingToUpdate, "",
-                new string[] { "pstNumPosition","pstFTE", "pstSalary", "pstJobDescription", "pstOpenDate", "pstEndDate", "PositionID" }))
+                new string[] { "pstNumPosition","pstFTE", "pstSalary", "pstCompensationType", "pstJobDescription", "pstOpenDate", "pstEndDate", "PositionID" }))
             {
                 try
                 {
