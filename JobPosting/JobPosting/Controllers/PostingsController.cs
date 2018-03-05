@@ -19,9 +19,15 @@ namespace JobPosting.Controllers
         private JBEntities db = new JBEntities();
 
         // GET: Postings
-        public ActionResult Index()
+        public ActionResult Index(string SearchString)
         {
             var postings = db.Postings.Include(p => p.Position);
+
+            if (!String.IsNullOrEmpty(SearchString))
+            {
+                postings = postings.Where(u => u.Position.PositionCode.ToUpper().Contains(SearchString.ToUpper()));
+            }
+
             return View(postings.ToList());
         }
 

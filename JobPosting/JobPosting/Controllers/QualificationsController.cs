@@ -17,9 +17,18 @@ namespace JobPosting.Controllers
         private JBEntities db = new JBEntities();
 
         // GET: Qualifications
-        public ActionResult Index()
+        public ActionResult Index(string SearchString)
         {
-            return View(db.Qualification.ToList());
+
+            var qualifications = db.Qualification.Include(a => a.JobRequirements);
+
+            if (!String.IsNullOrEmpty(SearchString))
+            {
+                qualifications = qualifications.Where(u => u.QlfDescription.ToUpper().Contains(SearchString.ToUpper()));
+            }
+
+
+            return View(qualifications.ToList());
         }
 
         // GET: Qualifications/Details/5

@@ -9,6 +9,16 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+@using (Html.BeginForm())
+{
+    <p>
+    Select By Union Name:  @Html.TextBox("SearchString", null, new {@class = "form-control" }) <br>
+    <input type="submit" value="Filter" class="btn btn-default"/>
+    @Html.ActionLink("Clear", "Index")
+    </p>
+
+}
+
 <table class="table">
     <tr>
         <th>

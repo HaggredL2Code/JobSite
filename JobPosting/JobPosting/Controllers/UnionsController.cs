@@ -17,9 +17,17 @@ namespace JobPosting.Controllers
         private JBEntities db = new JBEntities();
 
         // GET: Unions
-        public ActionResult Index()
+        public ActionResult Index(string SearchString)
         {
-            return View(db.Unions.ToList());
+
+            var unions = db.Unions.Include(a=>a.Positions);
+
+            if (!String.IsNullOrEmpty(SearchString))
+            {
+                unions = unions.Where(u => u.UnionName.ToUpper().Contains(SearchString.ToUpper()));
+            }
+
+            return View(unions.ToList());
         }
 
         // GET: Unions/Details/5
