@@ -445,6 +445,7 @@ namespace JobPosting.Controllers
             }
             ViewBag.JobRequirements = db.JobRequirements.Where(j => j.PostingID == id).OrderBy(a => a.QualificationID);
             ViewBag.JobLocations = db.JobLocations.Where(jl => jl.PostingID == id);
+            ViewBag.PostingSkills = db.PostingSkills.Where(ps => ps.PostingID == id);
             return View(posting);
         }
 
@@ -467,6 +468,7 @@ namespace JobPosting.Controllers
             }
             ViewBag.JobRequirements = db.JobRequirements.Where(j => j.PostingID == id).OrderBy(a => a.QualificationID);
             ViewBag.JobLocations = db.JobLocations.Where(jl => jl.PostingID == id);
+            ViewBag.PostingSkills = db.PostingSkills.Where(ps => ps.PostingID == id);
 
             return View(posting);
         }

@@ -71,6 +71,60 @@
         </dd>
 
         <dt>
+            Location
+        </dt>
+
+        <dd>
+            @{
+                IEnumerable<JobPosting.Models.JobLocation> jobLocations = ViewBag.JobLocations;
+                foreach (var l in jobLocations)
+                {
+                @: @Html.DisplayFor(lModel => l.Location.Address) <br />
+            }
+            }
+        </dd>
+
+        <dt>
+            Day of Work
+        </dt>
+
+        <dd>
+            @foreach (var d in Model.Days)
+            {
+            @: @Html.DisplayFor(dModel => d.dayName) <br />
+            }
+        </dd>
+
+
+        <dt>
+            Requirements
+        </dt>
+
+        <dd>
+            @{
+                IEnumerable<JobPosting.Models.JobRequirement> jobRequirements = ViewBag.JobRequirements;
+                foreach (var r in jobRequirements)
+                {
+                @: @Html.DisplayFor(rModel => r.Qualification.QlfDescription) <br />
+        }
+            }
+        </dd>
+
+        <dt>
+            Skills
+        </dt>
+
+        <dd>
+            @{ 
+                IEnumerable<JobPosting.Models.PostingSkill> postingSkills = ViewBag.PostingSkills;
+                foreach (var s in postingSkills)
+                {
+                    @: @Html.DisplayFor(sModel => s.Skill.SkillDescription) <br />
+                }
+            }
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.pstOpenDate)
         </dt>
 
