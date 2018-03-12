@@ -13,6 +13,7 @@ namespace JobPosting.Models
         public Posting() {
             this.Applications = new HashSet<Application>();
             this.JobRequirements = new HashSet<JobRequirement>();
+            this.PostingSkills = new HashSet<PostingSkill>();
             this.JobLocations = new HashSet<JobLocation>();
             this.Days = new HashSet<Day>();
         }
@@ -80,6 +81,8 @@ namespace JobPosting.Models
         public virtual ICollection<Application> Applications { get; set; }
 
         public virtual ICollection<JobRequirement> JobRequirements { get; set; }
+
+        public virtual ICollection<PostingSkill> PostingSkills { get; set; }
 
         public virtual ICollection<JobLocation> JobLocations { get; set; }
 

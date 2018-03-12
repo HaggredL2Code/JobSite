@@ -42,6 +42,7 @@ namespace JobPosting.Controllers
             }
             ViewBag.JobRequirements = db.JobRequirements.Where(j => j.PostingID == id);
             ViewBag.JobLocations = db.JobLocations.Where(jl => jl.PostingID == id);
+            ViewBag.PostingSkills = db.PostingSkills.Where(ps => ps.PostingID == id);
             return View(posting);
         }
 
@@ -55,11 +56,12 @@ namespace JobPosting.Controllers
             PopulateDropdownList();
             PopulateQualification();
             ViewBag.Locations = db.Locations;
+            ViewBag.Skills = db.Skills;
             PopulateAssignedDay(posting);
             return View();
         }
 
-        
+
 
         // POST: Postings/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -67,7 +69,7 @@ namespace JobPosting.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin, Manager, Hiring Team")]
-        public ActionResult Create([Bind(Include = "ID,pstNumPosition,pstFTE,pstSalary,pstCompensationType,pstJobDescription,pstOpenDate,pstEndDate,PositionID,CreatedBy,CreatedOn,UpdatedBy,UpdatedOn,RowVersion")] Posting posting, string[] selectedQualification, string[] selectedDay, string[] selectedLocation)
+        public ActionResult Create([Bind(Include = "ID,pstNumPosition,pstFTE,pstSalary,pstCompensationType,pstJobDescription,pstOpenDate,pstEndDate,PositionID,CreatedBy,CreatedOn,UpdatedBy,UpdatedOn,RowVersion")] Posting posting, string[] selectedQualification, string[] selectedDay, string[] selectedLocation, string[] selectedSkill)
         {
             try
             {
@@ -103,6 +105,18 @@ namespace JobPosting.Controllers
                         db.JobLocations.Add(jobLocation);
 
                     }
+                    foreach (var s in selectedSkill)
+                    {
+                        var skillToAdd = db.Skills.Find(int.Parse(s));
+                        PostingSkill postingSkill = new PostingSkill
+                        {
+                            Posting = posting,
+                            Skill = skillToAdd,
+                            PostingID = posting.ID,
+                            SkillID = skillToAdd.ID
+                        };
+                        db.PostingSkills.Add(postingSkill);
+                    }
                     foreach (var d in selectedDay)
                     {
                         var dayToAdd = db.Days.Find(int.Parse(d));
@@ -137,7 +151,11 @@ namespace JobPosting.Controllers
                 }
             }
 
+            PopulateQualification();
+            ViewBag.Locations = db.Locations;
+            ViewBag.Skills = db.Skills;
             PopulateDropdownList(posting);
+            PopulateAssignedDay(posting);
             return View(posting);
         }
 
@@ -157,11 +175,13 @@ namespace JobPosting.Controllers
             PopulateDropdownList(posting);
             PopulateQualification();
             ViewBag.Locations = db.Locations;
+            ViewBag.Skills = db.Skills;
             PopulateAssignedDay(posting);
 
             int realID = id.Value;
             ViewBag.JobRequirements = db.JobRequirements.Where(j => j.PostingID == realID).ToList();
             ViewBag.JobLocations = db.JobLocations.Where(jl => jl.PostingID == realID).ToList();
+            ViewBag.PostingSkills = db.PostingSkills.Where(ps => ps.PostingID == id);
             return View(posting);
         }
 
@@ -171,7 +191,7 @@ namespace JobPosting.Controllers
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin, Manager, Hiring Team")]
-        public ActionResult EditPost(int? id, Byte[] rowVersion, string[] selectedQualification, string[] selectedDay, string[] selectedLocation)
+        public ActionResult EditPost(int? id, Byte[] rowVersion, string[] selectedQualification, string[] selectedDay, string[] selectedLocation, string[] selectedSkill)
         {
             int realID;
             if (id == null)
@@ -202,6 +222,7 @@ namespace JobPosting.Controllers
                         UpdatePositionQualification(selectedQualification, realID, postingToUpdate);
                         UpdatePositionDay(selectedDay, postingToUpdate);
                         UpdateLocation(selectedLocation, realID, postingToUpdate);
+                        UpdateSkill(selectedSkill, realID, postingToUpdate);
                         db.Entry(postingToUpdate).OriginalValues["RowVersion"] = rowVersion;
                         db.SaveChanges();
                         return RedirectToAction("Index");
@@ -246,6 +267,45 @@ namespace JobPosting.Controllers
             ViewBag.JobRequirements = db.JobRequirements.Where(j => j.PostingID == realID);
             ViewBag.JobLocations = db.JobLocations.Where(l => l.PostingID == realID);
             return View(postingToUpdate);
+        }
+
+        private void UpdateSkill(string[] selectedSkill, int id, Posting postingToUpdate)
+        {
+            if (selectedSkill == null)
+            {
+                postingToUpdate.PostingSkills = new List<PostingSkill>();
+                return;
+            }
+            var selectedSkillHS = new HashSet<string>(selectedSkill);
+            var postingSkills = new HashSet<int>(db.PostingSkills.Where(s => s.PostingID == id).Select(s => s.SkillID));
+            foreach (var s in db.Skills)
+            {
+                var SkillToUpdate = db.Skills.Find(s.ID);
+                PostingSkill postingSkill = new PostingSkill
+                {
+                    Posting = postingToUpdate,
+                    PostingID = id,
+                    Skill = SkillToUpdate,
+                    SkillID = s.ID
+                };
+                if (selectedSkillHS.Contains(s.ID.ToString()))
+                {
+                    if (!postingSkills.Contains(s.ID))
+                    {
+                        db.PostingSkills.Add(postingSkill);
+                    }
+                }
+                else
+                {
+                    if (postingSkills.Contains(s.ID))
+                    {
+                        var selectedItem = (from i in db.PostingSkills
+                                            where i.PostingID == id & i.SkillID == s.ID
+                                            select i).Single();
+                        db.PostingSkills.Remove(selectedItem);
+                    }
+                }
+            }
         }
 
         private void UpdateLocation(string[] selectedLocation, int id, Posting postingToUpdate)

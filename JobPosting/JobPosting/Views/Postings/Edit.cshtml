@@ -88,7 +88,7 @@
     </div>
 
     <div class="form-group">
-            <label class="control-label col-md-2">Requirements</label>
+            <label class="control-label col-md-2">Locations</label>
             <div class="col-md-offset-2 col-md-10">
                 <table>
                     <tr>
@@ -180,6 +180,42 @@
                                            value="@q.ID"
                                             @(Html.Raw(Assigned2 ? "checked=\"checked\"" : "")) />
                                     @q.QlfDescription @:&nbsp;&nbsp;
+                                    @:</td>
+                            }
+                            @:</tr>
+                        }
+                    </table>
+                </div>
+            </div>
+
+     <div class="form-group">
+            <label class="control-label col-md-2">Requirements</label>
+            <div class="col-md-offset-2 col-md-10">
+                <table>
+                    <tr>
+                        @{
+                            int cnt3 = 0;
+                            IEnumerable<JobPosting.Models.PostingSkill> postingSkills = ViewBag.PostingSkills;
+                            List<int> skillList = new List<int>();
+                            foreach (var s in postingSkills.Select(p => p.SkillID))
+                            {
+                                skillList.Add(s);
+                            }
+                            bool Assigned3 = false;
+                            foreach (var s in ViewBag.Skills)
+                            {
+                                Assigned3 = (skillList.Contains(s.ID)) ? true : false;
+
+                                if (cnt3++ % 3 == 0)
+                                {
+                                    @:</tr><tr>
+                                }
+                                @:<td>
+                                    <input type="checkbox"
+                                           name="selectedQualification"
+                                           value="@s.ID"
+                                            @(Html.Raw(Assigned2 ? "checked=\"checked\"" : "")) />
+                                    @s.SkillDescription @:&nbsp;&nbsp;
                                     @:</td>
                             }
                             @:</tr>

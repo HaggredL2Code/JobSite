@@ -121,6 +121,20 @@
         </dd>
 
         <dt>
+            Skills
+        </dt>
+
+        <dd>
+            @{ 
+                IEnumerable<JobPosting.Models.PostingSkill> postingSkills = ViewBag.PostingSkills;
+                foreach (var s in postingSkills)
+                {
+                    @: @Html.DisplayFor(sModel => s.Skill.SkillDescription) <br />
+                }
+            }
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.pstOpenDate)
         </dt>
 

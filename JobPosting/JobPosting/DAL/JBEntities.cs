@@ -32,6 +32,9 @@ namespace JobPosting.DAL
         public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<Day> Days { get; set; }
         public DbSet<BinaryFile> BinaryFiles { get; set; }
+        public DbSet<Skill> Skills { get; set; }
+        public DbSet<ApplicationSkill> ApplicationSkills { get; set; }
+        public DbSet<PostingSkill> PostingSkills { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -63,6 +66,11 @@ namespace JobPosting.DAL
                 .WithRequired(p => p.Posting)
                 .WillCascadeOnDelete(true);
 
+            modelBuilder.Entity<Posting>()
+                .HasMany(ps => ps.PostingSkills)
+                .WithRequired(p => p.Posting)
+                .WillCascadeOnDelete(true);
+
             //modelBuilder.Entity<Posting>()
             //    .HasMany(pos => pos.Applications)
             //    .WithRequired(p => p.Posting)
@@ -80,6 +88,11 @@ namespace JobPosting.DAL
 
             modelBuilder.Entity<Application>()
                 .HasMany(a => a.ApplicationsQualifications)
+                .WithRequired(p => p.Application)
+                .WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<Application>()
+                .HasMany(a => a.ApplicationSkills)
                 .WithRequired(p => p.Application)
                 .WillCascadeOnDelete(true);
 
