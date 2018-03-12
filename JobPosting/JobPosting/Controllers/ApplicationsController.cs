@@ -21,6 +21,12 @@ namespace JobPosting.Controllers
         public ActionResult Index()
         {
             IQueryable<Application> applications = db.Applications.Include(a => a.Applicant).Include(a => a.Posting).Include(a => a.BinaryFiles);
+
+
+
+
+
+
             return View(applications.ToList());
         }
 

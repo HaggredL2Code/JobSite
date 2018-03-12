@@ -31,6 +31,7 @@ namespace JobPosting.Controllers
                 positions = positions.Where(u => u.UnionID == UnionID);
 
             }
+
             if (JobGroupID.HasValue)
             {
                 positions = positions.Where(u => u.JobGroupID == JobGroupID);
