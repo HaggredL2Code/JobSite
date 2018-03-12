@@ -51,7 +51,6 @@ namespace JobPosting.Controllers
                            where p.ID == id
                            select p).ToList().SingleOrDefault();
             var applicant = db.Applicants.Where(a => a.apEMail == User.Identity.Name).Select(a => a.ID).SingleOrDefault();
-            var applicantID = User.Identity.Name
 
             
 
