@@ -308,6 +308,26 @@ namespace JobPosting.DAL.JBMigrations
                 .PrimaryKey(t => t.ID);
             
             CreateTable(
+                "dbo.PostingTemplate",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        pstNumPosition = c.Int(nullable: false),
+                        pstFTE = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        pstSalary = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        pstCompensationType = c.Short(nullable: false),
+                        pstJobDescription = c.String(),
+                        pstOpenDate = c.DateTime(nullable: false),
+                        pstEndDate = c.DateTime(nullable: false),
+                        PositionID = c.Int(nullable: false),
+                        RequirementIDs = c.String(),
+                        SkillIDs = c.String(),
+                        LocationIDs = c.String(),
+                        dayIDs = c.String(),
+                    })
+                .PrimaryKey(t => t.ID);
+            
+            CreateTable(
                 "dbo.DayPosting",
                 c => new
                     {
@@ -378,6 +398,7 @@ namespace JobPosting.DAL.JBMigrations
             DropIndex("dbo.Applicant", new[] { "UserRoleID" });
             DropIndex("dbo.Applicant", "IX_Unique_Email");
             DropTable("dbo.DayPosting");
+            DropTable("dbo.PostingTemplate");
             DropTable("dbo.Archive");
             DropTable("dbo.FileContentTemp");
             DropTable("dbo.BinaryFileTemp");

@@ -2,13 +2,25 @@
 
 @{
     ViewBag.Title = "Index";
+    var Positions = ViewBag.Positions;
 }
 
 <h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<ul>
+    <li class="dropdown">
+        <a href="#" data-toggle="dropdown" class="dropdown-toggle">Create New - Menu<b class="caret"></b></a>
+        <ul class="dropdown-menu">
+            <li>@Html.ActionLink("Create New", "Create")</li>
+            @foreach (var p in Positions)
+            {
+                string positionName = p.PositionDescription;
+                <li class="divider"></li>
+                <li>@Html.ActionLink("Follow " + positionName, "Create", new { id = p.ID })</li>
+            }
+        </ul>
+    </li>
+</ul>
 <table class="table">
     <tr>
         <th>

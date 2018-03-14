@@ -35,6 +35,7 @@ namespace JobPosting.DAL
         public DbSet<Skill> Skills { get; set; }
         public DbSet<ApplicationSkill> ApplicationSkills { get; set; }
         public DbSet<PostingSkill> PostingSkills { get; set; }
+        public DbSet<PostingTemplate> PostingTemplates { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

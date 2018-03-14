@@ -246,6 +246,13 @@ namespace JobPosting.DAL.JBMigrations
             applicationSkills.ForEach(a => context.ApplicationSkills.AddOrUpdate(n => new { n.ApplicationId, n.skillID }, a));
             SaveChanges(context);
 
+
+            //var postingTemplate = new List<PostingTemplate>
+            //{
+
+            //    new PostingTemplate { RequirementIDs = "1,2,3"  }
+            //};
+
             //var applicationsCart = new List<ApplicationCart>
             //            {
             //                new ApplicationCart { PostingID = 1,  ApplicantID=(context.Applicants.Where(p=>p.apEMail == "testuser@hotmail.com").SingleOrDefault().ID), Priority = 2},

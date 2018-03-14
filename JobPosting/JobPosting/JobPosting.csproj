@@ -189,6 +189,7 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Code\ConvertStringToArray.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApplicantsController.cs" />
     <Compile Include="Controllers\ApplicationCartsController.cs" />
@@ -204,9 +205,9 @@
     <Compile Include="Controllers\UnionsController.cs" />
     <Compile Include="DAL\ApplicationDbContext.cs" />
     <Compile Include="DAL\JBEntities.cs" />
-    <Compile Include="DAL\JBMigrations\201803120203249_InitialCreate.cs" />
-    <Compile Include="DAL\JBMigrations\201803120203249_InitialCreate.Designer.cs">
-      <DependentUpon>201803120203249_InitialCreate.cs</DependentUpon>
+    <Compile Include="DAL\JBMigrations\201803141553022_InitialCreate.cs" />
+    <Compile Include="DAL\JBMigrations\201803141553022_InitialCreate.Designer.cs">
+      <DependentUpon>201803141553022_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="DAL\JBMigrations\Configuration.cs" />
     <Compile Include="DAL\SecurityMigrations\201803011756159_InitialCreate.cs" />
@@ -239,6 +240,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Posting.cs" />
     <Compile Include="Models\PostingSkill.cs" />
+    <Compile Include="Models\PostingTemplate.cs" />
     <Compile Include="Models\Qualification.cs" />
     <Compile Include="Models\Skill.cs" />
     <Compile Include="Models\Union.cs" />
@@ -247,6 +249,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\DayVM.cs" />
     <Compile Include="ViewModels\ApplicationVM.cs" />
+    <Compile Include="ViewModels\PostingTemplateVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Commands.txt" />
@@ -374,8 +377,8 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="DAL\JBMigrations\201803120203249_InitialCreate.resx">
-      <DependentUpon>201803120203249_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="DAL\JBMigrations\201803141553022_InitialCreate.resx">
+      <DependentUpon>201803141553022_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DAL\SecurityMigrations\201803011756159_InitialCreate.resx">
       <DependentUpon>201803011756159_InitialCreate.cs</DependentUpon>
