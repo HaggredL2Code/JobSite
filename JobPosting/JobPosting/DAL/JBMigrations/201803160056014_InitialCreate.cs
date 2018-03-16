@@ -100,6 +100,7 @@ namespace JobPosting.DAL.JBMigrations
                         pstJobDescription = c.String(nullable: false),
                         pstOpenDate = c.DateTime(nullable: false),
                         pstEndDate = c.DateTime(nullable: false),
+                        Enabled = c.Boolean(nullable: false),
                         PositionID = c.Int(nullable: false),
                         CreatedBy = c.String(maxLength: 256),
                         CreatedOn = c.DateTime(),
@@ -312,6 +313,7 @@ namespace JobPosting.DAL.JBMigrations
                 c => new
                     {
                         ID = c.Int(nullable: false, identity: true),
+                        templateName = c.String(maxLength: 255),
                         pstNumPosition = c.Int(nullable: false),
                         pstFTE = c.Decimal(nullable: false, precision: 18, scale: 2),
                         pstSalary = c.Decimal(nullable: false, precision: 18, scale: 2),
@@ -325,7 +327,8 @@ namespace JobPosting.DAL.JBMigrations
                         LocationIDs = c.String(),
                         dayIDs = c.String(),
                     })
-                .PrimaryKey(t => t.ID);
+                .PrimaryKey(t => t.ID)
+                .Index(t => t.templateName, unique: true, name: "IX_Unique_Name");
             
             CreateTable(
                 "dbo.DayPosting",
@@ -368,6 +371,7 @@ namespace JobPosting.DAL.JBMigrations
             DropForeignKey("dbo.Application", "PostingID", "dbo.Posting");
             DropIndex("dbo.DayPosting", new[] { "Posting_ID" });
             DropIndex("dbo.DayPosting", new[] { "Day_ID" });
+            DropIndex("dbo.PostingTemplate", "IX_Unique_Name");
             DropIndex("dbo.FileContentTemp", new[] { "FileContentTempID" });
             DropIndex("dbo.BinaryFileTemp", new[] { "ApplicationCartID" });
             DropIndex("dbo.UserRole", "IX_Unique_Role");

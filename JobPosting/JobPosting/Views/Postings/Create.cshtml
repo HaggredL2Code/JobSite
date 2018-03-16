@@ -65,6 +65,17 @@
             }
             console.log(count);
         });
+
+        $("#SavedAsTemplate").change(function () {
+            if (this.checked) {
+                $("#templateName").toggle("slow");
+                $("#lblTemplate").toggle("slow");
+            }
+            else {
+                $("#templateName").toggle("slow");
+                $("#lblTemplate").toggle("slow");
+            }
+        });
     });
 </script>
 
@@ -363,13 +374,10 @@
                     </table>
                 </div>
         </div>
-        @if (!ViewBag.Flag)
-        {
-            @: <input type="checkbox" name="SavedAsTemplate" value="true"> Do you wish to save this Posting as Template?
-        }
-        else {
-            @: <input type="hidden" name="SavedAsTemplate" value="false">
-        }
+        <div class="form-group">
+            <input type="checkbox" name="SavedAsTemplate" id="SavedAsTemplate" value="true"> Do you wish to save this Posting as Template?<br />
+            <label class="control-label col-md-2" id="lblTemplate" style="display: none">Template Name: </label><input type="text" name="templateName" id="templateName" style="display: none" />
+        </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" />

@@ -24,10 +24,11 @@ namespace JobPosting.Controllers
         {
             var postings = db.Postings.Include(p => p.Position);
             var PostingTemplates = ( from pt in db.PostingTemplates
-                                 select pt.PositionID).ToArray();
+                                 select pt.PositionID).Distinct().ToArray();
             ViewBag.JobRequirements = db.JobRequirements.OrderBy(a => a.QualificationID);
             ViewBag.JobLocations = db.JobLocations.OrderBy(a => a.LocationID);
             ViewBag.Positions = db.Positions.Where(p => PostingTemplates.Contains(p.ID));
+            ViewBag.postingTemplate = db.PostingTemplates;
             return View(postings.ToList());
         }
 
@@ -52,34 +53,13 @@ namespace JobPosting.Controllers
 
         // GET: Postings/Create
         [Authorize(Roles = "Admin, Manager, Hiring Team")]
-        public ActionResult Create(int? id)
+        public ActionResult Create(string name)
         {
             Posting posting = new Posting();
-            if (id != null)
+            // checking if there is any id passing to the Action.
+            if (name != null)
             {
-                var postingTemplate = db.PostingTemplates.Where(p => p.PositionID == id).SingleOrDefault();
-                posting = new Posting
-                {
-                    pstNumPosition = postingTemplate.pstNumPosition,
-                    pstFTE = postingTemplate.pstFTE,
-                    pstSalary = postingTemplate.pstSalary,
-                    pstCompensationType = postingTemplate.pstCompensationType,
-                    pstJobDescription = postingTemplate.pstJobDescription,
-                    pstOpenDate = postingTemplate.pstOpenDate,
-                    pstEndDate = postingTemplate.pstEndDate,
-                    PositionID = postingTemplate.PositionID
-
-                };
-                PopulateDropdownList(posting);
-                ViewBag.LocationIDs = ConvertStringToArray.ConvertToInt(postingTemplate.LocationIDs);
-                ViewBag.SkillIDs = ConvertStringToArray.ConvertToInt(postingTemplate.SkillIDs);
-                ViewBag.RequirementIDs = ConvertStringToArray.ConvertToInt(postingTemplate.RequirementIDs);
-                ViewBag.DayIDs = ConvertStringToArray.ConvertToInt(postingTemplate.dayIDs);
-                ViewBag.Days = db.Days;
-                PopulateQualification();
-                ViewBag.Locations = db.Locations;
-                ViewBag.Skills = db.Skills;
-                ViewBag.Flag = true;
+                posting = Template_fn(name, posting);
                 return View(posting);
             }
             
@@ -101,7 +81,7 @@ namespace JobPosting.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin, Manager, Hiring Team")]
-        public ActionResult Create([Bind(Include = "ID,pstNumPosition,pstFTE,pstSalary,pstCompensationType,pstJobDescription,pstOpenDate,pstEndDate,PositionID"/*,CreatedBy,CreatedOn,UpdatedBy,UpdatedOn,RowVersion*/)] Posting posting, string[] selectedQualification, string[] selectedDay, string[] selectedLocation, string[] selectedSkill, bool SavedAsTemplate)
+        public ActionResult Create([Bind(Include = "ID,pstNumPosition,pstFTE,pstSalary,pstCompensationType,pstJobDescription,pstOpenDate,pstEndDate,PositionID"/*,CreatedBy,CreatedOn,UpdatedBy,UpdatedOn,RowVersion*/)] Posting posting, string[] selectedQualification, string[] selectedDay, string[] selectedLocation, string[] selectedSkill, bool SavedAsTemplate, string templateName, string name)
         {
             try
             {
@@ -111,8 +91,6 @@ namespace JobPosting.Controllers
                 string Skills = "";
                 if (selectedQualification != null)
                 {
-
-
                     foreach (var r in selectedQualification)
                     {
                         Requirements += r + ",";
@@ -176,7 +154,7 @@ namespace JobPosting.Controllers
                 {
                     if (SavedAsTemplate)
                     {
-                        SavedAsTemplate_fn(posting, Requirements, Skills, Locations, Days);
+                        SavedAsTemplate_fn(templateName, posting, Requirements, Skills, Locations, Days);
                     }
                     db.Postings.Add(posting);
                     db.SaveChanges();
@@ -193,6 +171,10 @@ namespace JobPosting.Controllers
                 {
                     ModelState.AddModelError("PositionCode", "Unable to save changes. The Position Code is already existed.");
                 }
+                if (dex.InnerException.InnerException.Message.Contains("IX_Unique_Name"))
+                {
+                    ModelState.AddModelError("", "Unable to save changes. The Template Name is already existed.");
+                }
                 else if (dex.InnerException.InnerException.Message.Contains("IX_Unique_Desc"))
                 {
                     ModelState.AddModelError("PositionDescription", "Unable to save changes. The Position can not have the same name.");
@@ -201,6 +183,12 @@ namespace JobPosting.Controllers
                 {
                     ModelState.AddModelError("", "Unable to save changes. Try Again!");
                 }
+            }
+
+            if (name != null)
+            {
+                posting = Template_fn(name, posting);
+                return View(posting);
             }
 
             PopulateQualification();
@@ -483,6 +471,7 @@ namespace JobPosting.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Posting posting = db.Postings.Find(id);
             if (User.IsInRole("Hiring Team"))
             {
@@ -525,6 +514,29 @@ namespace JobPosting.Controllers
             return View(posting);
         }
 
+        [Authorize(Roles = "Admin, Manager, Hiring Team")]
+        public ActionResult DeleteTemplate(string name)
+        {
+            if (name == "")
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            PostingTemplate postingTemplate = db.PostingTemplates
+                                                .Where(p => p.templateName == name).SingleOrDefault();
+            try
+            {
+                db.PostingTemplates.Remove(postingTemplate);
+                db.SaveChanges();
+                
+            }
+            catch (DataException)
+            {
+                ModelState.AddModelError("", "Unable to save changes. Try Again!");
+            }
+            return RedirectToAction("Index");
+
+        }
+
         private void PopulateDropdownList(Posting posting = null)
         {
             ViewBag.PositionID = new SelectList(db.Positions.OrderBy(p => p.PositionDescription), "ID", "PositionDescription", posting?.PositionID);
@@ -558,12 +570,13 @@ namespace JobPosting.Controllers
             ViewBag.Day = viewModel;
         }
 
-        private void SavedAsTemplate_fn(Posting posting, string selectedRequirements, string selectedSkills, string selectedLocations, string selectedDays)
+        private void SavedAsTemplate_fn(string templateName, Posting posting, string selectedRequirements, string selectedSkills, string selectedLocations, string selectedDays)
         {
-            var postingTemplateHS = new HashSet<int>(db.PostingTemplates.Where(pt => pt.PositionID == posting.PositionID).Select(pt => pt.PositionID));
+            //var postingTemplateHS = new HashSet<int>(db.PostingTemplates.Where(pt => pt.PositionID == posting.PositionID).Select(pt => pt.PositionID));
 
             PostingTemplate postingTemplate = new PostingTemplate
             {
+                templateName = templateName,
                 pstNumPosition = posting.pstNumPosition,
                 pstFTE = posting.pstFTE,
                 pstSalary = posting.pstSalary,
@@ -579,15 +592,54 @@ namespace JobPosting.Controllers
 
             };
 
-            if (postingTemplateHS.Contains(posting.PositionID))
-            {
-                var postingTemplateToDelete = db.PostingTemplates.Find(posting.PositionID);
-                db.PostingTemplates.Remove(postingTemplateToDelete);
-            }
+            //if (postingTemplateHS.Contains(posting.PositionID))
+            //{
+            //    var postingTemplateToDelete = db.PostingTemplates.Find(posting.PositionID);
+            //    db.PostingTemplates.Remove(postingTemplateToDelete);
+            //}
            
             db.PostingTemplates.Add(postingTemplate);
 
             
+            
+        }
+
+        private Posting Template_fn(string name, Posting posting)
+        {
+                // retrieving record from PostingTemplate table by ID
+                var postingTemplate = db.PostingTemplates.Where(p => p.templateName == name).SingleOrDefault();
+
+                // Assigned record of postingTemplate to Posting Object
+                // to be able to use the record from postingTemplate table in View/Create
+                posting = new Posting
+                {
+                    pstNumPosition = postingTemplate.pstNumPosition,
+                    pstFTE = postingTemplate.pstFTE,
+                    pstSalary = postingTemplate.pstSalary,
+                    pstCompensationType = postingTemplate.pstCompensationType,
+                    pstJobDescription = postingTemplate.pstJobDescription,
+                    pstOpenDate = postingTemplate.pstOpenDate,
+                    pstEndDate = postingTemplate.pstEndDate,
+                    PositionID = postingTemplate.PositionID
+
+                };
+
+                // Populatedropdownlist for PositionID
+                PopulateDropdownList(posting);
+
+                // Passing values to View/Create and Convert IDs string to List ( to be able to use Contains function)
+                ViewBag.LocationIDs = ConvertStringToList.ConvertToInt(postingTemplate.LocationIDs);
+                ViewBag.SkillIDs = ConvertStringToList.ConvertToInt(postingTemplate.SkillIDs);
+                ViewBag.RequirementIDs = ConvertStringToList.ConvertToInt(postingTemplate.RequirementIDs);
+                ViewBag.DayIDs = ConvertStringToList.ConvertToInt(postingTemplate.dayIDs);
+                ViewBag.Days = db.Days;
+                PopulateQualification();
+                ViewBag.Locations = db.Locations;
+                ViewBag.Skills = db.Skills;
+                ViewBag.Flag = true;
+
+            // If id have value the Action will stop here.
+            return posting;
             
         }
 

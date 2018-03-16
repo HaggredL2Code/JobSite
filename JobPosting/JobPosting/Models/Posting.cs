@@ -9,6 +9,7 @@ namespace JobPosting.Models
     public class Posting : Auditable, IValidatableObject
     {
         DateTime openDate = DateTime.Now;
+        bool enabled = true;
 
         public Posting() {
             this.Applications = new HashSet<Application>();
@@ -71,6 +72,11 @@ namespace JobPosting.Models
         [DataType(DataType.DateTime)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}", ApplyFormatInEditMode = true)]
         public DateTime pstEndDate { get; set; }
+
+        public bool Enabled {
+            get { return enabled; }
+            set { enabled = value; }
+        }
 
         [Display(Name = "Job Title")]
         [Required(ErrorMessage = "You have specify the Job Title.")]

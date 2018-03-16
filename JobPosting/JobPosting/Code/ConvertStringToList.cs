@@ -5,7 +5,7 @@ using System.Web;
 
 namespace JobPosting.Code
 {
-    public static class ConvertStringToArray
+    public static class ConvertStringToList
     {
         public static List<int> ConvertToInt(string Array)
         {

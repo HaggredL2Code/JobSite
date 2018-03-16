@@ -7,16 +7,32 @@
 
 <h2>Index</h2>
 
-<ul>
+<ul class="nav navbar-nav">
     <li class="dropdown">
         <a href="#" data-toggle="dropdown" class="dropdown-toggle">Create New - Menu<b class="caret"></b></a>
         <ul class="dropdown-menu">
             <li>@Html.ActionLink("Create New", "Create")</li>
+            <li class="divider"></li>
             @foreach (var p in Positions)
             {
                 string positionName = p.PositionDescription;
-                <li class="divider"></li>
-                <li>@Html.ActionLink("Follow " + positionName, "Create", new { id = p.ID })</li>
+                
+                @*<li>@Html.ActionLink("Follow " + positionName, "Create", new { name = p.templateName }) - @Html.ActionLink("Delete", "DeleteTemplate", new { id = p.ID})</li>*@
+                
+                @*<li>
+                    <a href="#" data-toggle="dropdown" class="dropdown-toggle">@postionName<b class="caret"></b></a>
+                    <ul class="dropdown-menu">*@
+                        foreach (var pt in ViewBag.postingTemplate)
+                        {
+                            if (pt.PositionID == p.ID)
+                            {
+                                //string templateName = pt.templateName;
+                                <li>@Html.ActionLink("Follow " + (string)pt.templateName + " Template", "Create", new { name = (string)pt.templateName}) - @Html.ActionLink("Delete", "DeleteTemplate", new { name = (string)pt.templateName})</li>
+                            }
+                        }
+                    @*</ul>
+                </li>*@
+                    
             }
         </ul>
     </li>
