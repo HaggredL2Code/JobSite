@@ -57,20 +57,22 @@
     </tr>
 
 @foreach (var item in Model) {
-    bool flag = true;
-    if (User.IsInRole("Hiring Team") || User.IsInRole("User"))
+    if (item.Enabled)
     {
-        if (item.CreatedBy != User.Identity.Name)
+        bool flag = true;
+        if (User.IsInRole("Hiring Team") || User.IsInRole("User"))
         {
-            flag = false;
+            if (item.CreatedBy != User.Identity.Name)
+            {
+                flag = false;
+            }
         }
-    }
-    <tr>
+        <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Position.PositionCode)
         </td>
         <td>
-            @Html.ActionLink(item.Position.PositionDescription.ToString(), "Details", new { id = item.ID})
+            @Html.ActionLink(item.Position.PositionDescription.ToString(), "Details", new { id = item.ID })
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.pstNumPosition)
@@ -88,7 +90,8 @@
             @Html.ActionLink("Delete", "Delete", new { id = item.ID })
         </td>
         }
-    </tr>
+        </tr>
+    }
 }
 
 </table>

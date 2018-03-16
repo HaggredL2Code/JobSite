@@ -606,7 +606,7 @@ namespace JobPosting.Controllers
 
         private Posting Template_fn(string name, Posting posting)
         {
-                // retrieving record from PostingTemplate table by ID
+                // retrieving record from PostingTemplate table by Template Name (Unique)
                 var postingTemplate = db.PostingTemplates.Where(p => p.templateName == name).SingleOrDefault();
 
                 // Assigned record of postingTemplate to Posting Object
@@ -638,7 +638,7 @@ namespace JobPosting.Controllers
                 ViewBag.Skills = db.Skills;
                 ViewBag.Flag = true;
 
-            // If id have value the Action will stop here.
+
             return posting;
             
         }
