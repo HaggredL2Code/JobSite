@@ -4,6 +4,81 @@
     ViewBag.Title = "Create";
 }
 
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+<script>
+    $(document).ready(function () {
+        
+        var selectedLocation = [];
+        var selectedSkills = [];
+        var selectedDays = [];
+        var selectedQualifications = [];
+        $("#submit").click(function () {
+            var posting = {};
+            if (!Cookies.get("Count")) {
+                var count = 0
+            }
+            else {
+                var count = parseInt(Cookies.get("Count"));
+            }
+            count += 1;
+            $("#selectedLocation:checked").each(function (e) {
+                selectedLocation.push($(this).val());
+            });
+            $("#selectedSkill:checked").each(function (e) {
+                selectedSkills.push($(this).val());
+            });
+            $("#selectedDay:checked").each(function (e) {
+                selectedDays.push($(this).val());
+            });
+            $("#selectedQualification:checked").each(function (e) {
+                selectedQualifications.push($(this).val());
+            });
+
+            posting = {
+                ID: count,
+                pstNumPosition: $("#pstNumPosition").val(),
+                pstFTE: $("#pstFTE").val(),
+                pstCompensationType: $("#pstCompensationType").val(),
+                pstSalary: $("#pstSalary").val(),
+                pstJobDescription: $("#pstJobDescription").val(),
+                pstOpenDate: $("#pstOpenDate").val(),
+                pstEndDate: $("#pstEndDate").val(),
+                PositionID: $("#PositionID").val(),
+                selectedLocation: selectedLocation,
+                selectedSkills: selectedSkills,
+                selectedDays: selectedDays,
+                selectedQualifications: selectedQualifications,
+                //Roles: userRole
+            };
+
+            var jsonStr = JSON.stringify(posting);
+            localStorage.setItem("Posting" + count.toString(), jsonStr);
+            Cookies.set("Count", count, { expire: 365 });
+            for (var i = 1; i <= count; i++)
+            {
+                var postingValue = localStorage.getItem("Posting" + i.toString());
+                //var postingObj = JSON.parse(postingValue);
+                console.log(postingValue);
+                console.log(i);
+            }
+            console.log(count);
+        });
+
+        $("#SavedAsTemplate").change(function () {
+            if (this.checked) {
+                $("#templateName").toggle("slow");
+                $("#lblTemplate").toggle("slow");
+            }
+            else {
+                $("#templateName").toggle("slow");
+                $("#lblTemplate").toggle("slow");
+            }
+        });
+    });
+</script>
+
 <h2>Create</h2>
 
 
@@ -34,7 +109,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.pstCompensationType, "Compensation Type", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("PositionCompensationType", new SelectListItem[]
+                @Html.DropDownList("pstCompensationType", new SelectListItem[]
                                     {
                         new SelectListItem { Value = "1", Text = "Hourly"},
                         new SelectListItem { Value = "2", Text = "Monthly"},
@@ -88,24 +163,105 @@
             <label class="control-label col-md-2">Locations</label>
             <div class="col-md-offset-2 col-md-10">
                 <table>
-                    <tr>
+                    
                         @{
                             int cnt = 0;
-                            foreach (var l in ViewBag.Locations)
+                            if (!ViewBag.Flag)
                             {
-
-                                if (cnt++ % 3 == 0)
+                                @: <tr>
+                                foreach (var l in ViewBag.Locations)
                                 {
+
+                                    if (cnt++ % 3 == 0)
+                                    {
                                     @:</tr><tr>
-                                }
-                                @:<td>
+                                    }
+                                    @:<td>
                                     <input type="checkbox"
                                            name="selectedLocation"
+                                           id="selectedLocation"
                                            value="@l.ID" />
                                     @l.Address @:&nbsp;&nbsp;
                                     @:</td>
-                            }
+                                }
                             @:</tr>
+                            }
+                            else
+                            {
+                                
+                                @:<tr>
+                                foreach (var l in ViewBag.Locations)
+                                {
+                                    bool Assigned = (ViewBag.LocationIDs.Contains(l.ID)) ? true : false;
+                                    if (cnt++ % 3 == 0)
+                                    {
+                                        @:</tr><tr>
+                                    }
+                                    @:<td>
+                                        <input type="checkbox"
+                                         name="selectedLocation"
+                                         id="selectedLocation"
+                                         value="@l.ID"
+                                         @(Html.Raw(Assigned ? "checked=\"checked\"" : "")) />
+                                         @l.Address @:&nbsp;&nbsp;
+                                    @:</td>
+                                }
+                                @:</tr>
+                            }
+                        }
+                    </table>
+                </div>
+            </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Skills</label>
+            <div class="col-md-offset-2 col-md-10">
+                <table>
+                    
+                        @{
+
+                            int cnt3 = 0;
+                            if (!ViewBag.Flag)
+                            {
+                                @: <tr>
+                                foreach (var s in ViewBag.Skills)
+                                {
+
+                                    if (cnt3++ % 3 == 0)
+                                    {
+                                        @:</tr><tr>
+                                    }
+                                    @:<td>
+                                        <input type="checkbox"
+                                               name="selectedSkill"
+                                               id="selectedSkill"
+                                               value="@s.ID" />
+                                        @s.SkillDescription @:&nbsp;&nbsp;
+                                        @:</td>
+                                }
+                                @:</tr>
+                            }
+                            else
+                            {
+                                @: <tr>
+                                foreach (var s in ViewBag.Skills)
+                                {
+                                    bool Assigned = (ViewBag.SkillIDs.Contains(s.ID)) ? true : false;
+                                    if (cnt3++ % 3 == 0)
+                                    {
+                                        @:</tr><tr>
+                                    }
+                                    @:<td>
+                                    <input type="checkbox"
+                                           name="selectedSkill"
+                                           id="selectedSkill"
+                                           value="@s.ID"
+                                            @(Html.Raw(Assigned ? "checked=\"checked\"" : "")) />
+                                    @s.SkillDescription @:&nbsp;&nbsp;
+                                    @:</td>
+                                }
+                                @: </tr>
+                            }
                         }
                     </table>
                 </div>
@@ -115,25 +271,52 @@
             <label class="control-label col-md-2">Day of Work</label>
             <div class="col-md-offset-2 col-md-10">
                 <table>
-                    <tr>
+                    
                         @{
+                            
                             int cnt1 = 0;
-                            List<JobPosting.ViewModels.DayVM> days = ViewBag.Day;
-                            foreach (var d in days)
+                            if (!ViewBag.Flag)
                             {
-                                if (cnt1++ % 3 == 0)
+                                @: <tr>
+                                List<JobPosting.ViewModels.DayVM> days = ViewBag.Day;
+                                foreach (var d in days)
                                 {
+                                    if (cnt1++ % 3 == 0)
+                                    {
                                     @:</tr><tr>
-                                }
-                                @:<td>
+                                    }
+                                    @:<td>
                                     <input type="checkbox"
                                            name="selectedDay"
+                                           id="selectedDay"
                                            value="@d.DayID"
-                                            @(Html.Raw(d.Assigned ? "checked=\"checked\"" : "")) />
+                                            @*@(Html.Raw(d.Assigned ? "checked=\"checked\"" : ""))*@ />
                                     @d.dayName @:&nbsp;&nbsp;
                                     @:</td>
+                                }
+                                @:</tr>
                             }
-                            @:</tr>
+                            else
+                            {
+                                @: <tr>
+                                foreach (var d in ViewBag.Days)
+                                {
+                                    bool Assigned = (ViewBag.DayIDs.Contains(d.ID)) ? true : false;
+                                    if (cnt1++ % 3 == 0)
+                                    {
+                                        @:</tr><tr>
+                                    }
+                                    @:<td>
+                                    <input type="checkbox"
+                                           name="selectedDay"
+                                           id="selectedDay"
+                                           value="@d.ID"
+                                            @(Html.Raw(Assigned ? "checked=\"checked\"" : "")) />
+                                    @d.dayName @:&nbsp;&nbsp;
+                                    @:</td>
+                                }
+                                @:</tr>
+                            }
                         }
                     </table>
                 </div>
@@ -143,34 +326,66 @@
             <label class="control-label col-md-2">Requirements</label>
             <div class="col-md-offset-2 col-md-10">
                 <table>
-                    <tr>
+                    
                         @{
                             int cnt2 = 0;
-                            foreach (var q in ViewBag.Qualifications)
+                            if (!ViewBag.Flag)
                             {
-                                if (cnt2++ % 3 == 0)
+                                @: <tr>
+                                
+                                foreach (var q in ViewBag.Qualifications)
                                 {
+                                    if (cnt2++ % 3 == 0)
+                                    {
                                     @:</tr><tr>
                                 }
                                 @:<td>
                                     <input type="checkbox"
                                            name="selectedQualification"
+                                           id="selectedQualification"
                                            value="@q.ID"
                                             />
                                     @q.QlfDescription @:&nbsp;&nbsp;
                                     @:</td>
+                                }
+                                @:</tr>
                             }
-                            @:</tr>
+                            else
+                            {
+                                @:<tr>
+                                foreach (var q in ViewBag.Qualifications)
+                                {
+                                    bool Assigned = (ViewBag.RequirementIDs.Contains(q.ID)) ? true : false;
+                                    if (cnt2++ % 3 == 0)
+                                    {
+                                        @:</tr><tr>
+                                    }
+                                    @:<td>
+                                    <input type="checkbox"
+                                           name="selectedQualification"
+                                           id="selectedQualification"
+                                           value="@q.ID"
+                                            @(Html.Raw(Assigned ? "checked=\"checked\"" : "")) />
+                                    @q.QlfDescription @:&nbsp;&nbsp;
+                                    @:</td>
+                                }
+                            }
                         }
                     </table>
                 </div>
-            </div>
-
+        </div>
+        <div class="form-group">
+            <input type="checkbox" name="SavedAsTemplate" id="SavedAsTemplate" value="true"> Do you wish to save this Posting as Template?<br />
+            <label class="control-label col-md-2" id="lblTemplate" style="display: none">Template Name: </label><input type="text" name="templateName" id="templateName" style="display: none" />
+        </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" />
+                @*<input type="button" value="Save Posting" class="btn btn-default" id="submit">*@
             </div>
         </div>
+
+
     </div>
 }
 

@@ -8,7 +8,9 @@ namespace JobPosting
     {
         public void Configuration(IAppBuilder app)
         {
+            app.MapSignalR();
             ConfigureAuth(app);
+            
         }
     }
 }

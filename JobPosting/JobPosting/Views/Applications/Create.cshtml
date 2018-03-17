@@ -5,7 +5,88 @@
     var postingID = ViewBag.postingID;
     var applicantID = ViewBag.applicantID;
 }
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+<script type="text/javascript">
+            $(document).ready(function () {
+                var ApplicationsCart = [];
 
+
+
+                //preprocessing file
+                var selectedQualification = [];
+                var count = 0;
+                var control = document.getElementById("theFiles");
+                var resume = [];
+                $("#theFiles").change(function (e) {
+                    var files = control.files;
+                    resume = [];
+                    var fileInfo;
+                    for (var i = 0; i < files.length; i++) {
+                        var file = new Blob([files[i]]);
+                        fileInfo = files[i];
+                        var r = new FileReader();
+                        r.readAsArrayBuffer(file);
+                        r.onload = function () {
+                            var arrayBuffer = this.result,
+                                bytes = new Uint8Array(arrayBuffer);
+                            console.log(bytes);
+                            console.log(jQuery.type(bytes));
+                            resume.push({
+                                PostingID: $("#PostingID").val(),
+                                ApplicantID: $("#ApplicantID").val(),
+                                fileName: fileInfo.name,
+                                content: bytes,
+                                mimeType: fileInfo.type
+                            });
+                            console.log(resume);
+                        };
+                    }
+                });
+                $("#btnAddToCart").click(function () {
+                    var d = new Date();
+                    d.setTime(d.getTime() + (60 * 60 * 24 * 365 * 1000));
+                    $("#selectedQualification:checked").each(function (e) {
+                        selectedQualification.push($(this).val());
+                    })
+
+                    ApplicationsCart.push({
+                        Priority: $("#Priority").val(),
+                        PostingID: $("#PostingID").val(),
+                        ApplicantID: $("#ApplicantID").val(),
+                        selectedQualification: selectedQualification,
+                        Resume: resume
+
+                    });
+
+                    console.log(ApplicationsCart);
+
+
+                    //Cookies.set("ApplicationCart", jsonStr, { expires: 365 });
+                    window.localStorage.setItem('Test', JSON.stringify(ApplicationsCart));
+
+
+                    var cartValue = localStorage.getItem('Test');
+                    var cartObj = JSON.parse(cartValue);
+                    console.log(cartObj);
+                    ////selectedQualification.forEach(function (e) {
+                    ////    $("#test").text("The last Value: " + e)
+                    ////})
+
+                    //cartObj.forEach(function (e) {
+                    //    count += 1
+                    //    //$("#test").text("ApplicantID: " + e.ApplicantID + " PostingID: " + e.PostingID + " Priority: " + e.Priority + " SelecctedQualification: " + e.selectedQualification);
+                    //    $("#test").text(count)
+                    //})
+
+                });
+
+
+            }
+            )
+
+</script>
 <h2>Create</h2>
 
 
@@ -164,80 +245,7 @@
         </div>
 
         <p id="test">abc</p>
-        <script src="~/Scripts/jquery-1.10.2.js"></script>
-        <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-        <script type="text/javascript">
-            $(document).ready(function () {
-                var ApplicationsCart = [];
-
-                if (sessionStorage.getItem("ApplicationsCart") != null) {
-                    ApplicationsCart = JSON.parse(sessionStorage.getItem("ApplicationsCart"));
-                }
-
-                //preprocessing file
-                var selectedQualification = [];
-                var count = 0;
-                var control = document.getElementById("theFiles");
-                var resume = [];
-                $("#theFiles").change(function (e) {
-                    var files = control.files;
-                    resume = [];
-                    var fileInfo;
-                    for (var i = 0; i < files.length; i++) {
-                        var file = new Blob([files[i]]);
-                        fileInfo = files[i];
-                        var r = new FileReader();
-                        r.readAsArrayBuffer(file);
-                        r.onload = function () {
-                            var arrayBuffer = this.result,
-                                bytes = new Uint8Array(arrayBuffer);
-                            console.log(bytes);
-                            resume.push({
-                                fileName: fileInfo.name,
-                                content: bytes,
-                                mimeType: fileInfo.type
-                            });
-                            console.log(resume);
-                        };
-                    }
-                });
-                $("#btnAddToCart").click(function () {
-                    $("#selectedQualification:checked").each(function (e) {
-                        selectedQualification.push($(this).val());
-                    })
-                    
-                    ApplicationsCart.push({
-                        Priority: $("#Priority").val(),
-                        PostingID: $("#PostingID").val(),
-                        ApplicantID: $("#ApplicantID").val(),
-                        selectedQualification: selectedQualification,
-                        Resume: resume
-
-                    });
-
-                    console.log(ApplicationsCart);
-
-                    var jsonStr = JSON.stringify(ApplicationsCart);
-                    sessionStorage.setItem("ApplicationsCart", jsonStr);
-
-                    var cartValue = sessionStorage.getItem("ApplicationsCart");
-                    var cartObj = JSON.parse(cartValue);
-                    //selectedQualification.forEach(function (e) {
-                    //    $("#test").text("The last Value: " + e)
-                    //})
-                    cartObj.forEach(function (e) {
-                        count += 1
-                        //$("#test").text("ApplicantID: " + e.ApplicantID + " PostingID: " + e.PostingID + " Priority: " + e.Priority + " SelecctedQualification: " + e.selectedQualification);
-                        $("#test").text(count)
-                    })
-
-                });
-
-
-            }
-            )
-
-        </script>
+        
     </div>
 
 

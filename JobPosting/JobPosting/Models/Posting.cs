@@ -9,10 +9,12 @@ namespace JobPosting.Models
     public class Posting : Auditable, IValidatableObject
     {
         DateTime openDate = DateTime.Now;
+        bool enabled = true;
 
         public Posting() {
             this.Applications = new HashSet<Application>();
             this.JobRequirements = new HashSet<JobRequirement>();
+            this.PostingSkills = new HashSet<PostingSkill>();
             this.JobLocations = new HashSet<JobLocation>();
             this.Days = new HashSet<Day>();
         }
@@ -71,6 +73,11 @@ namespace JobPosting.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}", ApplyFormatInEditMode = true)]
         public DateTime pstEndDate { get; set; }
 
+        public bool Enabled {
+            get { return enabled; }
+            set { enabled = value; }
+        }
+
         [Display(Name = "Job Title")]
         [Required(ErrorMessage = "You have specify the Job Title.")]
         public int PositionID { get; set; }
@@ -80,6 +87,8 @@ namespace JobPosting.Models
         public virtual ICollection<Application> Applications { get; set; }
 
         public virtual ICollection<JobRequirement> JobRequirements { get; set; }
+
+        public virtual ICollection<PostingSkill> PostingSkills { get; set; }
 
         public virtual ICollection<JobLocation> JobLocations { get; set; }
 

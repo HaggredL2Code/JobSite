@@ -2,13 +2,41 @@
 
 @{
     ViewBag.Title = "Index";
+    var Positions = ViewBag.Positions;
 }
 
 <h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<ul class="nav navbar-nav">
+    <li class="dropdown">
+        <a href="#" data-toggle="dropdown" class="dropdown-toggle">Create New - Menu<b class="caret"></b></a>
+        <ul class="dropdown-menu">
+            <li>@Html.ActionLink("Create New", "Create")</li>
+            <li class="divider"></li>
+            @foreach (var p in Positions)
+            {
+                string positionName = p.PositionDescription;
+                
+                @*<li>@Html.ActionLink("Follow " + positionName, "Create", new { name = p.templateName }) - @Html.ActionLink("Delete", "DeleteTemplate", new { id = p.ID})</li>*@
+                
+                @*<li>
+                    <a href="#" data-toggle="dropdown" class="dropdown-toggle">@postionName<b class="caret"></b></a>
+                    <ul class="dropdown-menu">*@
+                        foreach (var pt in ViewBag.postingTemplate)
+                        {
+                            if (pt.PositionID == p.ID)
+                            {
+                                //string templateName = pt.templateName;
+                                <li>@Html.ActionLink("Follow " + (string)pt.templateName + " Template", "Create", new { name = (string)pt.templateName}) - @Html.ActionLink("Delete", "DeleteTemplate", new { name = (string)pt.templateName})</li>
+                            }
+                        }
+                    @*</ul>
+                </li>*@
+                    
+            }
+        </ul>
+    </li>
+</ul>
 <table class="table">
     <tr>
         <th>
@@ -24,24 +52,27 @@
         <th>
             @Html.DisplayNameFor(model => model.pstOpenDate)
         </th>
+
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
-    bool flag = true;
-    if (User.IsInRole("Hiring Team") || User.IsInRole("User"))
+    if (item.Enabled)
     {
-        if (item.CreatedBy != User.Identity.Name)
+        bool flag = true;
+        if (User.IsInRole("Hiring Team") || User.IsInRole("User"))
         {
-            flag = false;
+            if (item.CreatedBy != User.Identity.Name)
+            {
+                flag = false;
+            }
         }
-    }
-    <tr>
+        <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Position.PositionCode)
         </td>
         <td>
-            @Html.ActionLink(item.Position.PositionDescription.ToString(), "Details", new { id = item.ID})
+            @Html.ActionLink(item.Position.PositionDescription.ToString(), "Details", new { id = item.ID })
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.pstNumPosition)
@@ -50,6 +81,8 @@
         <td>
             @Html.DisplayFor(modelItem => item.pstOpenDate)
         </td>
+
+        
         @if (flag)
         {
         <td>
@@ -57,7 +90,8 @@
             @Html.ActionLink("Delete", "Delete", new { id = item.ID })
         </td>
         }
-    </tr>
+        </tr>
+    }
 }
 
 </table>

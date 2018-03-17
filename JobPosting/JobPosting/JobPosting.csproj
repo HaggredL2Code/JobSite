@@ -46,6 +46,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.AspNet.SignalR.Client, Version=2.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Client.2.2.3\lib\net45\Microsoft.AspNet.SignalR.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.2.3\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.SystemWeb, Version=2.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.2.3\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.8.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
@@ -189,6 +198,7 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Code\ConvertStringToList.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApplicantsController.cs" />
     <Compile Include="Controllers\ApplicationCartsController.cs" />
@@ -204,9 +214,9 @@
     <Compile Include="Controllers\UnionsController.cs" />
     <Compile Include="DAL\ApplicationDbContext.cs" />
     <Compile Include="DAL\JBEntities.cs" />
-    <Compile Include="DAL\JBMigrations\201803052059245_InitialCreate.cs" />
-    <Compile Include="DAL\JBMigrations\201803052059245_InitialCreate.Designer.cs">
-      <DependentUpon>201803052059245_InitialCreate.cs</DependentUpon>
+    <Compile Include="DAL\JBMigrations\201803160056014_InitialCreate.cs" />
+    <Compile Include="DAL\JBMigrations\201803160056014_InitialCreate.Designer.cs">
+      <DependentUpon>201803160056014_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="DAL\JBMigrations\Configuration.cs" />
     <Compile Include="DAL\SecurityMigrations\201803011756159_InitialCreate.cs" />
@@ -217,7 +227,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Hubs\ChatHub.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\ApplicationSkill.cs" />
     <Compile Include="Models\BinaryFileTemp.cs" />
     <Compile Include="Models\Applicant.cs" />
     <Compile Include="Models\Application.cs" />
@@ -237,13 +249,17 @@
     <Compile Include="Models\Location.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Posting.cs" />
+    <Compile Include="Models\PostingSkill.cs" />
+    <Compile Include="Models\PostingTemplate.cs" />
     <Compile Include="Models\Qualification.cs" />
+    <Compile Include="Models\Skill.cs" />
     <Compile Include="Models\Union.cs" />
     <Compile Include="Models\UserRole.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\DayVM.cs" />
     <Compile Include="ViewModels\ApplicationVM.cs" />
+    <Compile Include="ViewModels\PostingTemplateVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Commands.txt" />
@@ -262,6 +278,8 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.signalR-2.2.3.js" />
+    <Content Include="Scripts\jquery.signalR-2.2.3.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -353,6 +371,7 @@
     <Content Include="Views\Positions\Details.cshtml" />
     <Content Include="Views\Positions\Edit.cshtml" />
     <Content Include="Views\Positions\Index.cshtml" />
+    <Content Include="Views\Home\Chat.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -371,8 +390,8 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="DAL\JBMigrations\201803052059245_InitialCreate.resx">
-      <DependentUpon>201803052059245_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="DAL\JBMigrations\201803160056014_InitialCreate.resx">
+      <DependentUpon>201803160056014_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DAL\SecurityMigrations\201803011756159_InitialCreate.resx">
       <DependentUpon>201803011756159_InitialCreate.cs</DependentUpon>

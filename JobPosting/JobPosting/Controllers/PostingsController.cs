@@ -10,6 +10,7 @@ using System.Web.Mvc;
 using JobPosting.DAL;
 using JobPosting.Models;
 using JobPosting.ViewModels;
+using JobPosting.Code;
 
 namespace JobPosting.Controllers
 {
@@ -22,8 +23,12 @@ namespace JobPosting.Controllers
         public ActionResult Index()
         {
             var postings = db.Postings.Include(p => p.Position);
+            var PostingTemplates = ( from pt in db.PostingTemplates
+                                 select pt.PositionID).Distinct().ToArray();
             ViewBag.JobRequirements = db.JobRequirements.OrderBy(a => a.QualificationID);
             ViewBag.JobLocations = db.JobLocations.OrderBy(a => a.LocationID);
+            ViewBag.Positions = db.Positions.Where(p => PostingTemplates.Contains(p.ID));
+            ViewBag.postingTemplate = db.PostingTemplates;
             return View(postings.ToList());
         }
 
@@ -42,24 +47,33 @@ namespace JobPosting.Controllers
             }
             ViewBag.JobRequirements = db.JobRequirements.Where(j => j.PostingID == id);
             ViewBag.JobLocations = db.JobLocations.Where(jl => jl.PostingID == id);
+            ViewBag.PostingSkills = db.PostingSkills.Where(ps => ps.PostingID == id);
             return View(posting);
         }
 
         // GET: Postings/Create
         [Authorize(Roles = "Admin, Manager, Hiring Team")]
-        public ActionResult Create()
+        public ActionResult Create(string name)
         {
             Posting posting = new Posting();
+            // checking if there is any id passing to the Action.
+            if (name != null)
+            {
+                posting = Template_fn(name, posting);
+                return View(posting);
+            }
+            
             posting.Days = new List<Day>();
-
+            ViewBag.Flag = false;
             PopulateDropdownList();
             PopulateQualification();
             ViewBag.Locations = db.Locations;
+            ViewBag.Skills = db.Skills;
             PopulateAssignedDay(posting);
             return View();
         }
 
-        
+
 
         // POST: Postings/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -67,18 +81,19 @@ namespace JobPosting.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin, Manager, Hiring Team")]
-        public ActionResult Create([Bind(Include = "ID,pstNumPosition,pstFTE,pstSalary,pstCompensationType,pstJobDescription,pstOpenDate,pstEndDate,PositionID,CreatedBy,CreatedOn,UpdatedBy,UpdatedOn,RowVersion")] Posting posting, string[] selectedQualification, string[] selectedDay, string[] selectedLocation)
+        public ActionResult Create([Bind(Include = "ID,pstNumPosition,pstFTE,pstSalary,pstCompensationType,pstJobDescription,pstOpenDate,pstEndDate,PositionID"/*,CreatedBy,CreatedOn,UpdatedBy,UpdatedOn,RowVersion*/)] Posting posting, string[] selectedQualification, string[] selectedDay, string[] selectedLocation, string[] selectedSkill, bool SavedAsTemplate, string templateName, string name)
         {
             try
             {
+                string Locations = "";
+                string Requirements = "";
+                string Days = "";
+                string Skills = "";
                 if (selectedQualification != null)
                 {
-
-                    posting.Days = new List<Day>();
-
-
                     foreach (var r in selectedQualification)
                     {
+                        Requirements += r + ",";
                         var qualificateToAdd = db.Qualification.Find(int.Parse(r));
                         JobRequirement jobRequirement = new JobRequirement
                         {
@@ -90,8 +105,12 @@ namespace JobPosting.Controllers
                         db.JobRequirements.Add(jobRequirement);
 
                     }
+                }
+                if (selectedLocation != null)
+                {
                     foreach (var l in selectedLocation)
                     {
+                        Locations += l + ",";
                         var locationToAdd = db.Locations.Find(int.Parse(l));
                         JobLocation jobLocation = new JobLocation
                         {
@@ -103,15 +122,40 @@ namespace JobPosting.Controllers
                         db.JobLocations.Add(jobLocation);
 
                     }
+                }
+                if (selectedSkill != null)
+                {
+                    foreach (var s in selectedSkill)
+                    {
+                        Skills += s + ",";
+                        var skillToAdd = db.Skills.Find(int.Parse(s));
+                        PostingSkill postingSkill = new PostingSkill
+                        {
+                            Posting = posting,
+                            Skill = skillToAdd,
+                            PostingID = posting.ID,
+                            SkillID = skillToAdd.ID
+                        };
+                        db.PostingSkills.Add(postingSkill);
+                    }
+                }
+                if (selectedDay != null)
+                {
+                    posting.Days = new List<Day>();
                     foreach (var d in selectedDay)
                     {
+                        Days += d + ",";
                         var dayToAdd = db.Days.Find(int.Parse(d));
                         posting.Days.Add(dayToAdd);
                     }
-
                 }
+                
                 if (ModelState.IsValid)
                 {
+                    if (SavedAsTemplate)
+                    {
+                        SavedAsTemplate_fn(templateName, posting, Requirements, Skills, Locations, Days);
+                    }
                     db.Postings.Add(posting);
                     db.SaveChanges();
                     return RedirectToAction("Index");
@@ -127,6 +171,10 @@ namespace JobPosting.Controllers
                 {
                     ModelState.AddModelError("PositionCode", "Unable to save changes. The Position Code is already existed.");
                 }
+                if (dex.InnerException.InnerException.Message.Contains("IX_Unique_Name"))
+                {
+                    ModelState.AddModelError("", "Unable to save changes. The Template Name is already existed.");
+                }
                 else if (dex.InnerException.InnerException.Message.Contains("IX_Unique_Desc"))
                 {
                     ModelState.AddModelError("PositionDescription", "Unable to save changes. The Position can not have the same name.");
@@ -137,7 +185,17 @@ namespace JobPosting.Controllers
                 }
             }
 
+            if (name != null)
+            {
+                posting = Template_fn(name, posting);
+                return View(posting);
+            }
+
+            PopulateQualification();
+            ViewBag.Locations = db.Locations;
+            ViewBag.Skills = db.Skills;
             PopulateDropdownList(posting);
+            PopulateAssignedDay(posting);
             return View(posting);
         }
 
@@ -157,11 +215,13 @@ namespace JobPosting.Controllers
             PopulateDropdownList(posting);
             PopulateQualification();
             ViewBag.Locations = db.Locations;
+            ViewBag.Skills = db.Skills;
             PopulateAssignedDay(posting);
 
             int realID = id.Value;
             ViewBag.JobRequirements = db.JobRequirements.Where(j => j.PostingID == realID).ToList();
             ViewBag.JobLocations = db.JobLocations.Where(jl => jl.PostingID == realID).ToList();
+            ViewBag.PostingSkills = db.PostingSkills.Where(ps => ps.PostingID == id);
             return View(posting);
         }
 
@@ -171,7 +231,7 @@ namespace JobPosting.Controllers
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin, Manager, Hiring Team")]
-        public ActionResult EditPost(int? id, Byte[] rowVersion, string[] selectedQualification, string[] selectedDay, string[] selectedLocation)
+        public ActionResult EditPost(int? id, Byte[] rowVersion, string[] selectedQualification, string[] selectedDay, string[] selectedLocation, string[] selectedSkill)
         {
             int realID;
             if (id == null)
@@ -202,6 +262,7 @@ namespace JobPosting.Controllers
                         UpdatePositionQualification(selectedQualification, realID, postingToUpdate);
                         UpdatePositionDay(selectedDay, postingToUpdate);
                         UpdateLocation(selectedLocation, realID, postingToUpdate);
+                        UpdateSkill(selectedSkill, realID, postingToUpdate);
                         db.Entry(postingToUpdate).OriginalValues["RowVersion"] = rowVersion;
                         db.SaveChanges();
                         return RedirectToAction("Index");
@@ -246,6 +307,45 @@ namespace JobPosting.Controllers
             ViewBag.JobRequirements = db.JobRequirements.Where(j => j.PostingID == realID);
             ViewBag.JobLocations = db.JobLocations.Where(l => l.PostingID == realID);
             return View(postingToUpdate);
+        }
+
+        private void UpdateSkill(string[] selectedSkill, int id, Posting postingToUpdate)
+        {
+            if (selectedSkill == null)
+            {
+                postingToUpdate.PostingSkills = new List<PostingSkill>();
+                return;
+            }
+            var selectedSkillHS = new HashSet<string>(selectedSkill);
+            var postingSkills = new HashSet<int>(db.PostingSkills.Where(s => s.PostingID == id).Select(s => s.SkillID));
+            foreach (var s in db.Skills)
+            {
+                var SkillToUpdate = db.Skills.Find(s.ID);
+                PostingSkill postingSkill = new PostingSkill
+                {
+                    Posting = postingToUpdate,
+                    PostingID = id,
+                    Skill = SkillToUpdate,
+                    SkillID = s.ID
+                };
+                if (selectedSkillHS.Contains(s.ID.ToString()))
+                {
+                    if (!postingSkills.Contains(s.ID))
+                    {
+                        db.PostingSkills.Add(postingSkill);
+                    }
+                }
+                else
+                {
+                    if (postingSkills.Contains(s.ID))
+                    {
+                        var selectedItem = (from i in db.PostingSkills
+                                            where i.PostingID == id & i.SkillID == s.ID
+                                            select i).Single();
+                        db.PostingSkills.Remove(selectedItem);
+                    }
+                }
+            }
         }
 
         private void UpdateLocation(string[] selectedLocation, int id, Posting postingToUpdate)
@@ -371,6 +471,7 @@ namespace JobPosting.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Posting posting = db.Postings.Find(id);
             if (User.IsInRole("Hiring Team"))
             {
@@ -385,6 +486,7 @@ namespace JobPosting.Controllers
             }
             ViewBag.JobRequirements = db.JobRequirements.Where(j => j.PostingID == id).OrderBy(a => a.QualificationID);
             ViewBag.JobLocations = db.JobLocations.Where(jl => jl.PostingID == id);
+            ViewBag.PostingSkills = db.PostingSkills.Where(ps => ps.PostingID == id);
             return View(posting);
         }
 
@@ -407,13 +509,43 @@ namespace JobPosting.Controllers
             }
             ViewBag.JobRequirements = db.JobRequirements.Where(j => j.PostingID == id).OrderBy(a => a.QualificationID);
             ViewBag.JobLocations = db.JobLocations.Where(jl => jl.PostingID == id);
+            ViewBag.PostingSkills = db.PostingSkills.Where(ps => ps.PostingID == id);
 
             return View(posting);
+        }
+
+        [Authorize(Roles = "Admin, Manager, Hiring Team")]
+        public ActionResult DeleteTemplate(string name)
+        {
+            if (name == "")
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            PostingTemplate postingTemplate = db.PostingTemplates
+                                                .Where(p => p.templateName == name).SingleOrDefault();
+            try
+            {
+                db.PostingTemplates.Remove(postingTemplate);
+                db.SaveChanges();
+                
+            }
+            catch (DataException)
+            {
+                ModelState.AddModelError("", "Unable to save changes. Try Again!");
+            }
+            return RedirectToAction("Index");
+
         }
 
         private void PopulateDropdownList(Posting posting = null)
         {
             ViewBag.PositionID = new SelectList(db.Positions.OrderBy(p => p.PositionDescription), "ID", "PositionDescription", posting?.PositionID);
+        }
+
+        private void PopulateDropdownListTemplate(PostingTemplate postingTemplate = null)
+        {
+            ViewBag.PositionID = new SelectList(db.Positions.OrderBy(p => p.PositionDescription), "ID", "PositionDescription", postingTemplate?.PositionID);
+            
         }
 
         private void PopulateQualification()
@@ -436,6 +568,79 @@ namespace JobPosting.Controllers
                 });
             }
             ViewBag.Day = viewModel;
+        }
+
+        private void SavedAsTemplate_fn(string templateName, Posting posting, string selectedRequirements, string selectedSkills, string selectedLocations, string selectedDays)
+        {
+            //var postingTemplateHS = new HashSet<int>(db.PostingTemplates.Where(pt => pt.PositionID == posting.PositionID).Select(pt => pt.PositionID));
+
+            PostingTemplate postingTemplate = new PostingTemplate
+            {
+                templateName = templateName,
+                pstNumPosition = posting.pstNumPosition,
+                pstFTE = posting.pstFTE,
+                pstSalary = posting.pstSalary,
+                pstCompensationType = posting.pstCompensationType,
+                pstJobDescription = posting.pstJobDescription,
+                pstOpenDate = posting.pstOpenDate,
+                pstEndDate = posting.pstEndDate,
+                PositionID = posting.PositionID,
+                RequirementIDs = selectedRequirements,
+                SkillIDs = selectedSkills,
+                LocationIDs = selectedLocations,
+                dayIDs = selectedDays
+
+            };
+
+            //if (postingTemplateHS.Contains(posting.PositionID))
+            //{
+            //    var postingTemplateToDelete = db.PostingTemplates.Find(posting.PositionID);
+            //    db.PostingTemplates.Remove(postingTemplateToDelete);
+            //}
+           
+            db.PostingTemplates.Add(postingTemplate);
+
+            
+            
+        }
+
+        private Posting Template_fn(string name, Posting posting)
+        {
+                // retrieving record from PostingTemplate table by Template Name (Unique)
+                var postingTemplate = db.PostingTemplates.Where(p => p.templateName == name).SingleOrDefault();
+
+                // Assigned record of postingTemplate to Posting Object
+                // to be able to use the record from postingTemplate table in View/Create
+                posting = new Posting
+                {
+                    pstNumPosition = postingTemplate.pstNumPosition,
+                    pstFTE = postingTemplate.pstFTE,
+                    pstSalary = postingTemplate.pstSalary,
+                    pstCompensationType = postingTemplate.pstCompensationType,
+                    pstJobDescription = postingTemplate.pstJobDescription,
+                    pstOpenDate = postingTemplate.pstOpenDate,
+                    pstEndDate = postingTemplate.pstEndDate,
+                    PositionID = postingTemplate.PositionID
+
+                };
+
+                // Populatedropdownlist for PositionID
+                PopulateDropdownList(posting);
+
+                // Passing values to View/Create and Convert IDs string to List ( to be able to use Contains function)
+                ViewBag.LocationIDs = ConvertStringToList.ConvertToInt(postingTemplate.LocationIDs);
+                ViewBag.SkillIDs = ConvertStringToList.ConvertToInt(postingTemplate.SkillIDs);
+                ViewBag.RequirementIDs = ConvertStringToList.ConvertToInt(postingTemplate.RequirementIDs);
+                ViewBag.DayIDs = ConvertStringToList.ConvertToInt(postingTemplate.dayIDs);
+                ViewBag.Days = db.Days;
+                PopulateQualification();
+                ViewBag.Locations = db.Locations;
+                ViewBag.Skills = db.Skills;
+                ViewBag.Flag = true;
+
+
+            return posting;
+            
         }
 
         protected override void Dispose(bool disposing)

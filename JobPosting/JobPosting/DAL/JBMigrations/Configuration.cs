@@ -182,6 +182,15 @@ namespace JobPosting.DAL.JBMigrations
             Locations.ForEach(a => context.Locations.AddOrUpdate(n => n.ID, a));
             SaveChanges(context);
 
+            var Skills = new List<Skill>
+            {
+                new Skill { SkillDescription = "C#"},
+                new Skill { SkillDescription = "JQuery"},
+                new Skill { SkillDescription = "C++"}
+            };
+            Skills.ForEach(a => context.Skills.AddOrUpdate(n => n.ID, a));
+            SaveChanges(context);
+
 
             //var jobRequirements = new List<JobRequirement>
             //            {
@@ -221,6 +230,28 @@ namespace JobPosting.DAL.JBMigrations
             applicationQualifications.ForEach(a => context.ApplicationQualification.AddOrUpdate(n => new { n.ApplicationID, n.QualificationID }, a));
             SaveChanges(context);
 
+            var postingSkills = new List<PostingSkill>
+            {
+                new PostingSkill { PostingID = 1, SkillID = 1},
+                new PostingSkill { PostingID = 1, SkillID = 2},
+                new PostingSkill { PostingID = 1, SkillID = 3}
+            };
+            postingSkills.ForEach(a => context.PostingSkills.AddOrUpdate(n => new { n.PostingID, n.SkillID }, a));
+            SaveChanges(context);
+
+            var applicationSkills = new List<ApplicationSkill>
+            {
+                new ApplicationSkill { ApplicationId = 1, skillID = 2}
+            };
+            applicationSkills.ForEach(a => context.ApplicationSkills.AddOrUpdate(n => new { n.ApplicationId, n.skillID }, a));
+            SaveChanges(context);
+
+
+            //var postingTemplate = new List<PostingTemplate>
+            //{
+
+            //    new PostingTemplate { RequirementIDs = "1,2,3"  }
+            //};
 
             //var applicationsCart = new List<ApplicationCart>
             //            {
