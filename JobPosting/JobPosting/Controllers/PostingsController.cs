@@ -81,7 +81,7 @@ namespace JobPosting.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin, Manager, Hiring Team")]
-        public ActionResult Create([Bind(Include = "ID,pstNumPosition,pstFTE,pstSalary,pstCompensationType,pstJobDescription,pstOpenDate,pstEndDate,PositionID"/*,CreatedBy,CreatedOn,UpdatedBy,UpdatedOn,RowVersion*/)] Posting posting, string[] selectedQualification, string[] selectedDay, string[] selectedLocation, string[] selectedSkill, bool? SavedAsTemplate, string templateName, string name)
+        public ActionResult Create([Bind(Include = "ID,pstNumPosition,pstFTE,pstSalary,pstCompensationType,pstJobDescription,pstOpenDate,pstEndDate,PositionID"/*,CreatedBy,CreatedOn,UpdatedBy,UpdatedOn,RowVersion*/)] Posting posting, string[] selectedQualification, string[] selectedDay, string[] selectedLocation, string[] selectedSkill, bool? SavedAsTemplate, string templateName)
         {
             try
             {
@@ -189,9 +189,9 @@ namespace JobPosting.Controllers
                 }
             }
 
-            if (name != null)
+            if (templateName != null)
             {
-                posting = Template_fn(name, posting);
+                posting = Template_fn(templateName, posting);
                 return View(posting);
             }
 
