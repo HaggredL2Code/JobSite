@@ -1,26 +1,33 @@
-﻿@using Microsoft.AspNet.Identity
+﻿
+
+
+@using Microsoft.AspNet.Identity
 @if (Request.IsAuthenticated)
 {
-    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm"}))
     {
     @Html.AntiForgeryToken()
         var userName = (Session["userName"] != null) ? Session["userName"] : User.Identity.Name;
-    <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown"><a href="#" data-toggle="dropdown" class="dropdown-toggle">Welcome @userName - Menu<b class="caret"></b></a>
+    <ul class="nav navbar-nav ml-auto">
+
+        <li class=" dropdown" ><a href="#" data-toggle="dropdown" class="dropdown-toggle nav-link">Welcome @userName - Menu<b class="caret"></b></a>
+
             <ul class="dropdown-menu">
                 <li>@Html.ActionLink("Change Security Settings", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
                 <li class="divider"></li>
                 <li>@Html.ActionLink("Manage Profile", "Details", "Applicants")</li>
             </ul>
+
         </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+
+        <li><a class="nav-link" href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
     </ul>
     }
 }
 else
 {
-    <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "nav-link navbar-right" })</li>
-        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "nav-link navbar-right" })</li>
+    <ul class="nav navbar-nav ml-auto">
+        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "nav-link" })</li>
+        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "nav-link" })</li>
     </ul>
 }
