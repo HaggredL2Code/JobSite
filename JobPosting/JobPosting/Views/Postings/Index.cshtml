@@ -13,6 +13,9 @@
         <ul class="dropdown-menu">
             <li>@Html.ActionLink("Create New", "Create")</li>
             <li class="divider"></li>
+
+
+
             @foreach (var p in Positions)
             {
                 string positionName = p.PositionDescription;
@@ -37,6 +40,19 @@
         </ul>
     </li>
 </ul>
+
+@using (Html.BeginForm())
+{
+    <p>
+        Select By Job Group: @Html.DropDownList("JobGroupID", null, "All Job Groups", htmlAttributes: new { @class = "form-control" }) <br>
+        Select By Position:  @Html.DropDownList("PositionID", null, "All Positions", htmlAttributes: new { @class = "form-control" }) <br>
+        Select By Code: @Html.TextBox("SearchString", null, new { @class = "form-control" }) <br>
+        <input type="submit" value="Filter" class="btn btn-default" />
+        @Html.ActionLink("Clear", "Index")
+    </p>
+}
+
+
 <table class="table">
     <tr>
         <th>

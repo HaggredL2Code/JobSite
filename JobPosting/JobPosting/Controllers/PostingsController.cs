@@ -20,15 +20,38 @@ namespace JobPosting.Controllers
         private JBEntities db = new JBEntities();
 
         // GET: Postings
-        public ActionResult Index()
+        public ActionResult Index(string SearchPosition, int? PositionID, int? JobGroupID)
         {
-            var postings = db.Postings.Include(p => p.Position);
+            PopulateDropdownList();
+
+            var postings = db.Postings.Include(p => p.Position.JobGroup);
             var PostingTemplates = ( from pt in db.PostingTemplates
                                  select pt.PositionID).Distinct().ToArray();
             ViewBag.JobRequirements = db.JobRequirements.OrderBy(a => a.QualificationID);
             ViewBag.JobLocations = db.JobLocations.OrderBy(a => a.LocationID);
             ViewBag.Positions = db.Positions.Where(p => PostingTemplates.Contains(p.ID));
             ViewBag.postingTemplate = db.PostingTemplates;
+
+            if (PositionID.HasValue)
+            {
+                postings = postings.Where(u => u.PositionID == PositionID);
+
+            }
+            if (JobGroupID.HasValue)
+            {
+                postings = postings.Where(u => u.Position.JobGroupID == JobGroupID);
+
+            }
+            if (!String.IsNullOrEmpty(SearchPosition))
+            {
+                postings = postings.Where(p => p.Position.PositionCode.ToUpper().Contains(SearchPosition.ToUpper()));
+            }
+
+            postings = postings.OrderBy(p => p.pstEndDate);
+
+
+
+
             return View(postings.ToList());
         }
 
