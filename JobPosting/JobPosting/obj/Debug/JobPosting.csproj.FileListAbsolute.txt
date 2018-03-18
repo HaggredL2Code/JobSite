@@ -368,3 +368,9 @@ C:\Users\Administrator\Documents\GitHub\JobSite\JobPosting\JobPosting\bin\Micros
 C:\Users\Administrator\Documents\GitHub\JobSite\JobPosting\JobPosting\bin\Microsoft.AspNet.SignalR.Client.xml
 C:\Users\Administrator\Documents\GitHub\JobSite\JobPosting\JobPosting\bin\Microsoft.AspNet.SignalR.Core.xml
 C:\Users\Administrator\Documents\GitHub\JobSite\JobPosting\JobPosting\bin\Microsoft.AspNet.SignalR.SystemWeb.xml
+C:\Users\pevip\OneDrive\Documents\GitHub\JobSite\JobPosting\JobPosting\bin\Microsoft.AspNet.SignalR.Client.dll
+C:\Users\pevip\OneDrive\Documents\GitHub\JobSite\JobPosting\JobPosting\bin\Microsoft.AspNet.SignalR.Core.dll
+C:\Users\pevip\OneDrive\Documents\GitHub\JobSite\JobPosting\JobPosting\bin\Microsoft.AspNet.SignalR.SystemWeb.dll
+C:\Users\pevip\OneDrive\Documents\GitHub\JobSite\JobPosting\JobPosting\bin\Microsoft.AspNet.SignalR.Client.xml
+C:\Users\pevip\OneDrive\Documents\GitHub\JobSite\JobPosting\JobPosting\bin\Microsoft.AspNet.SignalR.Core.xml
+C:\Users\pevip\OneDrive\Documents\GitHub\JobSite\JobPosting\JobPosting\bin\Microsoft.AspNet.SignalR.SystemWeb.xml

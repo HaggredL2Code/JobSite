@@ -81,7 +81,7 @@ namespace JobPosting.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin, Manager, Hiring Team")]
-        public ActionResult Create([Bind(Include = "ID,pstNumPosition,pstFTE,pstSalary,pstCompensationType,pstJobDescription,pstOpenDate,pstEndDate,PositionID"/*,CreatedBy,CreatedOn,UpdatedBy,UpdatedOn,RowVersion*/)] Posting posting, string[] selectedQualification, string[] selectedDay, string[] selectedLocation, string[] selectedSkill, bool SavedAsTemplate, string templateName, string name)
+        public ActionResult Create([Bind(Include = "ID,pstNumPosition,pstFTE,pstSalary,pstCompensationType,pstJobDescription,pstOpenDate,pstEndDate,PositionID"/*,CreatedBy,CreatedOn,UpdatedBy,UpdatedOn,RowVersion*/)] Posting posting, string[] selectedQualification, string[] selectedDay, string[] selectedLocation, string[] selectedSkill, bool? SavedAsTemplate, string templateName, string name)
         {
             try
             {
@@ -89,6 +89,10 @@ namespace JobPosting.Controllers
                 string Requirements = "";
                 string Days = "";
                 string Skills = "";
+                if (SavedAsTemplate == null)
+                {
+                    SavedAsTemplate = false;
+                }
                 if (selectedQualification != null)
                 {
                     foreach (var r in selectedQualification)
@@ -152,7 +156,7 @@ namespace JobPosting.Controllers
                 
                 if (ModelState.IsValid)
                 {
-                    if (SavedAsTemplate)
+                    if ((bool)SavedAsTemplate)
                     {
                         SavedAsTemplate_fn(templateName, posting, Requirements, Skills, Locations, Days);
                     }
@@ -197,6 +201,11 @@ namespace JobPosting.Controllers
             PopulateDropdownList(posting);
             PopulateAssignedDay(posting);
             return View(posting);
+        }
+
+        public ActionResult SavedPosting()
+        {
+            return View();
         }
 
         // GET: Postings/Edit/5

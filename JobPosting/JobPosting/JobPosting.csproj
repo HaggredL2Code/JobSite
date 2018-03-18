@@ -372,6 +372,7 @@
     <Content Include="Views\Positions\Edit.cshtml" />
     <Content Include="Views\Positions\Index.cshtml" />
     <Content Include="Views\Home\Chat.cshtml" />
+    <Content Include="Views\Postings\SavedPosting.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
