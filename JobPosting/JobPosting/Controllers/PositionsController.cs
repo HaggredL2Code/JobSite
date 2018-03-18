@@ -17,9 +17,30 @@ namespace JobPosting.Controllers
         private JBEntities db = new JBEntities();
 
         // GET: Positions
-        public ActionResult Index()
+        public ActionResult Index(int? UnionID, string SearchString, int? JobGroupID)
         {
+
+            PopulateDropdownList();
+
             var positions = db.Positions.Include(p => p.JobGroup).Include(p => p.Union);
+            if (UnionID.HasValue)
+            {
+                positions = positions.Where(u => u.UnionID == UnionID);
+
+            }
+
+            if (JobGroupID.HasValue)
+            {
+                positions = positions.Where(u => u.JobGroupID == JobGroupID);
+
+            }
+
+            if (!String.IsNullOrEmpty(SearchString))
+            {
+                positions = positions.Where(p => p.PositionCode.ToUpper().Contains(SearchString.ToUpper()));
+            }
+
+
             return View(positions.ToList());
         }
 

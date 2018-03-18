@@ -20,7 +20,7 @@ namespace JobPosting.Controllers
         private JBEntities db = new JBEntities();
 
         // GET: Postings
-        public ActionResult Index(string SearchPosition, int? PositionID, int? JobGroupID)
+        public ActionResult Index(int? PositionID, int? JobGroupID, int? Location, int? PaymentTypeID)
         {
             PopulateDropdownList();
 
@@ -42,15 +42,22 @@ namespace JobPosting.Controllers
                 postings = postings.Where(u => u.Position.JobGroupID == JobGroupID);
 
             }
-            if (!String.IsNullOrEmpty(SearchPosition))
+
+            if (PaymentTypeID.HasValue)
             {
-                postings = postings.Where(p => p.Position.PositionCode.ToUpper().Contains(SearchPosition.ToUpper()));
+                postings = postings.Where(u => u.pstCompensationType == PaymentTypeID);
+            }
+
+            if (Location.HasValue)
+            {
+                var postingID = (from jl in db.JobLocations
+                                 where jl.LocationID == Location
+                                 select jl.PostingID
+                                  ).ToArray();
+                postings = postings.Where(p => postingID.Contains(p.ID));
             }
 
             postings = postings.OrderBy(p => p.pstEndDate);
-
-
-
 
             return View(postings.ToList());
         }
