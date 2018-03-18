@@ -21,14 +21,6 @@ namespace JobPosting.Models
 
         public int ID { get; set; }
 
-        //[Display(Name = "Job Title")]
-        //public string pstJobTitle
-        //{
-        //    get {
-        //        return Job?.JobDescription;
-        //    }
-        //}
-
         [Display(Name = "Number of Position")]
         [Required(ErrorMessage = "Number of Position is required.")]
         [Range(1,9999, ErrorMessage = "Invalid Number of Position.")]

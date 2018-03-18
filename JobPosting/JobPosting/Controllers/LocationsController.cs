@@ -17,10 +17,19 @@ namespace JobPosting.Controllers
         private JBEntities db = new JBEntities();
 
         // GET: Locations
-        public ActionResult Index()
+        public ActionResult Index(string SearchString)
         {
-            return View(db.Locations.ToList());
+
+            var locations = db.Locations.Include(a => a.JobLocations);
+
+            if (!String.IsNullOrEmpty(SearchString))
+            {
+                locations = locations.Where(l => l.Address.ToUpper().Contains(SearchString.ToUpper()));
+            }
+
+            return View(locations.ToList());
         }
+
 
         // GET: Locations/Details/5
         public ActionResult Details(int? id)

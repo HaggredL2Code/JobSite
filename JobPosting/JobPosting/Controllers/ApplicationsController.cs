@@ -18,9 +18,17 @@ namespace JobPosting.Controllers
         private JBEntities db = new JBEntities();
 
         // GET: Applications
-        public ActionResult Index()
+        public ActionResult Index(string SearchPrioity, int? PostingID)
         {
+            PopulateDropdownList();
+
             IQueryable<Application> applications = db.Applications.Include(a => a.Applicant).Include(a => a.Posting).Include(a => a.BinaryFiles).Include(a => a.ApplicationsQualifications);
+
+            if (PostingID.HasValue)
+            {
+                applications = applications.Where(a => a.PostingID == PostingID);
+            }
+
             return View(applications.ToList());
         }
 
@@ -251,6 +259,11 @@ namespace JobPosting.Controllers
         {
             var resumeFile = db.BinaryFiles.Include(f => f.FileContent).Where(f => f.ID == id).SingleOrDefault();
             return File(resumeFile.FileContent.Content, resumeFile.FileContent.MimeType, resumeFile.FileName);
+        }
+
+        private void PopulateDropdownList(Application Application = null)
+        {
+            ViewBag.PostingID = new SelectList(db.Postings.OrderBy(j => j.PositionID), "ID", "Postings", Application?.PostingID);
         }
 
         protected override void Dispose(bool disposing)

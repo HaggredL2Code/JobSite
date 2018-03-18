@@ -10,6 +10,17 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+
+@using (Html.BeginForm())
+{
+    <p>
+        Select By Posting:  @Html.DropDownList("PostingID", null, "All Postings", htmlAttributes: new { @class = "form-control" }) <br>
+        <input type="submit" value="Filter" class="btn btn-default" />
+        @Html.ActionLink("Clear", "Index")
+    </p>
+
+}
+
 <table class="table">
     <tr>
 

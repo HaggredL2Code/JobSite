@@ -13,6 +13,9 @@
         <ul class="dropdown-menu">
             <li>@Html.ActionLink("Create New", "Create")</li>
             <li class="divider"></li>
+
+
+
             @foreach (var p in Positions)
             {
                 string positionName = p.PositionDescription;
@@ -37,11 +40,35 @@
         </ul>
     </li>
 </ul>
+
+@using (Html.BeginForm())
+{
+    <p>
+        Select By Job Group: @Html.DropDownList("JobGroupID", null, "All Job Groups", htmlAttributes: new { @class = "form-control" }) <br>
+        Select By Position:  @Html.DropDownList("PositionID", null, "All Positions", htmlAttributes: new { @class = "form-control" }) <br>
+        Select By Location:  @Html.DropDownList("Location", null, "All Locations", htmlAttributes: new { @class = "form-control" }) <br>
+        Select By Payment Type: @Html.DropDownList("PaymentTypeID", new SelectListItem[]
+       {
+                                  new SelectListItem{Value = "1", Text = "Hourly"},
+                                  new SelectListItem{Value = "2", Text = "Monthly"},
+                                  new SelectListItem{Value = "3", Text = "Yearly"}
+        }, "All Types", htmlAttributes: new { @class = "form-control" }) <br />
+        <input type="submit" value="Filter" class="btn btn-default" />
+        @Html.ActionLink("Clear", "Index")
+    </p>
+}
+
+
 <table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Position.PositionCode)
         </th>
+        
+        <th>
+            @Html.DisplayNameFor(model => model.Position.JobGroupID)
+        </th>
+
         <th>
             @Html.DisplayNameFor(model => model.Position.PositionDescription)
         </th>
@@ -71,6 +98,9 @@
         <td>
             @Html.DisplayFor(modelItem => item.Position.PositionCode)
         </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Position.JobGroupID)
+            </td>
         <td>
             @Html.ActionLink(item.Position.PositionDescription.ToString(), "Details", new { id = item.ID })
         </td>

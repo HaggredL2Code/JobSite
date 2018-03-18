@@ -20,15 +20,45 @@ namespace JobPosting.Controllers
         private JBEntities db = new JBEntities();
 
         // GET: Postings
-        public ActionResult Index()
+        public ActionResult Index(int? PositionID, int? JobGroupID, int? Location, int? PaymentTypeID)
         {
-            var postings = db.Postings.Include(p => p.Position);
+            PopulateDropdownList();
+
+            var postings = db.Postings.Include(p => p.Position).Include(p => p.Position.JobGroup);
             var PostingTemplates = ( from pt in db.PostingTemplates
                                  select pt.PositionID).Distinct().ToArray();
             ViewBag.JobRequirements = db.JobRequirements.OrderBy(a => a.QualificationID);
             ViewBag.JobLocations = db.JobLocations.OrderBy(a => a.LocationID);
             ViewBag.Positions = db.Positions.Where(p => PostingTemplates.Contains(p.ID));
             ViewBag.postingTemplate = db.PostingTemplates;
+
+            if (PositionID.HasValue)
+            {
+                postings = postings.Where(u => u.PositionID == PositionID);
+
+            }
+            if (JobGroupID.HasValue)
+            {
+                postings = postings.Where(u => u.Position.JobGroupID == JobGroupID);
+            }
+
+            if (PaymentTypeID.HasValue)
+            {
+                postings = postings.Where(u => u.pstCompensationType == PaymentTypeID);
+            }
+
+            if (Location.HasValue)
+            {
+                var postingID = (from jl in db.JobLocations
+                                 where jl.LocationID == Location
+                                 select jl.PostingID
+                                  ).ToArray();
+                postings = postings.Where(p => postingID.Contains(p.ID));
+            }
+            
+
+            postings = postings.OrderBy(p => p.pstEndDate);
+
             return View(postings.ToList());
         }
 
@@ -540,6 +570,8 @@ namespace JobPosting.Controllers
         private void PopulateDropdownList(Posting posting = null)
         {
             ViewBag.PositionID = new SelectList(db.Positions.OrderBy(p => p.PositionDescription), "ID", "PositionDescription", posting?.PositionID);
+            ViewBag.JobGroupID = new SelectList(db.JobGroups.OrderBy(p => p.GroupTitle), "ID", "GroupTitle", posting?.Position.JobGroupID);
+            ViewBag.Location = new SelectList(db.Locations.OrderBy(l => l.Address), "ID", "Address");
         }
 
         private void PopulateDropdownListTemplate(PostingTemplate postingTemplate = null)
