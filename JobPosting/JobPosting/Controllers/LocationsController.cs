@@ -48,7 +48,7 @@ namespace JobPosting.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,CityID,Street")] Location location)
+        public ActionResult Create([Bind(Include = "ID,CityID,Address")] Location location)
         {
             if (ModelState.IsValid)
             {
@@ -79,7 +79,7 @@ namespace JobPosting.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,CityID,Street")] Location location)
+        public ActionResult Edit([Bind(Include = "ID,CityID,Address")] Location location)
         {
             if (ModelState.IsValid)
             {

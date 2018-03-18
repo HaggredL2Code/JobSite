@@ -423,11 +423,6 @@
     <Content Include="Views\Applications\Details.cshtml" />
     <Content Include="Views\Applications\Edit.cshtml" />
     <Content Include="Views\Applications\Index.cshtml" />
-    <Content Include="Views\ApplicationCarts\Create.cshtml" />
-    <Content Include="Views\ApplicationCarts\Delete.cshtml" />
-    <Content Include="Views\ApplicationCarts\Details.cshtml" />
-    <Content Include="Views\ApplicationCarts\Edit.cshtml" />
-    <Content Include="Views\ApplicationCarts\Index.cshtml" />
     <Content Include="Views\Archieves\Create.cshtml" />
     <Content Include="Views\Archieves\Delete.cshtml" />
     <Content Include="Views\Archieves\Details.cshtml" />
