@@ -46,7 +46,7 @@ namespace JobPosting.Controllers
             {
                 postings = postings.Where(u => u.pstCompensationType == PaymentTypeID);
             }
-/*
+
             if (Location.HasValue)
             {
                 var postingID = (from jl in db.JobLocations
@@ -55,7 +55,7 @@ namespace JobPosting.Controllers
                                   ).ToArray();
                 postings = postings.Where(p => postingID.Contains(p.ID));
             }
-            */
+            
 
             postings = postings.OrderBy(p => p.pstEndDate);
 
@@ -570,6 +570,7 @@ namespace JobPosting.Controllers
         private void PopulateDropdownList(Posting posting = null)
         {
             ViewBag.PositionID = new SelectList(db.Positions.OrderBy(p => p.PositionDescription), "ID", "PositionDescription", posting?.PositionID);
+            ViewBag.JobGroupID = new SelectList(db.JobGroups.OrderBy(p => p.GroupTitle), "ID", "GroupTitle", posting?.Position.JobGroupID);
         }
 
         private void PopulateDropdownListTemplate(PostingTemplate postingTemplate = null)
