@@ -4,82 +4,7 @@
     ViewBag.Title = "Create";
 }
 
-<script src="~/Scripts/jquery-1.10.2.js"></script>
-<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
-<script>
-    $(document).ready(function () {
-        
-        var selectedLocation = [];
-        var selectedSkills = [];
-        var selectedDays = [];
-        var selectedQualifications = [];
-        $("#submit").click(function () {
-            var posting = {};
-            if (!Cookies.get("Count")) {
-                var count = 0
-            }
-            else {
-                var count = parseInt(Cookies.get("Count"));
-            }
-            count += 1;
-            $("#selectedLocation:checked").each(function (e) {
-                selectedLocation.push($(this).val());
-            });
-            $("#selectedSkill:checked").each(function (e) {
-                selectedSkills.push($(this).val());
-            });
-            $("#selectedDay:checked").each(function (e) {
-                selectedDays.push($(this).val());
-            });
-            $("#selectedQualification:checked").each(function (e) {
-                selectedQualifications.push($(this).val());
-            });
 
-            posting = {
-                ID: count,
-                pstNumPosition: $("#pstNumPosition").val(),
-                pstFTE: $("#pstFTE").val(),
-                pstCompensationType: $("#pstCompensationType").val(),
-                pstSalary: $("#pstSalary").val(),
-                pstJobDescription: $("#pstJobDescription").val(),
-                pstOpenDate: $("#pstOpenDate").val(),
-                pstEndDate: $("#pstEndDate").val(),
-                PositionID: $("#PositionID").val(),
-                selectedLocation: selectedLocation,
-                selectedSkills: selectedSkills,
-                selectedDays: selectedDays,
-                selectedQualifications: selectedQualifications,
-                //Roles: userRole
-            };
-
-            var jsonStr = JSON.stringify(posting);
-            localStorage.setItem("Posting" + count.toString(), jsonStr);
-            Cookies.set("Count", count, { expire: 365, path: "../Postings" });
-            for (var i = 1; i <= count; i++)
-            {
-                var postingValue = localStorage.getItem("Posting" + i.toString());
-                //var postingObj = JSON.parse(postingValue);
-                console.log(postingValue);
-                console.log(i);
-            }
-            console.log(count);
-        });
-        $("#SavedAsTemplate").attr("value", "false");
-        $("#SavedAsTemplate").change(function () {
-            if (this.checked) {
-                $("#templateName").toggle("slow");
-                $("#lblTemplate").toggle("slow");
-                $("#SavedAsTemplate").attr("value", "true");
-            }
-            else {
-                $("#templateName").toggle("slow");
-                $("#lblTemplate").toggle("slow");
-                $("#SavedAsTemplate").attr("value", "false");
-            }
-        });
-    });
-</script>
 
 <h2>Create</h2>
 
@@ -139,8 +64,8 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.pstOpenDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.pstOpenDate, new { htmlAttributes = new { @class = "form-control" } })
+            <div class="col-md-10"> 
+                @Html.EditorFor(model => model.pstOpenDate ,new { htmlAttributes = new { @class = "form-control date-picker", onkeydown = "return false", onpaste = "return false" } })
                 @Html.ValidationMessageFor(model => model.pstOpenDate, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -148,7 +73,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.pstEndDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.pstEndDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.pstEndDate, new { htmlAttributes = new { @class = "form-control date-picker", onkeydown = "return false", onpaste = "return false" } })
                 @Html.ValidationMessageFor(model => model.pstEndDate, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -397,4 +322,105 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/Content/jquery-ui-timepicker-addon.min.css" rel="stylesheet" />
+    @*<script src="~/Scripts/jquery-1.12.4.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>*@
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script src="~/Scripts/jquery-ui-timepicker-addon.min.js"></script>
+    <script>
+        $(document).ready(function () {
+        
+            var selectedLocation = [];
+            var selectedSkills = [];
+            var selectedDays = [];
+            var selectedQualifications = [];
+            $(".date-picker").datetimepicker({
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "-100:+10",
+                dateFormat: "yy-mm-dd",
+                controlType: "select",
+                timeFormat: "HH:mm",
+                ampm: true
+            });
+
+            jQuery.validator.methods.date = function (value, element) {
+                var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+                if (isChrome) {
+                    var d = new Date();
+                    return this.optional(element) || !/Invalid|NaN/.test(new Date(d.toLocaleDateString(value)));
+                } else {
+                    return this.optional(element) || !/Invalid|NaN/.test(new Date(value));
+                }
+            };
+
+            $("#submit").click(function () {
+                var posting = {};
+                if (!Cookies.get("Count")) {
+                    var count = 0
+                }
+                else {
+                    var count = parseInt(Cookies.get("Count"));
+                }
+                count += 1;
+                $("#selectedLocation:checked").each(function (e) {
+                    selectedLocation.push($(this).val());
+                });
+                $("#selectedSkill:checked").each(function (e) {
+                    selectedSkills.push($(this).val());
+                });
+                $("#selectedDay:checked").each(function (e) {
+                    selectedDays.push($(this).val());
+                });
+                $("#selectedQualification:checked").each(function (e) {
+                    selectedQualifications.push($(this).val());
+                });
+
+                posting = {
+                    ID: count,
+                    pstNumPosition: $("#pstNumPosition").val(),
+                    pstFTE: $("#pstFTE").val(),
+                    pstCompensationType: $("#pstCompensationType").val(),
+                    pstSalary: $("#pstSalary").val(),
+                    pstJobDescription: $("#pstJobDescription").val(),
+                    pstOpenDate: $("#pstOpenDate").val(),
+                    pstEndDate: $("#pstEndDate").val(),
+                    PositionID: $("#PositionID").val(),
+                    selectedLocation: selectedLocation,
+                    selectedSkills: selectedSkills,
+                    selectedDays: selectedDays,
+                    selectedQualifications: selectedQualifications,
+                    //Roles: userRole
+                };
+
+                var jsonStr = JSON.stringify(posting);
+                localStorage.setItem("Posting" + count.toString(), jsonStr);
+                Cookies.set("Count", count, { expire: 365, path: "../Postings" });
+                for (var i = 1; i <= count; i++)
+                {
+                    var postingValue = localStorage.getItem("Posting" + i.toString());
+                    //var postingObj = JSON.parse(postingValue);
+                    console.log(postingValue);
+                    console.log(i);
+                }
+                console.log(count);
+            });
+            $("#SavedAsTemplate").attr("value", "false");
+            $("#SavedAsTemplate").change(function () {
+                if (this.checked) {
+                    $("#templateName").toggle("slow");
+                    $("#lblTemplate").toggle("slow");
+                    $("#SavedAsTemplate").attr("value", "true");
+                }
+                else {
+                    $("#templateName").toggle("slow");
+                    $("#lblTemplate").toggle("slow");
+                    $("#SavedAsTemplate").attr("value", "false");
+                }
+            });
+        });
+</script>
+
 }

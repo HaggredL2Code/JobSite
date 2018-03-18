@@ -57,7 +57,7 @@ namespace JobPosting.Models
         [Display(Name = "Open Date")]
         [Required(ErrorMessage = "Open Date is required.")]
         [DataType(DataType.DateTime)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd hh:mm}", ApplyFormatInEditMode = true)]
         public DateTime pstOpenDate {
             get {
                 return openDate;
@@ -70,7 +70,7 @@ namespace JobPosting.Models
         [Display(Name = "Closing Date")]
         [Required(ErrorMessage = "Closing Date is required.")]
         [DataType(DataType.DateTime)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd hh:mm}", ApplyFormatInEditMode = true)]
         public DateTime pstEndDate { get; set; }
 
         public bool Enabled {

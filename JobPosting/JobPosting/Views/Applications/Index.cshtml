@@ -7,9 +7,6 @@
 
 <h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
 
@@ -27,9 +24,9 @@
 
         
  
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.Posting.pstJobDescription)
-        </th>
+        </th>*@
         <th>
             @Html.DisplayNameFor(model => model.Priority)
         </th>
@@ -37,7 +34,13 @@
             Applicant's Qualifications
         </th>
         <th>
+            Applicant's Skills
+        </th>
+        <th>
             Resume
+        </th>
+        <th>
+            Comment
         </th>
         <th></th>
     </tr>
@@ -55,9 +58,9 @@
         <td>
             @Html.DisplayFor(modelItem => item.Applicant.apFullName)
         </td>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.Posting.pstJobDescription)
-        </td>
+        </td>*@
         <td>
             @Html.DisplayFor(modelItem => item.Priority)
         </td>
@@ -85,14 +88,39 @@
             }
         </td>
         <td>
+            
+            @foreach (var ps in item.Posting.PostingSkills)
+            {
+                bool flag = true;
+                foreach (var s in item.ApplicationSkills)
+                {
+                    if (ps.SkillID == s.skillID)
+                    {
+
+                        <p style="color:green">@ps.Skill.SkillDescription</p>
+                        flag = false;
+                        break;
+                    }
+
+                }
+                if (flag)
+                {
+                        <p style="color:red">@ps.Skill.SkillDescription</p>
+                }
+
+            }
+        </td>
+        <td>
             @foreach (var f in item.BinaryFiles)
             {
                 @: @Html.ActionLink(f.FileName, "Download", new { id = f.ID})
             }
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+            @Html.DisplayFor(modelItem => item.Comment)
+        </td>
+        <td>
+            @Html.ActionLink("Details", "Details", new { id = item.ID, postingID = item.Posting.ID }) |
             @Html.ActionLink("Delete", "Delete", new { id = item.ID })
         </td>
     </tr>

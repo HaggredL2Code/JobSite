@@ -34,6 +34,11 @@ namespace JobPosting.Models
         [Required(ErrorMessage = "You have to specify Applicant.")]
         public int ApplicantID { get; set; }
 
+        [Display(Name = "Comment")]
+        [StringLength(2000, ErrorMessage = "Comment must be less than 2000 characters")]
+        [DataType(DataType.MultilineText)]
+        public string Comment { get; set; }
+
         //[Display(Name = "Apply Date")]
         //public DateTime ApplyDate
         //{

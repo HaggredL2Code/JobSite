@@ -20,22 +20,28 @@ namespace JobPosting.Controllers
         // GET: Applications
         public ActionResult Index()
         {
-            IQueryable<Application> applications = db.Applications.Include(a => a.Applicant).Include(a => a.Posting).Include(a => a.BinaryFiles).Include(a => a.ApplicationsQualifications);
+            IQueryable<Application> applications = db.Applications.Include(a => a.Applicant).Include(a => a.Posting).Include(a => a.BinaryFiles).Include(a => a.ApplicationsQualifications).Include(a => a.ApplicationSkills);
             return View(applications.ToList());
         }
 
         // GET: Applications/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int? id, int? postingID)
         {
-            if (id == null)
+            if (id == null || postingID == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Application application = db.Applications.Find(id);
+            var posting = (from p in db.Postings
+                           where p.ID == postingID
+                           select p).SingleOrDefault();
             if (application == null)
             {
                 return HttpNotFound();
             }
+            ViewBag.posting = posting;
+            PopulateJobRequirements(posting.ID);
+            PopulatePostingSkills(posting.ID);
             return View(application);
         }
 
@@ -58,6 +64,8 @@ namespace JobPosting.Controllers
             ViewBag.applicantID = applicant;
             ViewBag.postingId = id;
             PopulateJobRequirements(posting.ID);
+            PopulatePostingSkills(posting.ID);
+
             return View();
         }
 
@@ -75,6 +83,18 @@ namespace JobPosting.Controllers
 
         }
 
+        private void PopulatePostingSkills(int postingID)
+        {
+            List<string> SkillName = new List<string>();
+            var postingSkills = db.PostingSkills.Where(ps => ps.PostingID == postingID);
+            foreach (var ps in postingSkills)
+            {
+                SkillName.Add(ps.Skill.SkillDescription);
+            }
+            ViewBag.postingSkills = postingSkills;
+            ViewBag.SkillName = SkillName;
+        }
+
 
 
 
@@ -85,7 +105,7 @@ namespace JobPosting.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Priority,PostingID,ApplicantID")] Application application, int? id, IEnumerable<HttpPostedFileBase> theFiles, string[] selectedQualification)
+        public ActionResult Create([Bind(Include = "ID,Priority,Comment,PostingID,ApplicantID")] Application application, int? id, IEnumerable<HttpPostedFileBase> theFiles, string[] selectedQualification, string[] selectedSkill)
         {
             if (id == null)
             {
@@ -109,6 +129,21 @@ namespace JobPosting.Controllers
                             QualificationID = qualificateToAdd.ID
                         };
                         db.ApplicationQualification.Add(applicationQualification);
+                    }
+                }
+                if (selectedSkill != null)
+                {
+                    foreach (var s in selectedSkill)
+                    {
+                        var skillToAdd = db.Skills.Find(int.Parse(s));
+                        ApplicationSkill applicationSkill = new ApplicationSkill
+                        {
+                            Application = application,
+                            ApplicationId = application.ID,
+                            Skill = skillToAdd,
+                            skillID = skillToAdd.ID
+                        };
+                        db.ApplicationSkills.Add(applicationSkill);
                     }
                 }
                 if (ModelState.IsValid)

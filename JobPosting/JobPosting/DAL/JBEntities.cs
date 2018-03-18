@@ -18,7 +18,6 @@ namespace JobPosting.DAL
 
         public DbSet<Applicant> Applicants { get; set; }
         public DbSet<Application> Applications { get; set; }
-        public DbSet<ApplicationCart> ApplicationCarts { get; set; }
         public DbSet<ApplicationQualification> ApplicationQualification { get; set; }
         public DbSet<Archive> Archives { get; set; }      
         public DbSet<Position> Positions { get; set; }
@@ -102,15 +101,6 @@ namespace JobPosting.DAL
                 .WithRequired(p => p.BinaryFile)
                 .WillCascadeOnDelete(true);
 
-            modelBuilder.Entity<ApplicationCart>()
-                .HasMany(a => a.BinaryFileTemps)
-                .WithRequired(p => p.ApplicationCart)
-                .WillCascadeOnDelete(true);
-
-            modelBuilder.Entity<BinaryFileTemp>()
-                .HasOptional(w => w.FileContentTemp)
-                .WithRequired(p => p.BinaryFileTemp)
-                .WillCascadeOnDelete(true);
         }
 
         public override int SaveChanges()

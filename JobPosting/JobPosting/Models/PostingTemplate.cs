@@ -25,8 +25,12 @@ namespace JobPosting.Models
 
         public string pstJobDescription { get; set; }
 
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd hh:mm}", ApplyFormatInEditMode = true)]
         public DateTime pstOpenDate { get; set; }
 
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd hh:mm}", ApplyFormatInEditMode = true)]
         public DateTime pstEndDate { get; set; }
 
         public int PositionID { get; set; }

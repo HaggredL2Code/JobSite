@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Details";
+    JobPosting.Models.Posting posting = ViewBag.posting;
 }
 
 <h2>Details</h2>
@@ -10,20 +11,22 @@
     <h4>Application</h4>
     <hr />
     <dl class="dl-horizontal">
+
+        
         <dt>
-            @Html.DisplayNameFor(model => model.Applicant.apFirstName)
+            @Html.DisplayNameFor(model => model.Applicant.apFormalName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Applicant.apFirstName)
+            @Html.DisplayFor(model => model.Applicant.apFormalName)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Posting.pstJobDescription)
+            @Html.DisplayNameFor(model => model.Comment)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Posting.pstJobDescription)
+            @Html.DisplayFor(model => model.Comment)
         </dd>
 
         <dt>
@@ -34,6 +37,71 @@
             @Html.DisplayFor(model => model.Priority)
         </dd>
 
+        <dt>
+            Requirements
+        </dt>
+        <dd>
+            
+            @foreach (var jq in Model.Posting.JobRequirements)
+            {
+                bool flag = true;
+                foreach (var aq in Model.ApplicationsQualifications)
+                {
+                    if (jq.QualificationID == aq.QualificationID)
+                    {
+
+                        <p style="color:green">@jq.Qualification.QlfDescription</p>
+                        flag = false;
+                        break;
+                    }
+
+                }
+                if (flag)
+                {
+                    <p style="color:red">@jq.Qualification.QlfDescription</p>
+                }
+
+            }
+        </dd>
+
+        <dt>
+            Skills
+        </dt>
+        <dd>
+            
+            @foreach (var ps in Model.Posting.PostingSkills)
+            {
+                bool flag = true;
+                foreach (var s in Model.ApplicationSkills)
+                {
+                    if (ps.SkillID == s.skillID)
+                    {
+
+                        <p style="color:green">@ps.Skill.SkillDescription</p>
+                        flag = false;
+                        break;
+                    }
+
+                }
+                if (flag)
+                {
+                        <p style="color:red">@ps.Skill.SkillDescription</p>
+                }
+
+            }
+        </dd>
+        @if (Model.BinaryFiles.Count != 0)
+        {
+            <dt>
+                Resume
+            </dt>
+            <dd>
+                @foreach (var f in Model.BinaryFiles)
+                {
+                    @: @Html.ActionLink(f.FileName, "Download", new { id = f.ID })
+                }
+            </dd>
+        }
     </dl>
 </div>
 <p>
