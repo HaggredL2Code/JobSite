@@ -5,6 +5,7 @@
     var Positions = ViewBag.Positions;
 }
 
+<br />
     <div class="row">
         <div class="col-10">
 
@@ -61,11 +62,11 @@
                             Select By Position:  @Html.DropDownList("PositionID", null, "All Positions", htmlAttributes: new { @class = "form-control" }) <br>
                             Select By Location:  @Html.DropDownList("Location", null, "All Locations", htmlAttributes: new { @class = "form-control" }) <br>
                             Select By Payment Type: @Html.DropDownList("PaymentTypeID", new SelectListItem[]
-{
-new SelectListItem{Value = "1", Text = "Hourly"},
-new SelectListItem{Value = "2", Text = "Monthly"},
-new SelectListItem{Value = "3", Text = "Yearly"}
-}, "All Types", htmlAttributes: new { @class = "form-control" }) <br />
+                                {
+                                    new SelectListItem{Value = "1", Text = "Hourly"},
+                                    new SelectListItem{Value = "2", Text = "Monthly"},
+                                    new SelectListItem{Value = "3", Text = "Yearly"}
+                                }, "All Types", htmlAttributes: new { @class = "form-control" }) <br />
                             <input type="submit" value="Filter" class="btn btn-default" />
                             @Html.ActionLink("Clear", "Index")
                         </p>

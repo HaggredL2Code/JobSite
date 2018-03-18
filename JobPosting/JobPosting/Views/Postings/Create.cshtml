@@ -78,321 +78,333 @@
         });
     });
 </script>
-
-<h2>Create</h2>
-
-
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Posting</h4>
+<br />
+<h2>Create Job Posting</h2>
         <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.pstNumPosition, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.pstNumPosition, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.pstNumPosition, "", new { @class = "text-danger" })
+
+        <div class="row">
+                <div class="col-6">   
+    @using (Html.BeginForm()) 
+    {
+        @Html.AntiForgeryToken()
+    
+
+
+        <div class="form-horizontal">
+
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.pstNumPosition, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.pstNumPosition, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.pstNumPosition, "", new { @class = "text-danger" })
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.pstFTE, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.pstFTE, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.pstFTE, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.pstJobDescription, htmlAttributes: new { @class = "control-label 2" })
+   
+                    @Html.EditorFor(model => model.pstJobDescription, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.pstJobDescription, "", new { @class = "text-danger" })
+   
             </div>
-        </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.pstFTE, htmlAttributes: new { @class = "control-label" })
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.pstCompensationType, "Compensation Type", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("pstCompensationType", new SelectListItem[]
-                                    {
-                        new SelectListItem { Value = "1", Text = "Hourly"},
-                        new SelectListItem { Value = "2", Text = "Monthly"},
-                        new SelectListItem { Value = "3", Text = "Yearly"}
-                                    }, "Select Compensation Type", htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.pstCompensationType, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.pstSalary, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.pstSalary, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.pstSalary, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.pstJobDescription, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.pstJobDescription, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.pstJobDescription, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.pstOpenDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.pstOpenDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.pstOpenDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.pstEndDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.pstEndDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.pstEndDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.PositionID, "Position", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("PositionID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.PositionID, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-           <div class="form-group">
-            <label class="control-label col-md-2">Locations</label>
-            <div class="col-md-offset-2 col-md-10">
-                <table>
-                    
-                        @{
-                            int cnt = 0;
-                            if (!ViewBag.Flag)
-                            {
-                                @: <tr>
-                                foreach (var l in ViewBag.Locations)
-                                {
-
-                                    if (cnt++ % 3 == 0)
-                                    {
-                                    @:</tr><tr>
-                                    }
-                                    @:<td>
-                                    <input type="checkbox"
-                                           name="selectedLocation"
-                                           id="selectedLocation"
-                                           value="@l.ID" />
-                                    @l.Address @:&nbsp;&nbsp;
-                                    @:</td>
-                                }
-                            @:</tr>
-                            }
-                            else
-                            {
-                                
-                                @:<tr>
-                                foreach (var l in ViewBag.Locations)
-                                {
-                                    bool Assigned = (ViewBag.LocationIDs.Contains(l.ID)) ? true : false;
-                                    if (cnt++ % 3 == 0)
-                                    {
-                                        @:</tr><tr>
-                                    }
-                                    @:<td>
-                                        <input type="checkbox"
-                                         name="selectedLocation"
-                                         id="selectedLocation"
-                                         value="@l.ID"
-                                         @(Html.Raw(Assigned ? "checked=\"checked\"" : "")) />
-                                         @l.Address @:&nbsp;&nbsp;
-                                    @:</td>
-                                }
-                                @:</tr>
-                            }
-                        }
-                    </table>
+                    @Html.EditorFor(model => model.pstFTE, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.pstFTE, "", new { @class = "text-danger" })
                 </div>
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.pstCompensationType, "Compensation Type", htmlAttributes: new { @class = "control-label " })
+
+                    @Html.DropDownList("pstCompensationType", new SelectListItem[]
+                                        {
+                            new SelectListItem { Value = "1", Text = "Hourly"},
+                            new SelectListItem { Value = "2", Text = "Monthly"},
+                            new SelectListItem { Value = "3", Text = "Yearly"}
+                                        }, "Select Compensation Type", htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.pstCompensationType, "", new { @class = "text-danger" })
+
             </div>
 
-        <div class="form-group">
-            <label class="control-label col-md-2">Skills</label>
-            <div class="col-md-offset-2 col-md-10">
-                <table>
+            <div class="form-group">
+                @Html.LabelFor(model => model.pstSalary, htmlAttributes: new { @class = "control-label " })
+  
+                    @Html.EditorFor(model => model.pstSalary, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.pstSalary, "", new { @class = "text-danger" })
+
+            </div>
+
+
+
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.PositionID, "Position", htmlAttributes: new { @class = "control-label" })
+           
+                    @Html.DropDownList("PositionID", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.PositionID, "", new { @class = "text-danger" })
+         
+            </div>
+
+               <div class="form-group">
+                <label class="control-label ">Locations</label>
+                <div class="col-md-offset-2">
+                    <table>
                     
-                        @{
-
-                            int cnt3 = 0;
-                            if (!ViewBag.Flag)
-                            {
-                                @: <tr>
-                                foreach (var s in ViewBag.Skills)
+                            @{
+                                int cnt = 0;
+                                if (!ViewBag.Flag)
                                 {
-
-                                    if (cnt3++ % 3 == 0)
+                                    @: <tr>
+                                    foreach (var l in ViewBag.Locations)
                                     {
+
+                                        if (cnt++ % 3 == 0)
+                                        {
                                         @:</tr><tr>
+                                        }
+                                        @:<td>
+                                        <input type="checkbox"
+                                               name="selectedLocation"
+                                               id="selectedLocation"
+                                               value="@l.ID" />
+                                        @l.Address @:&nbsp;&nbsp;
+                                        @:</td>
                                     }
-                                    @:<td>
+                                @:</tr>
+                                }
+                                else
+                                {
+                                
+                                    @:<tr>
+                                    foreach (var l in ViewBag.Locations)
+                                    {
+                                        bool Assigned = (ViewBag.LocationIDs.Contains(l.ID)) ? true : false;
+                                        if (cnt++ % 3 == 0)
+                                        {
+                                            @:</tr><tr>
+                                        }
+                                        @:<td>
+                                            <input type="checkbox"
+                                             name="selectedLocation"
+                                             id="selectedLocation"
+                                             value="@l.ID"
+                                             @(Html.Raw(Assigned ? "checked=\"checked\"" : "")) />
+                                             @l.Address @:&nbsp;&nbsp;
+                                        @:</td>
+                                    }
+                                    @:</tr>
+                                }
+                            }
+                        </table>
+                    </div>
+                </div>
+
+            <div class="form-group">
+                <label class="control-label">Skills</label>
+                <div class="col-md-offset-2 ">
+                    <table>
+                    
+                            @{
+
+                                int cnt3 = 0;
+                                if (!ViewBag.Flag)
+                                {
+                                    @: <tr>
+                                    foreach (var s in ViewBag.Skills)
+                                    {
+
+                                        if (cnt3++ % 3 == 0)
+                                        {
+                                            @:</tr><tr>
+                                        }
+                                        @:<td>
+                                            <input type="checkbox"
+                                                   name="selectedSkill"
+                                                   id="selectedSkill"
+                                                   value="@s.ID" />
+                                            @s.SkillDescription @:&nbsp;&nbsp;
+                                            @:</td>
+                                    }
+                                    @:</tr>
+                                }
+                                else
+                                {
+                                    @: <tr>
+                                    foreach (var s in ViewBag.Skills)
+                                    {
+                                        bool Assigned = (ViewBag.SkillIDs.Contains(s.ID)) ? true : false;
+                                        if (cnt3++ % 3 == 0)
+                                        {
+                                            @:</tr><tr>
+                                        }
+                                        @:<td>
                                         <input type="checkbox"
                                                name="selectedSkill"
                                                id="selectedSkill"
-                                               value="@s.ID" />
+                                               value="@s.ID"
+                                                @(Html.Raw(Assigned ? "checked=\"checked\"" : "")) />
                                         @s.SkillDescription @:&nbsp;&nbsp;
                                         @:</td>
-                                }
-                                @:</tr>
-                            }
-                            else
-                            {
-                                @: <tr>
-                                foreach (var s in ViewBag.Skills)
-                                {
-                                    bool Assigned = (ViewBag.SkillIDs.Contains(s.ID)) ? true : false;
-                                    if (cnt3++ % 3 == 0)
-                                    {
-                                        @:</tr><tr>
                                     }
-                                    @:<td>
-                                    <input type="checkbox"
-                                           name="selectedSkill"
-                                           id="selectedSkill"
-                                           value="@s.ID"
-                                            @(Html.Raw(Assigned ? "checked=\"checked\"" : "")) />
-                                    @s.SkillDescription @:&nbsp;&nbsp;
-                                    @:</td>
+                                    @: </tr>
                                 }
-                                @: </tr>
                             }
-                        }
-                    </table>
+                        </table>
+                    </div>
                 </div>
-            </div>
 
-    <div class="form-group">
-            <label class="control-label col-md-2">Day of Work</label>
-            <div class="col-md-offset-2 col-md-10">
-                <table>
+        <div class="form-group">
+                <label class="control-label ">Day of Work</label>
+                <div class="col-md-offset-2 ">
+                    <table>
                     
-                        @{
+                            @{
                             
-                            int cnt1 = 0;
-                            if (!ViewBag.Flag)
-                            {
-                                @: <tr>
-                                List<JobPosting.ViewModels.DayVM> days = ViewBag.Day;
-                                foreach (var d in days)
+                                int cnt1 = 0;
+                                if (!ViewBag.Flag)
                                 {
-                                    if (cnt1++ % 3 == 0)
+                                    @: <tr>
+                                    List<JobPosting.ViewModels.DayVM> days = ViewBag.Day;
+                                    foreach (var d in days)
                                     {
-                                    @:</tr><tr>
-                                    }
-                                    @:<td>
-                                    <input type="checkbox"
-                                           name="selectedDay"
-                                           id="selectedDay"
-                                           value="@d.DayID"
-                                            @*@(Html.Raw(d.Assigned ? "checked=\"checked\"" : ""))*@ />
-                                    @d.dayName @:&nbsp;&nbsp;
-                                    @:</td>
-                                }
-                                @:</tr>
-                            }
-                            else
-                            {
-                                @: <tr>
-                                foreach (var d in ViewBag.Days)
-                                {
-                                    bool Assigned = (ViewBag.DayIDs.Contains(d.ID)) ? true : false;
-                                    if (cnt1++ % 3 == 0)
-                                    {
+                                        if (cnt1++ % 3 == 0)
+                                        {
                                         @:</tr><tr>
+                                        }
+                                        @:<td>
+                                        <input type="checkbox"
+                                               name="selectedDay"
+                                               id="selectedDay"
+                                               value="@d.DayID"
+                                                @*@(Html.Raw(d.Assigned ? "checked=\"checked\"" : ""))*@ />
+                                        @d.dayName @:&nbsp;&nbsp;
+                                        @:</td>
                                     }
-                                    @:<td>
-                                    <input type="checkbox"
-                                           name="selectedDay"
-                                           id="selectedDay"
-                                           value="@d.ID"
-                                            @(Html.Raw(Assigned ? "checked=\"checked\"" : "")) />
-                                    @d.dayName @:&nbsp;&nbsp;
-                                    @:</td>
+                                    @:</tr>
                                 }
-                                @:</tr>
+                                else
+                                {
+                                    @: <tr>
+                                    foreach (var d in ViewBag.Days)
+                                    {
+                                        bool Assigned = (ViewBag.DayIDs.Contains(d.ID)) ? true : false;
+                                        if (cnt1++ % 3 == 0)
+                                        {
+                                            @:</tr><tr>
+                                        }
+                                        @:<td>
+                                        <input type="checkbox"
+                                               name="selectedDay"
+                                               id="selectedDay"
+                                               value="@d.ID"
+                                                @(Html.Raw(Assigned ? "checked=\"checked\"" : "")) />
+                                        @d.dayName @:&nbsp;&nbsp;
+                                        @:</td>
+                                    }
+                                    @:</tr>
+                                }
                             }
-                        }
-                    </table>
+                        </table>
+                    </div>
                 </div>
-            </div>
 
-        <div class="form-group">
-            <label class="control-label col-md-2">Requirements</label>
-            <div class="col-md-offset-2 col-md-10">
-                <table>
+            <div class="form-group">
+                <label class="control-label ">Requirements</label>
+                <div class="col-md-offset-2">
+                    <table>
                     
-                        @{
-                            int cnt2 = 0;
-                            if (!ViewBag.Flag)
-                            {
-                                @: <tr>
+                            @{
+                                int cnt2 = 0;
+                                if (!ViewBag.Flag)
+                                {
+                                    @: <tr>
                                 
-                                foreach (var q in ViewBag.Qualifications)
-                                {
-                                    if (cnt2++ % 3 == 0)
+                                    foreach (var q in ViewBag.Qualifications)
                                     {
-                                    @:</tr><tr>
-                                }
-                                @:<td>
-                                    <input type="checkbox"
-                                           name="selectedQualification"
-                                           id="selectedQualification"
-                                           value="@q.ID"
-                                            />
-                                    @q.QlfDescription @:&nbsp;&nbsp;
-                                    @:</td>
-                                }
-                                @:</tr>
-                            }
-                            else
-                            {
-                                @:<tr>
-                                foreach (var q in ViewBag.Qualifications)
-                                {
-                                    bool Assigned = (ViewBag.RequirementIDs.Contains(q.ID)) ? true : false;
-                                    if (cnt2++ % 3 == 0)
-                                    {
+                                        if (cnt2++ % 3 == 0)
+                                        {
                                         @:</tr><tr>
                                     }
                                     @:<td>
-                                    <input type="checkbox"
-                                           name="selectedQualification"
-                                           id="selectedQualification"
-                                           value="@q.ID"
-                                            @(Html.Raw(Assigned ? "checked=\"checked\"" : "")) />
-                                    @q.QlfDescription @:&nbsp;&nbsp;
-                                    @:</td>
+                                        <input type="checkbox"
+                                               name="selectedQualification"
+                                               id="selectedQualification"
+                                               value="@q.ID"
+                                                />
+                                        @q.QlfDescription @:&nbsp;&nbsp;
+                                        @:</td>
+                                    }
+                                    @:</tr>
+                                }
+                                else
+                                {
+                                    @:<tr>
+                                    foreach (var q in ViewBag.Qualifications)
+                                    {
+                                        bool Assigned = (ViewBag.RequirementIDs.Contains(q.ID)) ? true : false;
+                                        if (cnt2++ % 3 == 0)
+                                        {
+                                            @:</tr><tr>
+                                        }
+                                        @:<td>
+                                        <input type="checkbox"
+                                               name="selectedQualification"
+                                               id="selectedQualification"
+                                               value="@q.ID"
+                                                @(Html.Raw(Assigned ? "checked=\"checked\"" : "")) />
+                                        @q.QlfDescription @:&nbsp;&nbsp;
+                                        @:</td>
+                                    }
                                 }
                             }
-                        }
-                    </table>
-                </div>
-        </div>
-        <div class="form-group">
-            <input type="checkbox" name="SavedAsTemplate" id="SavedAsTemplate" value="true"> Do you wish to save this Posting as Template?<br />
-            <label class="control-label col-md-2" id="lblTemplate" style="display: none">Template Name: </label><input type="text" name="templateName" id="templateName" style="display: none" />
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-                @*<input type="button" value="Save Posting" class="btn btn-default" id="submit">*@
+                        </table>
+                    </div>
             </div>
+            <div class="form-group">
+                <input type="checkbox" name="SavedAsTemplate" id="SavedAsTemplate" value="true"> Do you wish to save this Posting as Template?<br />
+                <label class="control-label col-md-2" id="lblTemplate" style="display: none">Template Name: </label><input type="text" name="templateName" id="templateName" style="display: none" />
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 ">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                    @*<input type="button" value="Save Posting" class="btn btn-default" id="submit">*@
+                </div>
+            </div>
+
+
         </div>
+    }
 
-
+    <div>
+        @Html.ActionLink("Back to List", "Index")
     </div>
-}
+    </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.pstOpenDate, htmlAttributes: new { @class = "control-label" })
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+                        @Html.EditorFor(model => model.pstOpenDate, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.pstOpenDate, "", new { @class = "text-danger" })
+
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.pstEndDate, htmlAttributes: new { @class = "control-label" })
+
+                        @Html.EditorFor(model => model.pstEndDate, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.pstEndDate, "", new { @class = "text-danger" })
+                    </div>
+
+
+
+                </div>
 </div>
-
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

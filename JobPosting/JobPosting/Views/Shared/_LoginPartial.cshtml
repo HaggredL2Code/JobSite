@@ -12,10 +12,10 @@
 
         <li class=" dropdown" ><a href="#" data-toggle="dropdown" class="dropdown-toggle nav-link">Welcome @userName - Menu<b class="caret"></b></a>
 
-            <ul class="dropdown-menu">
-                <li>@Html.ActionLink("Change Security Settings", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
+            <ul class="dropdown-menu dropdown-menu-right">
+                <li>@Html.ActionLink("Change Security Settings", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "dropdown-item" })</li>
                 <li class="divider"></li>
-                <li>@Html.ActionLink("Manage Profile", "Details", "Applicants")</li>
+                <li>@Html.ActionLink("Manage Profile", "Details", "Applicants", new { @class = "dropdown-item" })</li>
             </ul>
 
         </li>

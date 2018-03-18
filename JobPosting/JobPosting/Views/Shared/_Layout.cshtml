@@ -24,14 +24,27 @@
                     <li class="nav-item">@Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link" })</li>
                     <li class="nav-item">@Html.ActionLink("About", "About", "Home", null, new { @class = "nav-link" })</li>
                     <li class="nav-item">@Html.ActionLink("Contact", "Contact", "Home", null, new { @class = "nav-link" })</li>
-                    @if (!User.IsInRole("User"))
-        {
-            <li class="nav-item">@Html.ActionLink("Job Type", "Index", "JobGroups", null, new { @class = "nav-link" })</li>
-            <li class="nav-item">@Html.ActionLink("Location", "Index", "Locations", null, new { @class = "nav-link" })</li>
-            <li class="nav-item">@Html.ActionLink("Qualification", "Index", "Qualifications", null, new { @class = "nav-link" })</li>
-            <li class="nav-item">@Html.ActionLink("Position", "Index", "Positions", null, new { @class = "nav-link" })</li>
-}
                     <li>@Html.ActionLink("Job Posting", "Index", "Postings", null, new { @class = "nav-link" })</li>
+
+                    @if (!User.IsInRole("User"))
+    {
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                        <div class="dropdown-menu">
+                            @Html.ActionLink("Job Type", "Index", "JobGroups", null, new { @class = "dropdown-item" })
+                            <div class="dropdown-divider"></div>
+                            @Html.ActionLink("Location", "Index", "Locations", null, new { @class = "dropdown-item" })
+                            <div class="dropdown-divider"></div>
+                            @Html.ActionLink("Qualification", "Index", "Qualifications", null, new { @class = "dropdown-item" })
+                            <div class="dropdown-divider"></div>
+                            @Html.ActionLink("Position", "Index", "Positions", null, new { @class = "dropdown-item" })
+                        </div>
+                    </li>
+ 
+    }
+
+
 
 
 
