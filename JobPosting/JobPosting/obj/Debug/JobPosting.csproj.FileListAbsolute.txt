@@ -619,9 +619,8 @@ E:\Jobsite1\JobSite\JobPosting\JobPosting\bin\Microsoft.AI.ServerTelemetryChanne
 E:\Jobsite1\JobSite\JobPosting\JobPosting\bin\Microsoft.AI.WindowsServer.xml
 E:\Jobsite1\JobSite\JobPosting\JobPosting\bin\Microsoft.AI.Web.xml
 E:\Jobsite1\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.csprojResolveAssemblyReference.cache
-E:\Jobsite1\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.DAL.JBMigrations.InitialCreate.resources
 E:\Jobsite1\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.DAL.Securitymigrations.InitialCreate.resources
 E:\Jobsite1\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.csproj.GenerateResource.Cache
 E:\Jobsite1\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.dll
 E:\Jobsite1\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.pdb
-E:\Jobsite1\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.DAL.JBMigrations.InitialCreate1.resources
+E:\Jobsite1\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.DAL.JBMigrations.InitialCreate.resources

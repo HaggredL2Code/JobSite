@@ -64,6 +64,11 @@
         <th>
             @Html.DisplayNameFor(model => model.Position.PositionCode)
         </th>
+        
+        <th>
+            @Html.DisplayNameFor(model => model.Position.JobGroupID)
+        </th>
+
         <th>
             @Html.DisplayNameFor(model => model.Position.PositionDescription)
         </th>
@@ -93,6 +98,9 @@
         <td>
             @Html.DisplayFor(modelItem => item.Position.PositionCode)
         </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Position.JobGroupID)
+            </td>
         <td>
             @Html.ActionLink(item.Position.PositionDescription.ToString(), "Details", new { id = item.ID })
         </td>
