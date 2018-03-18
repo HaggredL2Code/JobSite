@@ -215,7 +215,6 @@ namespace JobPosting.DAL.JBMigrations
             var jobLocations = new List<JobLocation>
                         {
                             new JobLocation { PostingID = 1, LocationID = 1},
-                            new JobLocation { PostingID = 1, LocationID = 2},
                             new JobLocation { PostingID = 1, LocationID = 2}
                         };
             jobLocations.ForEach(a => context.JobLocations.AddOrUpdate(n => new { n.PostingID, n.LocationID }, a));

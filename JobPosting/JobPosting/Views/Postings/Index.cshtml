@@ -48,11 +48,15 @@
         <th>
             @Html.DisplayNameFor(model => model.pstNumPosition)
         </th>
-
+        <th>
+            Locations
+        </th>
+        @if (!User.IsInRole("User"))
+        {
         <th>
             @Html.DisplayNameFor(model => model.pstOpenDate)
         </th>
-
+        }
         <th></th>
     </tr>
 
@@ -77,12 +81,23 @@
         <td>
             @Html.DisplayFor(modelItem => item.pstNumPosition)
         </td>
-
         <td>
-            @Html.DisplayFor(modelItem => item.pstOpenDate)
+            @foreach (var l in ViewBag.JobLocations)
+            {
+                if (l.PostingID == item.ID)
+                {
+                    <p>@l.Location.Address</p>
+                }
+            }
         </td>
 
-        
+        @if (!User.IsInRole("User"))
+        {
+            <td>
+                @Html.DisplayFor(modelItem => item.pstOpenDate)
+            </td>
+        }
+
         @if (flag)
         {
         <td>
