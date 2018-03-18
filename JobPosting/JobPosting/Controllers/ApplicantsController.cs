@@ -20,7 +20,6 @@ namespace JobPosting.Controllers
         // GET: Applicants
         public ActionResult Index()
         {
-
             return View();
         }
 
