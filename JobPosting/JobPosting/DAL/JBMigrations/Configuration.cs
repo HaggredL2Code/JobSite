@@ -73,7 +73,10 @@ namespace JobPosting.DAL.JBMigrations
                      new Union { UnionName = "Opseu 250" },
                      new Union { UnionName = "Opseu 260" },
                      new Union { UnionName = "Opseu 290" },
-                     new Union { UnionName = "Opseu 271" }
+                     new Union { UnionName = "Opseu 271" },
+                     new Union { UnionName = "Opseu 124" },
+                     new Union { UnionName = "Opseu 120" },
+                     new Union { UnionName = "Opseu 104" }
                  };
             unions.ForEach(a => context.Unions.AddOrUpdate(n => n.UnionName, a));
             SaveChanges(context);
@@ -83,7 +86,10 @@ namespace JobPosting.DAL.JBMigrations
                  {
                         new JobGroup {  GroupTitle = "Maintenance" },
                         new JobGroup {  GroupTitle = "Technical Support" },
-                        new JobGroup {  GroupTitle = "Teacher" }
+                        new JobGroup {  GroupTitle = "Teacher" },
+                        new JobGroup {  GroupTitle = "Security" },
+                        new JobGroup {  GroupTitle = "Administration" }
+
                  };
             jobGroups.ForEach(a => context.JobGroups.AddOrUpdate(n => n.GroupTitle, a));
             SaveChanges(context);
@@ -100,12 +106,12 @@ namespace JobPosting.DAL.JBMigrations
 
             var qualifications = new List<Qualification>
                         {
-                            new Qualification { QlfDescription = "Hard Working"},
-                            new Qualification { QlfDescription = "Punctual"},
-                            new Qualification { QlfDescription = "French Language"},
-                            new Qualification { QlfDescription = "Self Mostivated"},
-                            new Qualification { QlfDescription = "High Initiative"},
-                            new Qualification { QlfDescription = "positive Attitude"}
+                            new Qualification { QlfDescription = "WHIMIS teaching Certificate"},
+                            new Qualification { QlfDescription = "English Language 2017 Certificate"},
+                            new Qualification { QlfDescription = "French Language 2018 Certificate"},
+                            new Qualification { QlfDescription = "Welding teaching Certificate"},
+                            new Qualification { QlfDescription = "Fist Aid Certificate"},
+                            new Qualification { QlfDescription = "Teaching Certification 2304"}
                         };
             qualifications.ForEach(a => context.Qualification.AddOrUpdate(n => n.QlfDescription, a));
             SaveChanges(context);
@@ -117,7 +123,11 @@ namespace JobPosting.DAL.JBMigrations
             {
                 new Applicant { apFirstName = "Kevin", apMiddleName = "m", apLastName = "Marty", apPhone = 9056677777, apPostalCode = "L2S5G6", apEMail = "testuser@hotmail.com", apAddress = "13 fake lane" , apSubscripted = false, UserRoleID = (context.UserRoles.Where(p=>p.RoleTitle == "User").SingleOrDefault().ID) },
                 new Applicant { apFirstName = "Bob", apMiddleName = "m", apLastName = "Doom", apPhone = 9056675555, apPostalCode = "L2S5G7", apEMail = "testuser1@hotmail.com", apAddress = "13 fake lane" , apSubscripted = false, UserRoleID = (context.UserRoles.Where(p=>p.RoleTitle == "User").SingleOrDefault().ID) },
-                new Applicant { apFirstName = "Robert", apMiddleName = "D", apLastName = "McKnight", apPhone = 9056676666, apPostalCode = "L2S5G8", apEMail = "testuser2@hotmail.com", apAddress = "13 placeholder street" , apSubscripted = false, UserRoleID = (context.UserRoles.Where(p=>p.RoleTitle == "User").SingleOrDefault().ID) }
+                new Applicant { apFirstName = "Robert", apMiddleName = "D", apLastName = "McKnight", apPhone = 9056676666, apPostalCode = "L2S5G8", apEMail = "testuser2@hotmail.com", apAddress = "13 placeholder street" , apSubscripted = false, UserRoleID = (context.UserRoles.Where(p=>p.RoleTitle == "User").SingleOrDefault().ID) },
+                new Applicant { apFirstName = "Joe", apMiddleName = "D", apLastName = "Master", apPhone = 9056676556, apPostalCode = "L2S5G2", apEMail = "testuser3@hotmail.com", apAddress = "13 placeholder lane" , apSubscripted = false, UserRoleID = (context.UserRoles.Where(p=>p.RoleTitle == "User").SingleOrDefault().ID) },
+                new Applicant { apFirstName = "Monkey", apMiddleName = "D", apLastName = "Luffy", apPhone = 9056676555, apPostalCode = "L2S5G3", apEMail = "testuser4@hotmail.com", apAddress = "1000 sunny lane" , apSubscripted = false, UserRoleID = (context.UserRoles.Where(p=>p.RoleTitle == "User").SingleOrDefault().ID) },
+                new Applicant { apFirstName = "Traflagar", apMiddleName = "D", apLastName = "Law", apPhone = 9056676555, apPostalCode = "L2S5G3", apEMail = "testuser4@hotmail.com", apAddress = "1000 sunny lane" , apSubscripted = false, UserRoleID = (context.UserRoles.Where(p=>p.RoleTitle == "User").SingleOrDefault().ID) }
+
 
             };
             applicants.ForEach(a => context.Applicants.AddOrUpdate(n => n.apEMail, a));
@@ -135,12 +145,24 @@ namespace JobPosting.DAL.JBMigrations
             var positions = new List<Position>
                         {
                             new Position { UnionID = (context.Unions.Where(p=>p.UnionName == "Opseu 250").SingleOrDefault().ID),  JobGroupID=(context.JobGroups.Where(p=>p.GroupTitle == "Teacher").SingleOrDefault().ID),
-                             PositionDescription = "basically this is a english teaching job", PositionCode = "10330"
+                            PositionDescription = "English Teacher", PositionCode = "10330"
                         },
 
                             new Position { UnionID = (context.Unions.Where(p=>p.UnionName == "Opseu 270").SingleOrDefault().ID),  JobGroupID=(context.JobGroups.Where(p=>p.GroupTitle == "Technical Support").SingleOrDefault().ID),
-                                PositionDescription = "basically this is a IT guy job", PositionCode = "10331"
+                            PositionDescription = "IT Admin", PositionCode = "10331"
+                        },
+
+                            new Position { UnionID = (context.Unions.Where(p=>p.UnionName == "Opseu 104").SingleOrDefault().ID),  JobGroupID=(context.JobGroups.Where(p=>p.GroupTitle == "Technical Support").SingleOrDefault().ID),
+                            PositionDescription = "IT Junior", PositionCode = "10336"
+                        },
+                            new Position { UnionID = (context.Unions.Where(p=>p.UnionName == "Opseu 124").SingleOrDefault().ID),  JobGroupID=(context.JobGroups.Where(p=>p.GroupTitle == "Teacher").SingleOrDefault().ID),
+                            PositionDescription = "French Teacher", PositionCode = "10335"
+                        },
+                            new Position { UnionID = (context.Unions.Where(p=>p.UnionName == "Opseu 271").SingleOrDefault().ID),  JobGroupID=(context.JobGroups.Where(p=>p.GroupTitle == "Teacher").SingleOrDefault().ID),
+                            PositionDescription = "Gym Teacher", PositionCode = "10339"
                         }
+
+
                         };
             positions.ForEach(a => context.Positions.AddOrUpdate(n => n.PositionCode, a));
             SaveChanges(context);
@@ -177,7 +199,10 @@ namespace JobPosting.DAL.JBMigrations
             var Locations = new List<Location>
                         {
                             new Location { Address = "24 placeholder street, St.Catharines, ON"},
-                            new Location { Address = "13 placeholder lane, Wellend, ON"}
+                            new Location { Address = "13 placeholder lane, Wellend, ON"},
+                            new Location { Address = "1000 Sunny lane, Wellend, ON"},
+                            new Location { Address = "13 Sunny Street, Wellend, ON"},
+                            new Location { Address = "204 placeholder lane, Wellend, ON"}
                         };
             Locations.ForEach(a => context.Locations.AddOrUpdate(n => n.ID, a));
             SaveChanges(context);
@@ -186,7 +211,10 @@ namespace JobPosting.DAL.JBMigrations
             {
                 new Skill { SkillDescription = "C#"},
                 new Skill { SkillDescription = "JQuery"},
-                new Skill { SkillDescription = "C++"}
+                new Skill { SkillDescription = "C++"},
+                new Skill { SkillDescription = "Hard Working"},
+                new Skill { SkillDescription = "Punctual"},
+                new Skill { SkillDescription = "Detail Oriented"}
             };
             Skills.ForEach(a => context.Skills.AddOrUpdate(n => n.ID, a));
             SaveChanges(context);

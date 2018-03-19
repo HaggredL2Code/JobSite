@@ -12,18 +12,20 @@
 
 @using (Html.BeginForm())
 {
+    <input type="hidden" name="sortDirection" value="@ViewBag.sortDirection" />
+    <input type="hidden" name="sortField" value="@ViewBag.sortField" />
     <p>
         Select By Qualification Description:  @Html.TextBox("SearchString", null, new { @class = "form-control" }) <br>
         <input type="submit" value="Filter" class="btn btn-default" />
         @Html.ActionLink("Clear", "Index")
     </p>
 
-}
+
 
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.QlfDescription)
+            <input type="submit" name="actionButton" value="Qualification" class="btn btn-link" />
         </th>
         <th></th>
     </tr>
@@ -42,3 +44,4 @@
 }
 
 </table>
+}

@@ -18,7 +18,7 @@ namespace JobPosting.Controllers
         private JBEntities db = new JBEntities();
 
         // GET: Applications
-        public ActionResult Index(string SearchPrioity, int? PostingID)
+        public ActionResult Index(string sortDirection, string sortField, string actionButton, string SearchPrioity, int? PostingID)
         {
             PopulateDropdownList();
 
@@ -28,6 +28,38 @@ namespace JobPosting.Controllers
             {
                 applications = applications.Where(a => a.PostingID == PostingID);
             }
+
+           /* if (!String.IsNullOrEmpty(actionButton)) //Form Submitted
+            {
+                if (actionButton != "Filter")//Change of sort is requested
+                {
+                    if (actionButton == sortField) //Reverse order on same field
+                    {
+                        sortDirection = String.IsNullOrEmpty(sortDirection) ? "desc" : "";
+                    }
+                    sortField = actionButton;//Sort by the button clicked
+                }
+
+                if (sortField.Contains("Job Type"))
+                {
+                    if (String.IsNullOrEmpty(sortDirection))
+                    {
+                        applications = applications.OrderBy(j => j.PostingID);
+                    }
+                    else
+                    {
+                        applications = applications.OrderByDescending(j => j);
+                    }
+                }
+
+            }
+            ViewBag.sortField = sortField;
+            ViewBag.sortDirection = sortDirection;
+            */
+
+
+
+
 
             return View(applications.ToList());
         }

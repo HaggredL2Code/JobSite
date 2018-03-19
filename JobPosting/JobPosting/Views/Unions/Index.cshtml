@@ -13,34 +13,37 @@
 
 @using (Html.BeginForm())
 {
+    <input type="hidden" name="sortDirection" value="@ViewBag.sortDirection" />
+    <input type="hidden" name="sortField" value="@ViewBag.sortField" />
     <p>
         Select By Union Name:  @Html.TextBox("SearchString", null, new { @class = "form-control" }) <br>
         <input type="submit" value="Filter" class="btn btn-default" />
         @Html.ActionLink("Clear", "Index")
     </p>
 
-}
 
 
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.UnionName)
+            <input type="submit" name="actionButton" value="Union Name" class="btn btn-link" />
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model)
+{
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.UnionName)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.ID })
         </td>
     </tr>
 }
 
 </table>
+}

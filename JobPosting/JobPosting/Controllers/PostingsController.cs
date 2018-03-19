@@ -20,7 +20,7 @@ namespace JobPosting.Controllers
         private JBEntities db = new JBEntities();
 
         // GET: Postings
-        public ActionResult Index(int? PositionID, int? JobGroupID, int? Location, int? PaymentTypeID)
+        public ActionResult Index(string sortDirection, string sortField, string actionButton, int? PositionID, int? JobGroupID, int? Location, int? PaymentTypeID)
         {
             PopulateDropdownList();
 
@@ -58,7 +58,34 @@ namespace JobPosting.Controllers
             
 
             postings = postings.OrderBy(p => p.pstEndDate);
+/*          
+            if (!String.IsNullOrEmpty(actionButton)) //Form Submitted
+            {
+                if (actionButton != "Filter")//Change of sort is requested
+                {
+                    if (actionButton == sortField) //Reverse order on same field
+                    {
+                        sortDirection = String.IsNullOrEmpty(sortDirection) ? "desc" : "";
+                    }
+                    sortField = actionButton;//Sort by the button clicked
+                }
 
+                if (sortField.Contains(""))
+                {
+                    if (String.IsNullOrEmpty(sortDirection))
+                    {
+                 //       postings = postings.OrderBy(p => p.);
+                    }
+                    else
+                    {
+              //          postings = postings.OrderByDescending(p => p.);
+                    }
+                }
+
+            }
+            ViewBag.sortField = sortField;
+            ViewBag.sortDirection = sortDirection;
+            */
             return View(postings.ToList());
         }
 

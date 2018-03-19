@@ -17,7 +17,7 @@ namespace JobPosting.Controllers
         private JBEntities db = new JBEntities();
 
         // GET: Unions
-        public ActionResult Index(string SearchString)
+        public ActionResult Index(string sortDirection, string sortField, string actionButton, string SearchString)
         {
 
             var unions = db.Unions.Include(a => a.Positions);
@@ -26,6 +26,33 @@ namespace JobPosting.Controllers
             {
                 unions = unions.Where(u => u.UnionName.ToUpper().Contains(SearchString.ToUpper()));
             }
+
+            if (!String.IsNullOrEmpty(actionButton)) //Form Submitted
+            {
+                if (actionButton != "Filter")//Change of sort is requested
+                {
+                    if (actionButton == sortField) //Reverse order on same field
+                    {
+                        sortDirection = String.IsNullOrEmpty(sortDirection) ? "desc" : "";
+                    }
+                    sortField = actionButton;//Sort by the button clicked
+                }
+
+                if (sortField.Contains("Union Name"))
+                {
+                    if (String.IsNullOrEmpty(sortDirection))
+                    {
+                               unions = unions.OrderBy(u => u.UnionName);
+                    }
+                    else
+                    {
+                               unions = unions.OrderByDescending(u => u.UnionName);
+                    }
+                }
+
+            }
+            ViewBag.sortField = sortField;
+            ViewBag.sortDirection = sortDirection;
 
             return View(unions.ToList());
         }
