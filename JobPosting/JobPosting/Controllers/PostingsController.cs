@@ -606,6 +606,8 @@ namespace JobPosting.Controllers
         private void PopulateDropdownList(Posting posting = null)
         {
             ViewBag.PositionID = new SelectList(db.Positions.OrderBy(p => p.PositionDescription), "ID", "PositionDescription", posting?.PositionID);
+            ViewBag.JobGroupID = new SelectList(db.JobGroups.OrderBy(p => p.GroupTitle), "ID", "GroupTitle", posting?.Position.JobGroupID);
+            ViewBag.Location = new SelectList(db.Locations.OrderBy(l => l.Address), "ID", "Address");
         }
 
         private void PopulateDropdownListTemplate(PostingTemplate postingTemplate = null)
