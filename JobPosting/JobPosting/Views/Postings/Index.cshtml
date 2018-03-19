@@ -81,7 +81,7 @@ new SelectListItem{Value = "3", Text = "Yearly"}
                     </th>
 
                     <th>
-                        @Html.DisplayNameFor(model => model.Position.JobGroupID)
+                        @Html.DisplayNameFor(model => model.Position.JobGroup.GroupTitle)
                     </th>
 
                     <th>
@@ -92,7 +92,7 @@ new SelectListItem{Value = "3", Text = "Yearly"}
                     </th>
 
                     <th>
-                        @Html.DisplayNameFor(model => model.pstOpenDate)
+                        @Html.DisplayNameFor(model => model.pstEndDate)
                     </th>
 
                     <th></th>
@@ -115,7 +115,7 @@ new SelectListItem{Value = "3", Text = "Yearly"}
                                 @Html.DisplayFor(modelItem => item.Position.PositionCode)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.Position.JobGroupID)
+                                @Html.DisplayFor(modelItem => item.Position.JobGroup.GroupTitle)
                             </td>
                             <td>
                                 @Html.ActionLink(item.Position.PositionDescription.ToString(), "Details", new { id = item.ID })
@@ -125,7 +125,7 @@ new SelectListItem{Value = "3", Text = "Yearly"}
                             </td>
 
                             <td>
-                                @Html.DisplayFor(modelItem => item.pstOpenDate)
+                                @Html.DisplayFor(modelItem => item.pstEndDate)
                             </td>
 
 

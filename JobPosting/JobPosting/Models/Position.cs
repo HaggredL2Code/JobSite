@@ -25,7 +25,7 @@ namespace JobPosting.Models
         [StringLength(maximumLength: 5, MinimumLength = 5, ErrorMessage = "Job Code requires 5 characters.")]
         public string PositionCode { get; set; }
 
-        [Display(Name = "Job Description")]
+        [Display(Name = "Position")]
         [Required(ErrorMessage = "Job Description is required.")]
         [Index("IX_Unique_Desc", Order = 2)]
         [StringLength(50, ErrorMessage = "Job Description can not be longer than 50 characters.")]
