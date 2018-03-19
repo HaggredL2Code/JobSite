@@ -50,7 +50,7 @@ namespace JobPosting.Models
 
         //Job Description is used to tell the Applicant that
         //what the applicant will do in that particular job.
-        [Display(Name = "Job Description")]
+        [Display(Name = "Job Title")]
         [Required(ErrorMessage = "Job Description is required.")]
         public string pstJobDescription { get; set; }
 
