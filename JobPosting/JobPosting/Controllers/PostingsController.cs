@@ -20,15 +20,72 @@ namespace JobPosting.Controllers
         private JBEntities db = new JBEntities();
 
         // GET: Postings
-        public ActionResult Index()
+        public ActionResult Index(string sortDirection, string sortField, string actionButton, int? PositionID, int? JobGroupID, int? Location, int? PaymentTypeID)
         {
-            var postings = db.Postings.Include(p => p.Position);
-            var PostingTemplates = ( from pt in db.PostingTemplates
-                                 select pt.PositionID).Distinct().ToArray();
+            PopulateDropdownList();
+
+            var postings = db.Postings.Include(p => p.Position).Include(p => p.Position.JobGroup);
+            var PostingTemplates = (from pt in db.PostingTemplates
+                                    select pt.PositionID).Distinct().ToArray();
             ViewBag.JobRequirements = db.JobRequirements.OrderBy(a => a.QualificationID);
             ViewBag.JobLocations = db.JobLocations.OrderBy(a => a.LocationID);
             ViewBag.Positions = db.Positions.Where(p => PostingTemplates.Contains(p.ID));
             ViewBag.postingTemplate = db.PostingTemplates;
+
+            if (PositionID.HasValue)
+            {
+                postings = postings.Where(u => u.PositionID == PositionID);
+
+            }
+            if (JobGroupID.HasValue)
+            {
+                postings = postings.Where(u => u.Position.JobGroupID == JobGroupID);
+            }
+
+            if (PaymentTypeID.HasValue)
+            {
+                postings = postings.Where(u => u.pstCompensationType == PaymentTypeID);
+            }
+
+            if (Location.HasValue)
+            {
+                var postingID = (from jl in db.JobLocations
+                                 where jl.LocationID == Location
+                                 select jl.PostingID
+                                  ).ToArray();
+                postings = postings.Where(p => postingID.Contains(p.ID));
+            }
+
+
+            postings = postings.OrderBy(p => p.pstEndDate);
+            /*          
+                        if (!String.IsNullOrEmpty(actionButton)) //Form Submitted
+                        {
+                            if (actionButton != "Filter")//Change of sort is requested
+                            {
+                                if (actionButton == sortField) //Reverse order on same field
+                                {
+                                    sortDirection = String.IsNullOrEmpty(sortDirection) ? "desc" : "";
+                                }
+                                sortField = actionButton;//Sort by the button clicked
+                            }
+
+                            if (sortField.Contains(""))
+                            {
+                                if (String.IsNullOrEmpty(sortDirection))
+                                {
+                             //       postings = postings.OrderBy(p => p.);
+                                }
+                                else
+                                {
+                          //          postings = postings.OrderByDescending(p => p.);
+                                }
+                            }
+
+                        }
+                        ViewBag.sortField = sortField;
+                        ViewBag.sortDirection = sortDirection;
+                        */
             return View(postings.ToList());
         }
 
