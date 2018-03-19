@@ -374,3 +374,10 @@ C:\Users\pevip\OneDrive\Documents\GitHub\JobSite\JobPosting\JobPosting\bin\Micro
 C:\Users\pevip\OneDrive\Documents\GitHub\JobSite\JobPosting\JobPosting\bin\Microsoft.AspNet.SignalR.Core.xml
 C:\Users\pevip\OneDrive\Documents\GitHub\JobSite\JobPosting\JobPosting\bin\Microsoft.AspNet.SignalR.SystemWeb.xml
 C:\Users\pevip\OneDrive\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.DAL.JBMigrations.InitialCreate.resources
+C:\Users\jacob\Documents\Community Sponsored Project\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.DAL.Securitymigrations.InitialCreate.resources
+C:\Users\jacob\Documents\Community Sponsored Project\JobSite\JobPosting\JobPosting\bin\Microsoft.AspNet.SignalR.Client.dll
+C:\Users\jacob\Documents\Community Sponsored Project\JobSite\JobPosting\JobPosting\bin\Microsoft.AspNet.SignalR.Core.dll
+C:\Users\jacob\Documents\Community Sponsored Project\JobSite\JobPosting\JobPosting\bin\Microsoft.AspNet.SignalR.SystemWeb.dll
+C:\Users\jacob\Documents\Community Sponsored Project\JobSite\JobPosting\JobPosting\bin\Microsoft.AspNet.SignalR.Client.xml
+C:\Users\jacob\Documents\Community Sponsored Project\JobSite\JobPosting\JobPosting\bin\Microsoft.AspNet.SignalR.Core.xml
+C:\Users\jacob\Documents\Community Sponsored Project\JobSite\JobPosting\JobPosting\bin\Microsoft.AspNet.SignalR.SystemWeb.xml
