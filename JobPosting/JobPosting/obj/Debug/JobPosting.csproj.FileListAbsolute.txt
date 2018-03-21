@@ -234,7 +234,6 @@ C:\Users\Administrator\Documents\GitHub\JobSite\JobPosting\JobPosting\bin\Micros
 C:\Users\Administrator\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.csproj.GenerateResource.Cache
 C:\Users\Administrator\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.dll
 C:\Users\Administrator\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.pdb
-C:\Users\Jacob\Documents\Community Sponsored Project\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.csprojResolveAssemblyReference.cache
 C:\Users\Jacob\Documents\Community Sponsored Project\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.DAL.JBMigrations.InitialCreate.resources
 C:\Users\Jacob\Documents\Community Sponsored Project\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.csproj.GenerateResource.Cache
 C:\Users\Jacob\Documents\Community Sponsored Project\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.csproj.CoreCompileInputs.cache
@@ -508,3 +507,5 @@ C:\Users\Administrator\Desktop\JobSite\JobPosting\JobPosting\obj\Debug\JobPostin
 C:\Users\Administrator\Desktop\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.csproj.GenerateResource.Cache
 C:\Users\Administrator\Desktop\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.dll
 C:\Users\Administrator\Desktop\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.pdb
+C:\Users\jacob\Documents\Community Sponsored Project\JobSite\JobPosting\JobPosting\bin\NLog.dll
+C:\Users\jacob\Documents\Community Sponsored Project\JobSite\JobPosting\JobPosting\bin\NLog.xml

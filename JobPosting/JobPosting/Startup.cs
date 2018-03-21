@@ -1,6 +1,8 @@
 ﻿using Microsoft.Owin;
 using Owin;
 
+using NLog;
+
 [assembly: OwinStartupAttribute(typeof(JobPosting.Startup))]
 namespace JobPosting
 {
@@ -8,6 +10,9 @@ namespace JobPosting
     {
         public void Configuration(IAppBuilder app)
         {
+            Logger logger = LogManager.GetLogger("Startup");
+            logger.Info("Starting application. (Why wasn't it running?)");
+
             //app.MapSignalR();
             ConfigureAuth(app);
             
