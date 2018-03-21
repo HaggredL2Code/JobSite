@@ -11,7 +11,7 @@ namespace JobPosting
         public void Configuration(IAppBuilder app)
         {
             Logger logger = LogManager.GetLogger("Startup");
-            logger.Info("Starting application.");
+            logger.Info("Starting application. (Why wasn't it running?)");
 
             //app.MapSignalR();
             ConfigureAuth(app);
