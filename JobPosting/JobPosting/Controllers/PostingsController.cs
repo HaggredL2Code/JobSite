@@ -59,7 +59,7 @@ namespace JobPosting.Controllers
 
 
             postings = postings.OrderBy(p => p.pstEndDate);
-            /*          
+                      
                         if (!String.IsNullOrEmpty(actionButton)) //Form Submitted
                         {
                             if (actionButton != "Filter")//Change of sort is requested
@@ -86,7 +86,7 @@ namespace JobPosting.Controllers
                         }
                         ViewBag.sortField = sortField;
                         ViewBag.sortDirection = sortDirection;
-                        */
+                        
             return View(postings.ToList());
         }
 
@@ -611,12 +611,6 @@ namespace JobPosting.Controllers
             ViewBag.Location = new SelectList(db.Locations.OrderBy(l => l.Address), "ID", "Address");
         }
 
-        private void PopulateDropdownList2(Posting posting = null)
-        {
-            ViewBag.PositionID = new SelectList(db.Positions.OrderBy(p => p.PositionDescription), "ID", "PositionDescription", posting?.PositionID);
-           
-        }
-
         private void PopulateDropdownListTemplate(PostingTemplate postingTemplate = null)
         {
             ViewBag.PositionID = new SelectList(db.Positions.OrderBy(p => p.PositionDescription), "ID", "PositionDescription", postingTemplate?.PositionID);
@@ -683,7 +677,7 @@ namespace JobPosting.Controllers
         {
                 // retrieving record from PostingTemplate table by Template Name (Unique)
                 var postingTemplate = db.PostingTemplates.Where(p => p.templateName == name).SingleOrDefault();
-
+                var positionToAdd = db.Positions.Where(p => p.ID == postingTemplate.PositionID).SingleOrDefault();
                 // Assigned record of postingTemplate to Posting Object
                 // to be able to use the record from postingTemplate table in View/Create
                 posting = new Posting
@@ -695,12 +689,13 @@ namespace JobPosting.Controllers
                     pstJobDescription = postingTemplate.pstJobDescription,
                     pstOpenDate = postingTemplate.pstOpenDate,
                     pstEndDate = postingTemplate.pstEndDate,
-                    PositionID = postingTemplate.PositionID
+                    PositionID = postingTemplate.PositionID,
+                    Position = positionToAdd
 
                 };
 
                 // Populatedropdownlist for PositionID
-                PopulateDropdownList2(posting);
+                PopulateDropdownList(posting);
 
                 // Passing values to View/Create and Convert IDs string to List ( to be able to use Contains function)
                 ViewBag.LocationIDs = ConvertStringToList.ConvertToInt(postingTemplate.LocationIDs);
