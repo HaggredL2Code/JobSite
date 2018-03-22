@@ -14,6 +14,7 @@ using JobPosting.Code;
 
 namespace JobPosting.Controllers
 {
+    // i am a test
     [Authorize]
     public class PostingsController : Controller
     {
