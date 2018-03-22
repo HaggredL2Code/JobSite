@@ -509,3 +509,5 @@ C:\Users\Administrator\Desktop\JobSite\JobPosting\JobPosting\obj\Debug\JobPostin
 C:\Users\Administrator\Desktop\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.pdb
 C:\Users\jacob\Documents\Community Sponsored Project\JobSite\JobPosting\JobPosting\bin\NLog.dll
 C:\Users\jacob\Documents\Community Sponsored Project\JobSite\JobPosting\JobPosting\bin\NLog.xml
+C:\Users\Administrator\Documents\GitHub\JobSite\JobPosting\JobPosting\bin\NLog.dll
+C:\Users\Administrator\Documents\GitHub\JobSite\JobPosting\JobPosting\bin\NLog.xml
