@@ -14,7 +14,7 @@ using JobPosting.Code;
 
 namespace JobPosting.Controllers
 {
-    // i am a test fmeea;eada
+
     [Authorize]
     public class PostingsController : Controller
     {
@@ -59,7 +59,7 @@ namespace JobPosting.Controllers
 
 
             postings = postings.OrderBy(p => p.pstEndDate);
-            /*          
+                      
                         if (!String.IsNullOrEmpty(actionButton)) //Form Submitted
                         {
                             if (actionButton != "Filter")//Change of sort is requested
@@ -86,7 +86,7 @@ namespace JobPosting.Controllers
                         }
                         ViewBag.sortField = sortField;
                         ViewBag.sortDirection = sortDirection;
-                        */
+                        
             return View(postings.ToList());
         }
 
@@ -607,8 +607,8 @@ namespace JobPosting.Controllers
         private void PopulateDropdownList(Posting posting = null)
         {
             ViewBag.PositionID = new SelectList(db.Positions.OrderBy(p => p.PositionDescription), "ID", "PositionDescription", posting?.PositionID);
-            //ViewBag.JobGroupID = new SelectList(db.JobGroups.OrderBy(p => p.GroupTitle), "ID", "GroupTitle", posting?.Position.JobGroupID);
-            //ViewBag.Location = new SelectList(db.Locations.OrderBy(l => l.Address), "ID", "Address");
+            ViewBag.JobGroupID = new SelectList(db.JobGroups.OrderBy(p => p.GroupTitle), "ID", "GroupTitle", posting?.Position.JobGroupID);
+            ViewBag.Location = new SelectList(db.Locations.OrderBy(l => l.Address), "ID", "Address");
         }
 
         private void PopulateDropdownListTemplate(PostingTemplate postingTemplate = null)
@@ -677,7 +677,7 @@ namespace JobPosting.Controllers
         {
                 // retrieving record from PostingTemplate table by Template Name (Unique)
                 var postingTemplate = db.PostingTemplates.Where(p => p.templateName == name).SingleOrDefault();
-
+                var positionToAdd = db.Positions.Where(p => p.ID == postingTemplate.PositionID).SingleOrDefault();
                 // Assigned record of postingTemplate to Posting Object
                 // to be able to use the record from postingTemplate table in View/Create
                 posting = new Posting
@@ -689,7 +689,8 @@ namespace JobPosting.Controllers
                     pstJobDescription = postingTemplate.pstJobDescription,
                     pstOpenDate = postingTemplate.pstOpenDate,
                     pstEndDate = postingTemplate.pstEndDate,
-                    PositionID = postingTemplate.PositionID
+                    PositionID = postingTemplate.PositionID,
+                    Position = positionToAdd
 
                 };
 
