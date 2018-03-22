@@ -14,7 +14,7 @@ using JobPosting.Code;
 
 namespace JobPosting.Controllers
 {
-    // i am a test fmeea;eada
+
     [Authorize]
     public class PostingsController : Controller
     {
@@ -607,8 +607,14 @@ namespace JobPosting.Controllers
         private void PopulateDropdownList(Posting posting = null)
         {
             ViewBag.PositionID = new SelectList(db.Positions.OrderBy(p => p.PositionDescription), "ID", "PositionDescription", posting?.PositionID);
-            //ViewBag.JobGroupID = new SelectList(db.JobGroups.OrderBy(p => p.GroupTitle), "ID", "GroupTitle", posting?.Position.JobGroupID);
-            //ViewBag.Location = new SelectList(db.Locations.OrderBy(l => l.Address), "ID", "Address");
+            ViewBag.JobGroupID = new SelectList(db.JobGroups.OrderBy(p => p.GroupTitle), "ID", "GroupTitle", posting?.Position.JobGroupID);
+            ViewBag.Location = new SelectList(db.Locations.OrderBy(l => l.Address), "ID", "Address");
+        }
+
+        private void PopulateDropdownList2(Posting posting = null)
+        {
+            ViewBag.PositionID = new SelectList(db.Positions.OrderBy(p => p.PositionDescription), "ID", "PositionDescription", posting?.PositionID);
+           
         }
 
         private void PopulateDropdownListTemplate(PostingTemplate postingTemplate = null)
@@ -694,7 +700,7 @@ namespace JobPosting.Controllers
                 };
 
                 // Populatedropdownlist for PositionID
-                PopulateDropdownList(posting);
+                PopulateDropdownList2(posting);
 
                 // Passing values to View/Create and Convert IDs string to List ( to be able to use Contains function)
                 ViewBag.LocationIDs = ConvertStringToList.ConvertToInt(postingTemplate.LocationIDs);
