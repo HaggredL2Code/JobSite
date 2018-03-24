@@ -9,11 +9,15 @@ using System.Web.Mvc;
 using JobPosting.DAL;
 using JobPosting.Models;
 
+using NLog;
+
+
 namespace JobPosting.Controllers
 {
     [Authorize(Roles = "Admin, Manager, Hiring Team")]
     public class UnionsController : Controller
     {
+        private Logger logger = LogManager.GetCurrentClassLogger();
         private JBEntities db = new JBEntities();
 
         // GET: Unions
@@ -27,11 +31,13 @@ namespace JobPosting.Controllers
         {
             if (id == null)
             {
+                logger.Info("Details/ Bad HTTP Request with ID {0}", id);
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Union union = db.Unions.Find(id);
             if (union == null)
             {
+                logger.Info("Details/ Failed to find union ID {0}", id);
                 return HttpNotFound();
             }
             return View(union);
@@ -65,11 +71,13 @@ namespace JobPosting.Controllers
         {
             if (id == null)
             {
+                logger.Info("Edit/ Bad HTTP Request With ID {0}", id);
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Union union = db.Unions.Find(id);
             if (union == null)
             {
+                logger.Info("Edit/ Failed to find union ID {0}", id);
                 return HttpNotFound();
             }
             return View(union);
@@ -96,11 +104,13 @@ namespace JobPosting.Controllers
         {
             if (id == null)
             {
+                logger.Info("Delete/ Bad HTTP Request with ID {0}", id);
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Union union = db.Unions.Find(id);
             if (union == null)
             {
+                logger.Info("Delete/ Failed to find union ID {0}", id);
                 return HttpNotFound();
             }
             return View(union);

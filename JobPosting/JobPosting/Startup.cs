@@ -8,10 +8,10 @@ namespace JobPosting
 {
     public partial class Startup
     {
+        private Logger logger = LogManager.GetCurrentClassLogger();
         public void Configuration(IAppBuilder app)
         {
-            Logger logger = LogManager.GetLogger("Startup");
-            logger.Info("Starting application. (Why wasn't it running?)");
+            logger.Info("Starting application.");
 
             //app.MapSignalR();
             ConfigureAuth(app);

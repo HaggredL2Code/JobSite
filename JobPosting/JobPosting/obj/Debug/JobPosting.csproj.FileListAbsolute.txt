@@ -511,3 +511,4 @@ C:\Users\jacob\Documents\Community Sponsored Project\JobSite\JobPosting\JobPosti
 C:\Users\jacob\Documents\Community Sponsored Project\JobSite\JobPosting\JobPosting\bin\NLog.xml
 C:\Users\Administrator\Documents\GitHub\JobSite\JobPosting\JobPosting\bin\NLog.dll
 C:\Users\Administrator\Documents\GitHub\JobSite\JobPosting\JobPosting\bin\NLog.xml
+C:\Users\jacob\Documents\Community Sponsored Project\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.csprojResolveAssemblyReference.cache

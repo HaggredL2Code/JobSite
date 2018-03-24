@@ -9,11 +9,14 @@ using System.Web.Mvc;
 using JobPosting.DAL;
 using JobPosting.Models;
 
+using NLog;
+
 namespace JobPosting.Controllers
 {
     [Authorize(Roles = "Admin, Manager, Hiring Team")]
     public class QualificationsController : Controller
     {
+        private Logger logger = LogManager.GetCurrentClassLogger();
         private JBEntities db = new JBEntities();
 
         // GET: Qualifications
@@ -27,11 +30,13 @@ namespace JobPosting.Controllers
         {
             if (id == null)
             {
+                logger.Info("Details/ Bad HTTP Request with ID {0}", id);
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Qualification qualification = db.Qualification.Find(id);
             if (qualification == null)
             {
+                logger.Info("Details/ Failed to find Qualification with ID {0}", id);
                 return HttpNotFound();
             }
             return View(qualification);
@@ -65,11 +70,13 @@ namespace JobPosting.Controllers
         {
             if (id == null)
             {
+                logger.Info("Edit/ Bad HTTP Request with ID {0}", id);
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Qualification qualification = db.Qualification.Find(id);
             if (qualification == null)
             {
+                logger.Info("Edit/ Failed to find Qualification with ID {0}", id);
                 return HttpNotFound();
             }
             return View(qualification);
@@ -96,11 +103,13 @@ namespace JobPosting.Controllers
         {
             if (id == null)
             {
+                logger.Info("Delete/ Bad HTTP Request with ID {0}", id);
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Qualification qualification = db.Qualification.Find(id);
             if (qualification == null)
             {
+                logger.Info("Delete/ Failed to find Qualification with ID {0}", id);
                 return HttpNotFound();
             }
             return View(qualification);

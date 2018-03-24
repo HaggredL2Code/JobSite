@@ -12,12 +12,15 @@ using JobPosting.Models;
 using JobPosting.ViewModels;
 using JobPosting.Code;
 
+using NLog;
+
 namespace JobPosting.Controllers
 {
 
     [Authorize]
     public class PostingsController : Controller
     {
+        private Logger logger = LogManager.GetCurrentClassLogger();
         private JBEntities db = new JBEntities();
 
         // GET: Postings
@@ -95,12 +98,14 @@ namespace JobPosting.Controllers
         {
             if (id == null)
             {
+                logger.Info("Details/ Bad HTTP Request with ID {0}", id);
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
             Posting posting = db.Postings.Find(id);
             if (posting == null)
             {
+                logger.Info("Details/ Failed to find Posting with ID {0}", id);
                 return HttpNotFound();
             }
             ViewBag.JobRequirements = db.JobRequirements.Where(j => j.PostingID == id);
@@ -225,10 +230,12 @@ namespace JobPosting.Controllers
             }
             catch (RetryLimitExceededException)
             {
+                logger.Error("Create/ Retry Limit Exceeded For Update");
                 ModelState.AddModelError("", "Unable to save changes after multiple attemps. Try Again!");
             }
             catch (DataException dex)
             {
+                logger.Error("Create/ Data Exception Error '{0}'", dex.ToString());
                 if (dex.InnerException.InnerException.Message.Contains("IX_Unique_Code"))
                 {
                     ModelState.AddModelError("PositionCode", "Unable to save changes. The Position Code is already existed.");
@@ -272,6 +279,7 @@ namespace JobPosting.Controllers
         {
             if (id == null)
             {
+                logger.Info("Edit/ Bad HTTP Request with ID {0}", id);
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Posting posting = db.Postings.Find(id);
@@ -303,6 +311,7 @@ namespace JobPosting.Controllers
             int realID;
             if (id == null)
             {
+                logger.Info("EditPost/ Bad HTTP Request with ID {0}", id);
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             else {
@@ -316,6 +325,7 @@ namespace JobPosting.Controllers
             {
                 if (postingToUpdate.CreatedBy != User.Identity.Name)
                 {
+                    logger.Info("EditPost/ Bad HTTP Gateway Creator({0}) is not User({1})", postingToUpdate.CreatedBy, User.Identity.Name);
                     return new HttpStatusCodeResult(HttpStatusCode.BadGateway);
                 }
             }
@@ -337,6 +347,7 @@ namespace JobPosting.Controllers
                 }
                 catch (DbUpdateConcurrencyException ex)
                 {
+                    logger.Error("Database Concurrency Error");
                     var entry = ex.Entries.Single();
                     var clientValues = (Posting)entry.Entity;
                     var databaseEntry = entry.GetDatabaseValues();
@@ -364,6 +375,7 @@ namespace JobPosting.Controllers
                 }
                 catch (DataException)
                 {
+                    logger.Error("Data Exception - Unable to save changes.");
                     ModelState.AddModelError("", "Unable to save changes. Try Again!");
                 }
             }
@@ -536,6 +548,7 @@ namespace JobPosting.Controllers
         {
             if (id == null)
             {
+                logger.Info("Delete/ Bad HTTP Request with ID {0}", id);
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
@@ -544,11 +557,13 @@ namespace JobPosting.Controllers
             {
                 if (posting.CreatedBy != User.Identity.Name)
                 {
+                    logger.Info("Delete/ Bad HTTP Gateway");
                     return new HttpStatusCodeResult(HttpStatusCode.BadGateway);
                 }
             }
             if (posting == null)
             {
+                logger.Info("Delete/ HTTP Not Found Posting ID {0}", id);
                 return HttpNotFound();
             }
             ViewBag.JobRequirements = db.JobRequirements.Where(j => j.PostingID == id).OrderBy(a => a.QualificationID);
@@ -586,6 +601,7 @@ namespace JobPosting.Controllers
         {
             if (name == "")
             {
+                logger.Info("DeleteTemplate: Template name is blank (Bad Request)");
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             PostingTemplate postingTemplate = db.PostingTemplates
