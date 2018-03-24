@@ -9,11 +9,14 @@ using System.Web.Mvc;
 using JobPosting.DAL;
 using JobPosting.Models;
 
+using NLog;
+
 namespace JobPosting.Controllers
 {
     [Authorize(Roles = "Admin, Manager, Hiring Team")]
     public class LocationsController : Controller
     {
+        private Logger logger = LogManager.GetCurrentClassLogger();
         private JBEntities db = new JBEntities();
 
         // GET: Locations
@@ -27,11 +30,13 @@ namespace JobPosting.Controllers
         {
             if (id == null)
             {
+                logger.Info("Details/ Bad HTTP Request with ID {0}", id);
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Location location = db.Locations.Find(id);
             if (location == null)
             {
+                logger.Info("Details/ Unable to find Location with ID {0}", id);
                 return HttpNotFound();
             }
             return View(location);
@@ -64,11 +69,13 @@ namespace JobPosting.Controllers
         {
             if (id == null)
             {
+                logger.Info("Edit/ Bad HTTP Request with ID {0}", id);
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Location location = db.Locations.Find(id);
             if (location == null)
             {
+                logger.Info("Edit/ Unable to find Location with ID {0}", id);
                 return HttpNotFound();
             }
             return View(location);
@@ -95,11 +102,13 @@ namespace JobPosting.Controllers
         {
             if (id == null)
             {
+                logger.Info("Delete/ Bad HTTP Request with ID {0}", id);
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Location location = db.Locations.Find(id);
             if (location == null)
             {
+                logger.Info("Delete/ Unable to find Location with ID {0}", id);
                 return HttpNotFound();
             }
             return View(location);

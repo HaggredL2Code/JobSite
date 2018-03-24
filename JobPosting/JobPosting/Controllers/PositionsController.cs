@@ -10,10 +10,13 @@ using JobPosting.DAL;
 using JobPosting.Models;
 using System.Data.Entity.Infrastructure;
 
+using NLog;
+
 namespace JobPosting.Controllers
 {
     public class PositionsController : Controller
     {
+        private Logger logger = LogManager.GetCurrentClassLogger();
         private JBEntities db = new JBEntities();
 
         // GET: Positions
@@ -28,11 +31,13 @@ namespace JobPosting.Controllers
         {
             if (id == null)
             {
+                logger.Info("Details/ Bad HTTP Request with ID {0}", id);
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Position position = db.Positions.Find(id);
             if (position == null)
             {
+                logger.Info("Details/ Unable to find Position with ID {0}", id);
                 return HttpNotFound();
             }
             return View(position);
@@ -63,10 +68,12 @@ namespace JobPosting.Controllers
             }
             catch (RetryLimitExceededException)
             {
+                logger.Error("Create/ Retry Limit Exceeded. Unable To Save Changes");
                 ModelState.AddModelError("", "Unable to save changes after multiple attemps. Try Again!");
             }
             catch (DataException dex)
             {
+                logger.Error("Create/ Data Exception Error {0}", dex.ToString());
                 if (dex.InnerException.InnerException.Message.Contains("IX_Unique_Code"))
                 {
                     ModelState.AddModelError("PositionCode", "Unable to save changes. The Position Code is already existed.");
@@ -90,11 +97,13 @@ namespace JobPosting.Controllers
         {
             if (id == null)
             {
+                logger.Info("Edit/ HTTP Bad Request With ID {0}", id);
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Position position = db.Positions.Find(id);
             if (position == null)
             {
+                logger.Info("Edit/ Unable to find Position with ID {0}", id);
                 return HttpNotFound();
             }
 
@@ -125,10 +134,12 @@ namespace JobPosting.Controllers
                 }
                 catch (RetryLimitExceededException)
                 {
+                    logger.Error("EditPost/ Retry Limit Exceeded. Unable To Save Changes");
                     ModelState.AddModelError("", "Unable to save changes after multiple attempts. Try Again!");
                 }
                 catch (DbUpdateConcurrencyException ex)
                 {
+                    logger.Error("EditPost/ Database Concurrency Exception");
                     var entry = ex.Entries.Single();
                     var clientValues = (Position)entry.Entity;
                     var databaseEntry = entry.GetDatabaseValues();
@@ -171,11 +182,13 @@ namespace JobPosting.Controllers
         {
             if (id == null)
             {
+                logger.Info("Delete/ HTTP Bad Request With ID {0}", id);
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Position position = db.Positions.Find(id);
             if (position == null)
             {
+                logger.Info("Delete/ Unable to find Postion ID {0}", id);
                 return HttpNotFound();
             }
             return View(position);
