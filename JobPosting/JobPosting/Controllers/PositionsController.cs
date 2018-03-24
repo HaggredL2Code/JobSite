@@ -188,7 +188,7 @@ namespace JobPosting.Controllers
             Position position = db.Positions.Find(id);
             if (position == null)
             {
-                logger.Info("Delete/ Unable to find Postion ID {0}", id);
+                logger.Info("Delete/ Unable to find Position ID {0}", id);
                 return HttpNotFound();
             }
             return View(position);
@@ -210,6 +210,7 @@ namespace JobPosting.Controllers
             {
                 if (dex.InnerException.InnerException.Message.Contains("FK_"))
                 {
+                    logger.Error("DeleteConfirmed/ Attempted to delete Position with Postings attached.");
                     ModelState.AddModelError("", "You cannot delete a Position that have Postings in the System.");
                 }
                 else
