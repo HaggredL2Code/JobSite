@@ -9,11 +9,14 @@ using System.Web.Mvc;
 using JobPosting.DAL;
 using JobPosting.Models;
 
+using NLog;
+
 namespace JobPosting.Controllers
 {
     [Authorize(Roles = "Admin, Manager, Hiring Team")]
     public class JobGroupsController : Controller
     {
+        private Logger logger = LogManager.GetCurrentClassLogger();
         private JBEntities db = new JBEntities();
 
         // GET: JobGroups
@@ -27,11 +30,13 @@ namespace JobPosting.Controllers
         {
             if (id == null)
             {
+                logger.Info("Details/ HTTP Bad Request With ID {0}", id);
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             JobGroup jobGroup = db.JobGroups.Find(id);
             if (jobGroup == null)
             {
+                logger.Info("Details/ Failed to find Jobgroup with ID {0}", id);
                 return HttpNotFound();
             }
             return View(jobGroup);
@@ -65,11 +70,13 @@ namespace JobPosting.Controllers
         {
             if (id == null)
             {
+                logger.Info("Edit/ HTTP Bad Request With ID {0}", id);
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             JobGroup jobGroup = db.JobGroups.Find(id);
             if (jobGroup == null)
             {
+                logger.Info("Edit/ Failed to find Jobgroup with ID {0}", id);
                 return HttpNotFound();
             }
             return View(jobGroup);
@@ -96,11 +103,13 @@ namespace JobPosting.Controllers
         {
             if (id == null)
             {
+                logger.Info("Delete/ HTTP Bad Request With ID {0}", id);
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             JobGroup jobGroup = db.JobGroups.Find(id);
             if (jobGroup == null)
             {
+                logger.Info("Delete/ Failed to find Jobgroup with ID {0}", id);
                 return HttpNotFound();
             }
             return View(jobGroup);

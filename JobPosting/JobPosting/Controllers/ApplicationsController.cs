@@ -11,10 +11,13 @@ using JobPosting.DAL;
 using JobPosting.Models;
 using JobPosting.ViewModels;
 
+using NLog;
+
 namespace JobPosting.Controllers
 {
     public class ApplicationsController : Controller
     {
+        Logger logger = LogManager.GetCurrentClassLogger();
         private JBEntities db = new JBEntities();
 
         // GET: Applications
@@ -29,6 +32,10 @@ namespace JobPosting.Controllers
         {
             if (id == null || postingID == null)
             {
+                if (id == null)
+                    logger.Info("Details/ HTTP Bad Request With ID {0}", id);
+                if (postingID == null)
+                    logger.Info("Details/{0} HTTP Bad Request With Posting ID", id);
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Application application = db.Applications.Find(id);
@@ -37,6 +44,7 @@ namespace JobPosting.Controllers
                            select p).SingleOrDefault();
             if (application == null)
             {
+                logger.Info("Details/ Application not found with ID {0}", id);
                 return HttpNotFound();
             }
             ViewBag.posting = posting;
@@ -51,6 +59,7 @@ namespace JobPosting.Controllers
 
             if (id == null)
             {
+                logger.Info("Create/ HTTP Bad Request With ID {0}", id);
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var posting = (from p in db.Postings
