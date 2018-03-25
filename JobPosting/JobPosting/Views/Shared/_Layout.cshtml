@@ -9,36 +9,43 @@
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    @if (!User.IsInRole("User"))
-                    {
-                    <li>@Html.ActionLink("Job Type", "Index", "JobGroups")</li>
-                    <li>@Html.ActionLink("Location", "Index", "Locations")</li>
-                    <li>@Html.ActionLink("Qualification", "Index", "Qualifications")</li>
-                    <li>@Html.ActionLink("Position", "Index", "Positions")</li>
-                    }
-                    <li>@Html.ActionLink("Job Posting", "Index", "Postings")</li>
-                    
-                    
-                </ul>
-                @Html.Partial("_LoginPartial")
-            </div>
+
+
+    <nav class="navbar navbar-dark bg-dark navbar-expand-lg fixed-top">
+
+        <div class="navbar-header">
+            @Html.ActionLink("NC School Board Job Site", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
         </div>
-    </div>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+        <div class="navbar-collapse collapse">
+
+            <ul class="navbar-nav mr-auto">
+                <li>@Html.ActionLink("Home", "Index", "Home", new { @class= "nav-link" })</li>
+                <li>@Html.ActionLink("About", "About", "Home", new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("About", "About", "Home", new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("Contact", "Contact", "Home", new { @class = "nav-link" })</li>
+                @if (!User.IsInRole("User"))
+            {
+                <li>@Html.ActionLink("Job Type", "Index", "JobGroups", new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("Location", "Index", "Locations", new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("Qualification", "Index", "Qualifications", new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("Position", "Index", "Positions", new { @class = "nav-link" })</li>
+        }
+                <li>@Html.ActionLink("Job Posting", "Index", "Postings", new { @class = "nav-link" })</li>
+
+
+            </ul>
+
+            @Html.Partial("_LoginPartial")
+        </div>
+
+    </nav>
+
+
+
     <div class="container body-content">
         @RenderBody()
         <hr />
