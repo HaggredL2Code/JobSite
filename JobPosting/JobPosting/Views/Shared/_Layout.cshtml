@@ -23,18 +23,17 @@
         <div class="navbar-collapse collapse">
 
             <ul class="navbar-nav mr-auto">
-                <li>@Html.ActionLink("Home", "Index", "Home", new { @class= "nav-link" })</li>
-                <li>@Html.ActionLink("About", "About", "Home", new { @class = "nav-link" })</li>
-                <li>@Html.ActionLink("About", "About", "Home", new { @class = "nav-link" })</li>
-                <li>@Html.ActionLink("Contact", "Contact", "Home", new { @class = "nav-link" })</li>
+                <li class="nav-item">@Html.ActionLink("Home", "Index", "Home", null, new { @class= "nav-link" })</li>
+                <li class="nav-item">@Html.ActionLink("About", "About", "Home", null, new { @class = "nav-link" })</li>
+                <li class="nav-item">@Html.ActionLink("Contact", "Contact", "Home", null, new { @class = "nav-link" })</li>
                 @if (!User.IsInRole("User"))
             {
-                <li>@Html.ActionLink("Job Type", "Index", "JobGroups", new { @class = "nav-link" })</li>
-                <li>@Html.ActionLink("Location", "Index", "Locations", new { @class = "nav-link" })</li>
-                <li>@Html.ActionLink("Qualification", "Index", "Qualifications", new { @class = "nav-link" })</li>
-                <li>@Html.ActionLink("Position", "Index", "Positions", new { @class = "nav-link" })</li>
+                <li class="nav-item">@Html.ActionLink("Job Type", "Index", "JobGroups", null, new { @class = "nav-link" })</li>
+                <li class="nav-item">@Html.ActionLink("Location", "Index", "Locations", null, new { @class = "nav-link" })</li>
+                <li class="nav-item">@Html.ActionLink("Qualification", "Index", "Qualifications", null, new { @class = "nav-link" })</li>
+                <li class="nav-item">@Html.ActionLink("Position", "Index", "Positions", null, new { @class = "nav-link" })</li>
         }
-                <li>@Html.ActionLink("Job Posting", "Index", "Postings", new { @class = "nav-link" })</li>
+                <li class="nav-item">@Html.ActionLink("Job Posting", "Index", "Postings", null, new { @class = "nav-link" })</li>
 
 
             </ul>
