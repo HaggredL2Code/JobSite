@@ -4,128 +4,149 @@
     ViewBag.Title = "Index";
     var Positions = ViewBag.Positions;
 }
+<br />
+<div class="container">
+    <div class="row">
+        <div class="col-10">
+            <h2>Job Postings</h2>
+        </div>
+        <div class="col-2">
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a href="#" data-toggle="dropdown" class="dropdown-toggle">Create New - Menu<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li>@Html.ActionLink("Create New", "Create")</li>
+                        <li class="divider"></li>
+                        @foreach (var p in Positions)
+                {
+                    string positionName = p.PositionDescription;
 
-<h2>Index</h2>
+                    @*<li>@Html.ActionLink("Follow " + positionName, "Create", new { name = p.templateName }) - @Html.ActionLink("Delete", "DeleteTemplate", new { id = p.ID})</li>*@
 
-<ul class="nav navbar-nav">
-    <li class="dropdown">
-        <a href="#" data-toggle="dropdown" class="dropdown-toggle">Create New - Menu<b class="caret"></b></a>
-        <ul class="dropdown-menu">
-            <li>@Html.ActionLink("Create New", "Create")</li>
-            <li class="divider"></li>
-            @foreach (var p in Positions)
+                    @*<li>
+                <a href="#" data-toggle="dropdown" class="dropdown-toggle">@postionName<b class="caret"></b></a>
+                <ul class="dropdown-menu">*@
+            foreach (var pt in ViewBag.postingTemplate)
             {
-                string positionName = p.PositionDescription;
-                
-                @*<li>@Html.ActionLink("Follow " + positionName, "Create", new { name = p.templateName }) - @Html.ActionLink("Delete", "DeleteTemplate", new { id = p.ID})</li>*@
-                
-                @*<li>
-                    <a href="#" data-toggle="dropdown" class="dropdown-toggle">@postionName<b class="caret"></b></a>
-                    <ul class="dropdown-menu">*@
-                        foreach (var pt in ViewBag.postingTemplate)
+                if (pt.PositionID == p.ID)
+                {
+                    //string templateName = pt.templateName;
+                    <li>@Html.ActionLink("Follow " + (string)pt.templateName + " Template", "Create", new { name = (string)pt.templateName }) - @Html.ActionLink("Delete", "DeleteTemplate", new { name = (string)pt.templateName })</li>
+        }
+    }
+        @*</ul>
+    </li>*@
+
+}
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        @using (Html.BeginForm())
                         {
-                            if (pt.PositionID == p.ID)
+                            <p>
+                                Select By Job Group:
+                                @Html.DropDownList("JobGroupID", null, "All Job Groups", htmlAttributes: new { @class = "form-control" }) <br>
+                                Select By Position:
+                                @Html.DropDownList("PositionID", null, "All Positions", htmlAttributes: new { @class = "form-control" }) <br>
+                                Select By Location:
+                                @Html.DropDownList("Location", null, "All Locations", htmlAttributes: new { @class = "form-control" }) <br>
+                                Select By Payment Type:
+                                @Html.DropDownList("PaymentTypeID", new SelectListItem[]
                             {
-                                //string templateName = pt.templateName;
-                                <li>@Html.ActionLink("Follow " + (string)pt.templateName + " Template", "Create", new { name = (string)pt.templateName}) - @Html.ActionLink("Delete", "DeleteTemplate", new { name = (string)pt.templateName})</li>
-                            }
-                        }
-                    @*</ul>
-                </li>*@
-                    
-            }
-        </ul>
-    </li>
-</ul>
-@using (Html.BeginForm())
-{
-    <p>
-                            Select By Job Group: @Html.DropDownList("JobGroupID", null, "All Job Groups", htmlAttributes: new { @class = "form-control" }) <br>
-                            Select By Position:  @Html.DropDownList("PositionID", null, "All Positions", htmlAttributes: new { @class = "form-control" }) <br>
-                            Select By Location:  @Html.DropDownList("Location", null, "All Locations", htmlAttributes: new { @class = "form-control" }) <br>
-                            Select By Payment Type: @Html.DropDownList("PaymentTypeID", new SelectListItem[]
-         
-{
 new SelectListItem{Value = "1", Text = "Hourly"},
 new SelectListItem{Value = "2", Text = "Monthly"},
 new SelectListItem{Value = "3", Text = "Yearly"}
-}, "All Types", htmlAttributes: new { @class = "form-control" }) <br />
-                            <input type="submit" value="Filter" class="btn btn-default" />
-                            @Html.ActionLink("Clear", "Index")
+                            },
+                            "All Types", htmlAttributes: new { @class = "form-control" }) <br />
+                                <input type="submit" value="Filter" class="btn btn-default" />
+                                @Html.ActionLink("Clear", "Index")
+                            </p>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class=" col-md-12 col-lg-9">
+                <table class="table table-hover table-sm">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Position.PositionCode)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Position.PositionDescription)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.pstNumPosition)
+                            </th>
+                            <th>
+                                Locations
+                            </th>
+                            @if (!User.IsInRole("User"))
+                            {
+                                <th>
+                                    @Html.DisplayNameFor(model => model.pstOpenDate)
+                                </th>
+                            }
+                            <th></th>
+                        </tr>
+                    </thead>
+                    @foreach (var item in Model)
+                    {
+                        if (item.Enabled)
+                        {
+                            bool flag = true;
+                            if (User.IsInRole("Hiring Team") || User.IsInRole("User"))
+                            {
+                                if (item.CreatedBy != User.Identity.Name)
+                                {
+                                    flag = false;
+                                }
+                            }
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Position.PositionCode)
+                                </td>
+                                <td>
+                                    @Html.ActionLink(item.Position.PositionDescription.ToString(), "Details", new { id = item.ID })
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.pstNumPosition)
+                                </td>
+                                <td>
+                                    @foreach (var l in ViewBag.JobLocations)
+                                    {
+                                        if (l.PostingID == item.ID)
+                                        {
+                                            <p>@l.Location.Address</p>
+                                        }
+                                    }
+                                </td>
 
-        </p>
-}
+                                @if (!User.IsInRole("User"))
+                                {
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.pstOpenDate)
+                                    </td>
+                                }
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Position.PositionCode)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Position.PositionDescription)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.pstNumPosition)
-        </th>
-        <th>
-            Locations
-        </th>
-        @if (!User.IsInRole("User"))
-        {
-        <th>
-            @Html.DisplayNameFor(model => model.pstOpenDate)
-        </th>
-        }
-        <th></th>
-    </tr>
+                                @if (flag)
+                                {
+                                    <td>
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                                    </td>
+                                }
+                            </tr>
+                        }
+                    }
 
-@foreach (var item in Model) {
-    if (item.Enabled)
-    {
-        bool flag = true;
-        if (User.IsInRole("Hiring Team") || User.IsInRole("User"))
-        {
-            if (item.CreatedBy != User.Identity.Name)
-            {
-                flag = false;
-            }
-        }
-        <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Position.PositionCode)
-        </td>
-        <td>
-            @Html.ActionLink(item.Position.PositionDescription.ToString(), "Details", new { id = item.ID })
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.pstNumPosition)
-        </td>
-        <td>
-            @foreach (var l in ViewBag.JobLocations)
-            {
-                if (l.PostingID == item.ID)
-                {
-                    <p>@l.Location.Address</p>
-                }
-            }
-        </td>
-
-        @if (!User.IsInRole("User"))
-        {
-            <td>
-                @Html.DisplayFor(modelItem => item.pstOpenDate)
-            </td>
-        }
-
-        @if (flag)
-        {
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-        </td>
-        }
-        </tr>
-    }
-}
-
-</table>
+                </table>
+            </div>
+        </div>
+    </div>
