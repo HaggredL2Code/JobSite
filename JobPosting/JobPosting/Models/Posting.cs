@@ -31,7 +31,7 @@ namespace JobPosting.Models
 
         [Display(Name = "Number of Position")]
         [Required(ErrorMessage = "Number of Position is required.")]
-        [Range(1,9999, ErrorMessage = "Invalid Number of Position.")]
+        [Range(1, 9999, ErrorMessage = "Invalid Number of Position.")]
         public int pstNumPosition { get; set; }
 
         [Display(Name = "FTE")]
@@ -73,6 +73,19 @@ namespace JobPosting.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}", ApplyFormatInEditMode = true)]
         public DateTime pstEndDate { get; set; }
 
+        [Display(Name = "Job Start Date")]
+        [Required(ErrorMessage = "Job Start Date is required.")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime pstJobStartDate { get; set; }
+
+        [Display(Name = "Job End Date")]
+        [Required(ErrorMessage = "Job End Date is required.")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime pstJobEndDate { get; set; }
+
+
         public bool Enabled {
             get { return enabled; }
             set { enabled = value; }
@@ -103,6 +116,14 @@ namespace JobPosting.Models
             if (pstOpenDate > pstEndDate)
             {
                 yield return new ValidationResult("The open date cannot be after the closing date.", new[] { "pstOpenDate" });
+            }
+            if (pstJobEndDate < DateTime.Now)
+            {
+                yield return new ValidationResult("Job End Date connot be in the past.", new[] { "pstJobEndDate" });
+            }
+            if (pstJobStartDate > pstJobEndDate)
+            {
+                yield return new ValidationResult("Job Start Date cannot be after the Job End Date.", new[] { "pstJobStartDate" });
             }
         }
     }

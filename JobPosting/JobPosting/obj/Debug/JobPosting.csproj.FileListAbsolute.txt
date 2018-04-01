@@ -372,7 +372,6 @@ C:\Users\pevip\OneDrive\Documents\GitHub\JobSite\JobPosting\JobPosting\bin\Micro
 C:\Users\pevip\OneDrive\Documents\GitHub\JobSite\JobPosting\JobPosting\bin\Microsoft.AspNet.SignalR.Client.xml
 C:\Users\pevip\OneDrive\Documents\GitHub\JobSite\JobPosting\JobPosting\bin\Microsoft.AspNet.SignalR.Core.xml
 C:\Users\pevip\OneDrive\Documents\GitHub\JobSite\JobPosting\JobPosting\bin\Microsoft.AspNet.SignalR.SystemWeb.xml
-C:\Users\pevip\OneDrive\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.DAL.JBMigrations.InitialCreate.resources
 C:\Users\jacob\Documents\Community Sponsored Project\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.DAL.Securitymigrations.InitialCreate.resources
 C:\Users\jacob\Documents\Community Sponsored Project\JobSite\JobPosting\JobPosting\bin\Microsoft.AspNet.SignalR.Client.dll
 C:\Users\jacob\Documents\Community Sponsored Project\JobSite\JobPosting\JobPosting\bin\Microsoft.AspNet.SignalR.Core.dll
@@ -643,3 +642,6 @@ E:\Users\haggr\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosti
 E:\Users\haggr\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.csproj.CopyComplete
 E:\Users\haggr\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.dll
 E:\Users\haggr\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.pdb
+C:\Users\pevip\OneDrive\Documents\GitHub\JobSite\JobPosting\JobPosting\bin\NLog.dll
+C:\Users\pevip\OneDrive\Documents\GitHub\JobSite\JobPosting\JobPosting\bin\NLog.xml
+C:\Users\pevip\OneDrive\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.DAL.JBMigrations.InitialCreate.resources

@@ -5,6 +5,7 @@
     var Positions = ViewBag.Positions;
 }
 <br />
+<script src="https://unpkg.com/popper.js/dist/umd/popper.min.js"></script>
 <div class="container">
     <div class="row">
         <div class="col-10">
@@ -58,11 +59,11 @@
                                 @Html.DropDownList("Location", null, "All Locations", htmlAttributes: new { @class = "form-control" }) <br>
                                 Select By Payment Type:
                                 @Html.DropDownList("PaymentTypeID", new SelectListItem[]
-                            {
-new SelectListItem{Value = "1", Text = "Hourly"},
-new SelectListItem{Value = "2", Text = "Monthly"},
-new SelectListItem{Value = "3", Text = "Yearly"}
-                            },
+                                {
+                                    new SelectListItem{Value = "1", Text = "Hourly"},
+                                    new SelectListItem{Value = "2", Text = "Monthly"},
+                                    new SelectListItem{Value = "3", Text = "Yearly"}
+                                },
                             "All Types", htmlAttributes: new { @class = "form-control" }) <br />
                                 <input type="submit" value="Filter" class="btn btn-default" />
                                 @Html.ActionLink("Clear", "Index")

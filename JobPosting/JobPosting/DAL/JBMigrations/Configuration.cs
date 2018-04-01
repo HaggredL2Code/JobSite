@@ -176,13 +176,43 @@ namespace JobPosting.DAL.JBMigrations
 
             var postings = new List<Posting>
                         {
-                             new Posting { pstNumPosition = 1, pstEndDate = DateTime.Parse("2019-11-15")
-                           , pstJobDescription = "This is a job description for a Vice Principle", PositionID=6, pstFTE = 1.0m, pstSalary = 20.00m, pstCompensationType = 1},
-                              new Posting { pstNumPosition = 2, pstEndDate = DateTime.Parse("2019-11-16")
+                             new Posting { pstNumPosition = 1, pstEndDate = DateTime.Parse("2019-11-15"), pstJobStartDate = DateTime.Parse("2019-11-15"), pstJobEndDate = DateTime.Parse("2021-11-1")
+                           , pstJobDescription = "This is a job description for a Vice Principle", PositionID=6, pstFTE = 1.0m, pstSalary = 20.00m, pstCompensationType = 1,
+                             Days = new List<Day> {
+                               new Day {
+                                    dayName = "Monday",
+                                    dayOrder = 1
+                               },
+                               new Day {
+                                    dayName = "Tuesday",
+                                    dayOrder = 2
+                               },
+                               new Day {
+                                    dayName = "Wednesday",
+                                    dayOrder = 3
+                               },
+                               new Day {
+                                    dayName = "Thursday",
+                                    dayOrder = 4
+                               },
+                               new Day {
+                                    dayName = "Friday",
+                                    dayOrder = 5
+                               },
+                               new Day {
+                                    dayName = "Saturday",
+                                    dayOrder = 6
+                               },
+                               new Day {
+                                    dayName = "Sunday",
+                                    dayOrder = 7
+                               },
+                           } },
+                              new Posting { pstNumPosition = 2, pstEndDate = DateTime.Parse("2019-11-16"), pstJobStartDate = DateTime.Parse("2019-11-16"), pstJobEndDate = DateTime.Parse("2021-11-1")
                            , pstJobDescription = "This is a job description for a french teacher job", PositionID=4, pstFTE = 0.8m, pstSalary = 18.00m, pstCompensationType = 1,},
-                             new Posting { pstNumPosition = 4, pstEndDate = DateTime.Parse("2019-11-17")
+                             new Posting { pstNumPosition = 4, pstEndDate = DateTime.Parse("2019-11-17"), pstJobStartDate = DateTime.Parse("2019-11-17"), pstJobEndDate = DateTime.Parse("2021-11-1")
                            , pstJobDescription = "This is a job description for a Secretary", PositionID=7, pstFTE = 0.6m, pstSalary = 14.00m, pstCompensationType = 1},
-                              new Posting { pstNumPosition = 1, pstEndDate = DateTime.Parse("2019-11-17")
+                              new Posting { pstNumPosition = 1, pstEndDate = DateTime.Parse("2019-11-17"), pstJobStartDate = DateTime.Parse("2019-11-18"), pstJobEndDate = DateTime.Parse("2021-11-1")
                            , pstJobDescription = "This is a job description for a Vice Principle", PositionID=6, pstFTE = 0.6m, pstSalary = 25.00m, pstCompensationType = 1 }
 
 

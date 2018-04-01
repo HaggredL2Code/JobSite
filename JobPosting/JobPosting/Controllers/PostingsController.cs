@@ -129,9 +129,7 @@ namespace JobPosting.Controllers
             posting.Days = new List<Day>();
             ViewBag.Flag = false;
             PopulateDropdownList();
-            PopulateQualification();
-            ViewBag.Locations = db.Locations;
-            ViewBag.Skills = db.Skills;
+            PopulateListBox();
             PopulateAssignedDay(posting);
             return View();
         }
@@ -144,7 +142,7 @@ namespace JobPosting.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin, Manager, Hiring Team")]
-        public ActionResult Create([Bind(Include = "ID,pstNumPosition,pstFTE,pstSalary,pstCompensationType,pstJobDescription,pstOpenDate,pstEndDate,PositionID"/*,CreatedBy,CreatedOn,UpdatedBy,UpdatedOn,RowVersion*/)] Posting posting, string[] selectedQualification, string[] selectedDay, string[] selectedLocation, string[] selectedSkill, bool? SavedAsTemplate, string templateName)
+        public ActionResult Create([Bind(Include = "ID,pstNumPosition,pstFTE,pstSalary,pstCompensationType,pstJobDescription,pstOpenDate,pstEndDate,pstJobStartDate,pstJobEndDate,PositionID"/*,CreatedBy,CreatedOn,UpdatedBy,UpdatedOn,RowVersion*/)] Posting posting, string[] selectedQualification, string[] selectedDay, string[] selectedLocation, string[] selectedSkill, bool? SavedAsTemplate, string templateName)
         {
             try
             {
@@ -260,9 +258,7 @@ namespace JobPosting.Controllers
                 return View(posting);
             }
 
-            PopulateQualification();
-            ViewBag.Locations = db.Locations;
-            ViewBag.Skills = db.Skills;
+            PopulateListBox();
             PopulateDropdownList(posting);
             PopulateAssignedDay(posting);
             return View(posting);
@@ -288,9 +284,7 @@ namespace JobPosting.Controllers
                 return HttpNotFound();
             }
             PopulateDropdownList(posting);
-            PopulateQualification();
-            ViewBag.Locations = db.Locations;
-            ViewBag.Skills = db.Skills;
+            PopulateListBox();
             PopulateAssignedDay(posting);
 
             int realID = id.Value;
@@ -330,7 +324,7 @@ namespace JobPosting.Controllers
                 }
             }
             if (TryUpdateModel(postingToUpdate, "",
-                new string[] { "pstNumPosition","pstFTE", "pstSalary", "pstCompensationType", "pstJobDescription", "pstOpenDate", "pstEndDate", "PositionID" }))
+                new string[] { "pstNumPosition","pstFTE", "pstSalary", "pstCompensationType", "pstJobDescription", "pstOpenDate", "pstEndDate", "pstJobStartDate", "pstJobEndDate", "PositionID" }))
             {
                 try
                 {
@@ -380,8 +374,7 @@ namespace JobPosting.Controllers
                 }
             }
             PopulateDropdownList(postingToUpdate);
-            PopulateQualification();
-            ViewBag.Locations = db.Locations;
+            PopulateListBox();
             PopulateAssignedDay(postingToUpdate);
             ViewBag.JobRequirements = db.JobRequirements.Where(j => j.PostingID == realID);
             ViewBag.JobLocations = db.JobLocations.Where(l => l.PostingID == realID);
@@ -633,9 +626,11 @@ namespace JobPosting.Controllers
             
         }
 
-        private void PopulateQualification()
+        private void PopulateListBox()
         {
-            ViewBag.Qualifications = db.Qualification.OrderBy(q => q.QlfDescription);
+            ViewBag.Qualifications = new MultiSelectList(db.Qualification.OrderBy(q => q.QlfDescription), "ID", "QlfDescription");
+            ViewBag.Locations = new MultiSelectList(db.Locations, "ID", "Address");
+            ViewBag.Skills = new MultiSelectList(db.Skills, "ID", "SkillDescription");
         }
 
         private void PopulateAssignedDay(Posting posting)
@@ -652,7 +647,7 @@ namespace JobPosting.Controllers
                     Assigned = pDays.Contains(con.ID)
                 });
             }
-            ViewBag.Day = viewModel;
+            ViewBag.Day = new MultiSelectList(viewModel, "DayID", "dayName", pDays.ToArray());
         }
 
         private void SavedAsTemplate_fn(string templateName, Posting posting, string selectedRequirements, string selectedSkills, string selectedLocations, string selectedDays)
@@ -669,6 +664,8 @@ namespace JobPosting.Controllers
                 pstJobDescription = posting.pstJobDescription,
                 pstOpenDate = posting.pstOpenDate,
                 pstEndDate = posting.pstEndDate,
+                pstJobStartDate = posting.pstJobStartDate,
+                pstJobEndDate = posting.pstJobEndDate,
                 PositionID = posting.PositionID,
                 RequirementIDs = selectedRequirements,
                 SkillIDs = selectedSkills,
@@ -705,6 +702,8 @@ namespace JobPosting.Controllers
                     pstJobDescription = postingTemplate.pstJobDescription,
                     pstOpenDate = postingTemplate.pstOpenDate,
                     pstEndDate = postingTemplate.pstEndDate,
+                    pstJobStartDate = postingTemplate.pstJobStartDate,
+                    pstJobEndDate = postingTemplate.pstJobEndDate,
                     PositionID = postingTemplate.PositionID,
                     Position = positionToAdd
 
@@ -719,10 +718,8 @@ namespace JobPosting.Controllers
                 ViewBag.RequirementIDs = ConvertStringToList.ConvertToInt(postingTemplate.RequirementIDs);
                 ViewBag.DayIDs = ConvertStringToList.ConvertToInt(postingTemplate.dayIDs);
                 ViewBag.Days = db.Days;
-                PopulateQualification();
-                ViewBag.Locations = db.Locations;
-                ViewBag.Skills = db.Skills;
                 ViewBag.Flag = true;
+                PopulateListBox();
 
 
             return posting;

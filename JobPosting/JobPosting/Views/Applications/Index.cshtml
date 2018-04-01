@@ -46,6 +46,8 @@
     </tr>
 
 @foreach (var item in Model) {
+    if (item.Available == true)
+    {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Posting.Position.PositionCode)
@@ -113,7 +115,7 @@
         <td>
             @foreach (var f in item.BinaryFiles)
             {
-                @: @Html.ActionLink(f.FileName, "Download", new { id = f.ID})
+                @: @Html.ActionLink(f.FileName, "Download", new { id = f.ID })
             }
         </td>
         <td>
@@ -121,9 +123,11 @@
         </td>
         <td>
             @Html.ActionLink("Details", "Details", new { id = item.ID, postingID = item.Posting.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+            @Html.ActionLink("Delete", "Delete", new { id = item.ID }) |
+            @Html.ActionLink("Accept", "Accept", new { id = item.ID })
         </td>
     </tr>
+    }
 }
 
 </table>

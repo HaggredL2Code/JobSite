@@ -66,7 +66,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.pstOpenDate, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.pstOpenDate, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.pstOpenDate, new { htmlAttributes = new { @class = "form-control datetime-picker" } })
             @Html.ValidationMessageFor(model => model.pstOpenDate, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -74,8 +74,24 @@
     <div class="form-group">
         @Html.LabelFor(model => model.pstEndDate, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.pstEndDate, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.pstEndDate, new { htmlAttributes = new { @class = "form-control datetime-picker" } })
             @Html.ValidationMessageFor(model => model.pstEndDate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.pstJobStartDate, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.pstJobStartDate, new { htmlAttributes = new { @class = "form-control date-picker" } })
+            @Html.ValidationMessageFor(model => model.pstJobStartDate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.pstJobEndDate, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.pstJobEndDate, new { htmlAttributes = new { @class = "form-control date-picker" } })
+            @Html.ValidationMessageFor(model => model.pstJobEndDate, "", new { @class = "text-danger" })
         </div>
     </div>
 
@@ -238,4 +254,11 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/Content/jquery-ui-timepicker-addon.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script src="~/Scripts/jquery-ui-timepicker-addon.min.js"></script>
+    <script src="~/Scripts/date-picker.js"></script>
+    
 }

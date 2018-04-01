@@ -10,6 +10,7 @@ namespace JobPosting.Models
     //Only let Applicant delete their own Application
     public class Application : Auditable
     {
+        private bool available = true;
         private DateTime applyDate = DateTime.Now;
         public Application()
         {
@@ -38,6 +39,16 @@ namespace JobPosting.Models
         [StringLength(2000, ErrorMessage = "Comment must be less than 2000 characters")]
         [DataType(DataType.MultilineText)]
         public string Comment { get; set; }
+
+        public bool Available {
+            get {
+                return available;
+            }
+            set {
+                available = value;
+            }
+
+        }
 
         //[Display(Name = "Apply Date")]
         //public DateTime ApplyDate

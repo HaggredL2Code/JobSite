@@ -15,12 +15,14 @@ using NLog;
 
 namespace JobPosting.Controllers
 {
+    [Authorize]
     public class ApplicationsController : Controller
     {
         Logger logger = LogManager.GetCurrentClassLogger();
         private JBEntities db = new JBEntities();
 
         // GET: Applications
+        [Authorize(Roles = "Admin, Manager, Hiring Team")]
         public ActionResult Index()
         {
             IQueryable<Application> applications = db.Applications.Include(a => a.Applicant).Include(a => a.Posting).Include(a => a.BinaryFiles).Include(a => a.ApplicationsQualifications).Include(a => a.ApplicationSkills);
@@ -28,6 +30,7 @@ namespace JobPosting.Controllers
         }
 
         // GET: Applications/Details/5
+        [Authorize(Roles = "Admin, Manager, Hiring Team")]
         public ActionResult Details(int? id, int? postingID)
         {
             if (id == null || postingID == null)
@@ -80,28 +83,22 @@ namespace JobPosting.Controllers
 
         private void PopulateJobRequirements(int postingID)
         {
-            List<string> QualificationName = new List<string>();
-            var jobRequirements = db.JobRequirements.Where(jr => jr.PostingID == postingID);
-            foreach (var jr in jobRequirements)
-            {
-                QualificationName.Add(jr.Qualification.QlfDescription);
-                
-            }
-            ViewBag.jobRequirements = jobRequirements; //used to get ID of requirements
-            ViewBag.qualificationName = QualificationName; //used to display Desc of qualifications
+
+            var pJobRequirements = (from jr in db.JobRequirements
+                                    join q in db.Qualification on jr.QualificationID equals q.ID
+                                    where jr.PostingID == postingID
+                                    select q);
+            ViewBag.jobRequirements = new MultiSelectList(pJobRequirements, "ID", "QlfDescription");
 
         }
 
         private void PopulatePostingSkills(int postingID)
         {
-            List<string> SkillName = new List<string>();
-            var postingSkills = db.PostingSkills.Where(ps => ps.PostingID == postingID);
-            foreach (var ps in postingSkills)
-            {
-                SkillName.Add(ps.Skill.SkillDescription);
-            }
-            ViewBag.postingSkills = postingSkills;
-            ViewBag.SkillName = SkillName;
+            var pSkills = (from ps in db.PostingSkills
+                           join s in db.Skills on ps.SkillID equals s.ID
+                           where ps.PostingID == postingID
+                           select s);
+            ViewBag.postingSkills = new MultiSelectList(pSkills, "ID", "SkillDescription");
         }
 
 
@@ -230,6 +227,7 @@ namespace JobPosting.Controllers
         }
 
         // GET: Applications/Edit/5
+        [Authorize(Roles = "Admin, Manager, Hiring Team")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -252,6 +250,7 @@ namespace JobPosting.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, Manager, Hiring Team")]
         public ActionResult Edit([Bind(Include = "ID,Priority,PostingID,ApplicantID,CreatedBy,CreatedOn,UpdatedBy,UpdatedOn,RowVersion")] Application application)
         {
             if (ModelState.IsValid)
@@ -264,8 +263,32 @@ namespace JobPosting.Controllers
             ViewBag.PostingID = new SelectList(db.Postings, "ID", "pstJobDescription", application.PostingID);
             return View(application);
         }
+        [Authorize(Roles = "Admin, Manager, Hiring Team")]
+        public ActionResult Accept(int? id)
+        {
+            var applicant = (from ap in db.Applicants
+                             join apl in db.Applications on ap.ID equals apl.ApplicantID
+                             where apl.ID == id
+                             select ap).SingleOrDefault();
+            var job = db.Applications.Find(id).Posting.Position.PositionDescription;
+            var application = db.Applications.Find(id);
+            Archive archive = new Archive
+            {
+                EmployeeName = applicant.apFullName,
+                EmployeePhone = applicant.apPhone.ToString(),
+                EmployeeAddress = applicant.apAddress,
+                EmployeePosition = job.ToString()
 
+            };
+            application.Available = false;
+            db.Entry(application).State = EntityState.Modified;
+            db.Archives.Add(archive);
+            db.SaveChanges();
+            
+            return RedirectToAction("Index");
+        }
         // GET: Applications/Delete/5
+        [Authorize(Roles = "Admin, Manager, Hiring Team")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -281,6 +304,7 @@ namespace JobPosting.Controllers
         }
 
         // POST: Applications/Delete/5
+        [Authorize(Roles = "Admin, Manager, Hiring Team")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -290,7 +314,7 @@ namespace JobPosting.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
+        [Authorize(Roles = "Admin, Manager, Hiring Team")]
         public FileContentResult Download(int id)
         {
             var resumeFile = db.BinaryFiles.Include(f => f.FileContent).Where(f => f.ID == id).SingleOrDefault();

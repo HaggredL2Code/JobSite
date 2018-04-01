@@ -57,17 +57,17 @@
 
         <dd>
             @if (Model.pstCompensationType == 1)
-            {
-                @: Hourly
-            }
-            else if (Model.pstCompensationType == 2)
-            {
-                @:Monthly
-            }
-            else if (Model.pstCompensationType == 3)
-            {
-                @:Yearly
-            }
+        {
+            @: Hourly
+    }
+    else if (Model.pstCompensationType == 2)
+    {
+        @:Monthly
+}
+else if (Model.pstCompensationType == 3)
+{
+    @:Yearly
+}
         </dd>
 
         <dt>
@@ -76,11 +76,11 @@
 
         <dd>
             @{
-                IEnumerable<JobPosting.Models.JobLocation> jobLocations = ViewBag.JobLocations;
-                foreach (var l in jobLocations)
-                {
+            IEnumerable<JobPosting.Models.JobLocation> jobLocations = ViewBag.JobLocations;
+            foreach (var l in jobLocations)
+            {
                 @: @Html.DisplayFor(lModel => l.Location.Address) <br />
-            }
+        }
             }
         </dd>
 
@@ -90,9 +90,9 @@
 
         <dd>
             @foreach (var d in Model.Days)
-            {
+        {
             @: @Html.DisplayFor(dModel => d.dayName) <br />
-            }
+    }
         </dd>
 
 
@@ -102,9 +102,9 @@
 
         <dd>
             @{
-                IEnumerable<JobPosting.Models.JobRequirement> jobRequirements = ViewBag.JobRequirements;
-                foreach (var r in jobRequirements)
-                {
+            IEnumerable<JobPosting.Models.JobRequirement> jobRequirements = ViewBag.JobRequirements;
+            foreach (var r in jobRequirements)
+            {
                 @: @Html.DisplayFor(rModel => r.Qualification.QlfDescription) <br />
         }
             }
@@ -115,12 +115,12 @@
         </dt>
 
         <dd>
-            @{ 
-                IEnumerable<JobPosting.Models.PostingSkill> postingSkills = ViewBag.PostingSkills;
-                foreach (var s in postingSkills)
-                {
-                    @: @Html.DisplayFor(sModel => s.Skill.SkillDescription) <br />
-                }
+            @{
+            IEnumerable<JobPosting.Models.PostingSkill> postingSkills = ViewBag.PostingSkills;
+            foreach (var s in postingSkills)
+            {
+                @: @Html.DisplayFor(sModel => s.Skill.SkillDescription) <br />
+        }
             }
         </dd>
 
@@ -138,6 +138,20 @@
 
         <dd>
             @Html.DisplayFor(model => model.pstEndDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.pstJobStartDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.pstJobEndDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.pstJobEndDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.pstJobEndDate)
         </dd>
 
     </dl>

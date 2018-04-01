@@ -15,7 +15,7 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                   @Html.ActionLink("Change Security Settings", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "dropdown-item" })
-                  @Html.ActionLink("Manage Profile", "Details", "Applicants", htmlAttributes: new {@class="dropdown-item" })
+                  @Html.ActionLink("Manage Profile", "Details", "Applicants", routeValues: null, htmlAttributes: new {@class="dropdown-item" })
             </div>
         </li>
 

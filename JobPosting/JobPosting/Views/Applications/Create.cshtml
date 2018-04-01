@@ -233,62 +233,15 @@
     <div class="form-group">
             <label class="control-label col-md-2">Requirements</label>
             <div class="col-md-offset-2 col-md-10">
-                <table>
-                    <tr>
-                        @{
-                            int cnt_R = 0;
-                            var qualificationName = ViewBag.QualificationName;
-                            var index_R = 0;
-                            foreach (var jr in ViewBag.jobRequirements)
-                            {
-                                
-                                if (cnt_R++ % 3 == 0)
-                                {
-                                    @:</tr><tr>
-                                }
-                                @:<td>
-                                    <input type="checkbox"
-                                           name="selectedQualification"
-                                           id="selectedQualification"
-                                           value="@jr.QualificationID" />
-                                    @qualificationName[index_R] @:&nbsp;&nbsp;
-                                    @:</td>
-                                index_R += 1;
-                            }
-                            @:</tr>
-                        }
-                    </table>
+                @Html.ListBox("selectedQualification", (MultiSelectList)ViewBag.jobRequirements, new { @class = "form-control"})
+                
                 </div>
             </div>
 
     <div class="form-group">
             <label class="control-label col-md-2">Skills</label>
             <div class="col-md-offset-2 col-md-10">
-                <table>
-                    <tr>
-                        @{
-                            int cnt_S = 0;
-                            var SkillName = ViewBag.SkillName;
-                            var index_S = 0;
-                            foreach (var ps in ViewBag.postingSkills)
-                            {
-                                
-                                if (cnt_S++ % 3 == 0)
-                                {
-                                    @:</tr><tr>
-                                }
-                                @:<td>
-                                    <input type="checkbox"
-                                           name="selectedSkill"
-                                           id="selectedSkill"
-                                           value="@ps.SkillID" />
-                                    @SkillName[index_S] @:&nbsp;&nbsp;
-                                    @:</td>
-                                index_S += 1;
-                            }
-                            @:</tr>
-                        }
-                    </table>
+                @Html.ListBox("selectedSkill", (MultiSelectList)ViewBag.postingSkills, new { @class = "form-control"})
                 </div>
             </div>
 
