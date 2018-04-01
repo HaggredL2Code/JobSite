@@ -66,7 +66,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.pstOpenDate, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.pstOpenDate, new { htmlAttributes = new { @class = "form-control datetime-picker" } })
+            @Html.EditorFor(model => model.pstOpenDate, new { htmlAttributes = new { @class = "form-control datetime-picker", onkeydown = "return false", onpaste = "return false" } })
             @Html.ValidationMessageFor(model => model.pstOpenDate, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -74,7 +74,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.pstEndDate, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.pstEndDate, new { htmlAttributes = new { @class = "form-control datetime-picker" } })
+            @Html.EditorFor(model => model.pstEndDate, new { htmlAttributes = new { @class = "form-control datetime-picker", onkeydown = "return false", onpaste = "return false" } })
             @Html.ValidationMessageFor(model => model.pstEndDate, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -82,7 +82,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.pstJobStartDate, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.pstJobStartDate, new { htmlAttributes = new { @class = "form-control date-picker" } })
+            @Html.EditorFor(model => model.pstJobStartDate, new { htmlAttributes = new { @class = "form-control date-picker", onkeydown = "return false", onpaste = "return false" } })
             @Html.ValidationMessageFor(model => model.pstJobStartDate, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -90,7 +90,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.pstJobEndDate, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.pstJobEndDate, new { htmlAttributes = new { @class = "form-control date-picker" } })
+            @Html.EditorFor(model => model.pstJobEndDate, new { htmlAttributes = new { @class = "form-control date-picker", onkeydown = "return false", onpaste = "return false" } })
             @Html.ValidationMessageFor(model => model.pstJobEndDate, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -106,143 +106,58 @@
     <div class="form-group">
             <label class="control-label col-md-2">Locations</label>
             <div class="col-md-offset-2 col-md-10">
-                <table>
-                    <tr>
-                        @{
-                            int cnt = 0;
-                            IEnumerable<JobPosting.Models.JobLocation> positionLocations = ViewBag.JobLocations;
-                            List<int> LocationList = new List<int>();
-                            foreach (var l in positionLocations.Select(p => p.LocationID))
-                            {
-                                LocationList.Add(l);
-                            }
-                            bool Assigned = false;
-                            foreach (var l in ViewBag.Locations)
-                            {
-                                Assigned = (LocationList.Contains(l.ID)) ? true : false;
-
-                                if (cnt++ % 3 == 0)
-                                {
-                                    @:</tr><tr>
-                                }
-                                @:<td>
-                                    <input type="checkbox"
-                                           name="selectedLocation"
-                                           value="@l.ID"
-                                            @(Html.Raw(Assigned ? "checked=\"checked\"" : "")) />
-                                    @l.Address @:&nbsp;&nbsp;
-                                    @:</td>
-                            }
-                            @:</tr>
-                        }
-                    </table>
-                </div>
+                @Html.ListBox("selectedLocation", (MultiSelectList)ViewBag.JobLocations, htmlAttributes: new {@class = "form-control listBox", @id="locationListBox"  })
             </div>
+            <div class="col-md-10">
+                @Html.DropDownList("JobLocationID", (SelectList)ViewBag.Location, htmlAttributes: new { @class = "form-control", @id="jobLocationID" })
+                <input type="button" value="Add" id="addLocation">
+                <input type="button" value="Remove" id="removeLocation">
+            </div>
+   </div>
 
          <div class="form-group">
             <label class="control-label col-md-2">Day of Work</label>
-            <div class="col-md-offset-2 col-md-10">
-                <table>
-                    <tr>
-                        @{
-                            int cnt1 = 0;
-                            List<JobPosting.ViewModels.DayVM> days = ViewBag.Day;
-                            foreach (var d in days)
-                            {
-                                if (cnt1++ % 3 == 0)
-                                {
-                                    @:</tr><tr>
-                                }
-                                @:<td>
-                                    <input type="checkbox"
-                                           name="selectedDay"
-                                           value="@d.DayID"
-                                            @(Html.Raw(d.Assigned ? "checked=\"checked\"" : "")) />
-                                    @d.dayName @:&nbsp;&nbsp;
-                                    @:</td>
-                            }
-                            @:</tr>
-                        }
-                    </table>
-                </div>
+            <div class="col-md-offset-2 col-md-10"> 
+                @Html.ListBox("selectedDay", (MultiSelectList)ViewBag.SelectedDay, htmlAttributes: new { @class = "form-control listBox", @id="dayListBox"})
             </div>
+            <div class="col-md-10">
+                @Html.DropDownList("DayID", (SelectList)ViewBag.Days, htmlAttributes: new { @class = "form-control", @id = "dayID" })
+                <input type="button" value="Add" id="addDay" />
+                <input type="button" value="Remove" id="removeDay">
+            </div>
+         </div>
 
 
         <div class="form-group">
             <label class="control-label col-md-2">Requirements</label>
             <div class="col-md-offset-2 col-md-10">
-                <table>
-                    <tr>
-                        @{
-                            int cnt2 = 0;
-                            IEnumerable<JobPosting.Models.JobRequirement> positionRequirements = ViewBag.JobRequirements;
-                            List<int> requirementList = new List<int>();
-                            foreach (var p in positionRequirements.Select(p => p.QualificationID))
-                            {
-                                requirementList.Add(p);
-                            }
-                            bool Assigned2 = false;
-                            foreach (var q in ViewBag.Qualifications)
-                            {
-                                Assigned2 = (requirementList.Contains(q.ID)) ? true : false;
-
-                                if (cnt2++ % 3 == 0)
-                                {
-                                    @:</tr><tr>
-                                }
-                                @:<td>
-                                    <input type="checkbox"
-                                           name="selectedQualification"
-                                           value="@q.ID"
-                                            @(Html.Raw(Assigned2 ? "checked=\"checked\"" : "")) />
-                                    @q.QlfDescription @:&nbsp;&nbsp;
-                                    @:</td>
-                            }
-                            @:</tr>
-                        }
-                    </table>
+                @Html.ListBox("selectedQualification", (MultiSelectList)ViewBag.JobRequirements, htmlAttributes: new { @class = "form-control listBox", @id="qualificationListBox"})
+                
                 </div>
+            <div class="col-md-10">
+                @Html.DropDownList("JobRequirementID", (SelectList)ViewBag.Requirement, htmlAttributes: new { @class = "form-control", @id = "jobRequirementID" })
+                <input type="button" value="Add" id="addRequirement">
+                <input type="button" value="Remove" id="removeRequirement">
+            </div>
             </div>
 
-     <div class="form-group">
+        <div class="form-group">
             <label class="control-label col-md-2">Skills</label>
             <div class="col-md-offset-2 col-md-10">
-                <table>
-                    <tr>
-                        @{
-                            int cnt3 = 0;
-                            IEnumerable<JobPosting.Models.PostingSkill> postingSkills = ViewBag.PostingSkills;
-                            List<int> skillList = new List<int>();
-                            foreach (var s in postingSkills.Select(p => p.SkillID))
-                            {
-                                skillList.Add(s);
-                            }
-                            bool Assigned3 = false;
-                            foreach (var s in ViewBag.Skills)
-                            {
-                                Assigned3 = (skillList.Contains(s.ID)) ? true : false;
-
-                                if (cnt3++ % 3 == 0)
-                                {
-                                    @:</tr><tr>
-                                }
-                                @:<td>
-                                    <input type="checkbox"
-                                           name="selectedSkill"
-                                           value="@s.ID"
-                                            @(Html.Raw(Assigned3 ? "checked=\"checked\"" : "")) />
-                                    @s.SkillDescription @:&nbsp;&nbsp;
-                                    @:</td>
-                            }
-                            @:</tr>
-                        }
-                    </table>
-                </div>
+                @Html.ListBox("selectedSkill", (MultiSelectList)ViewBag.PostingSkills, htmlAttributes: new { @class= "form-control listBox", @id="skillListBox"})
+               
             </div>
+            <div class="col-md-10">
+                @Html.DropDownList("PostingSkillID", (SelectList)ViewBag.Skill, htmlAttributes: new { @class = "form-control", @id = "postingSkillID" })
+                <input type="button" value="Add" id="addSkill">
+                <input type="button" value="Remove" id="removeSkill">
+            </div>
+        </div>
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Save" class="btn btn-default" />
+            <input type="submit" value="Save" class="btn btn-default" id="submit" />
+            
         </div>
     </div>
 </div>
@@ -260,5 +175,7 @@
     <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
     <script src="~/Scripts/jquery-ui-timepicker-addon.min.js"></script>
     <script src="~/Scripts/date-picker.js"></script>
+    <script src="~/Scripts/checkExisted.js"></script>
+    <script src="~/Scripts/Code.js"></script>
     
 }

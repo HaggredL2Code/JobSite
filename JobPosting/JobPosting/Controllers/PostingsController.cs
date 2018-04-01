@@ -288,9 +288,7 @@ namespace JobPosting.Controllers
             PopulateAssignedDay(posting);
 
             int realID = id.Value;
-            ViewBag.JobRequirements = db.JobRequirements.Where(j => j.PostingID == realID).ToList();
-            ViewBag.JobLocations = db.JobLocations.Where(jl => jl.PostingID == realID).ToList();
-            ViewBag.PostingSkills = db.PostingSkills.Where(ps => ps.PostingID == id);
+            PopulateListBoxByID(realID);
             return View(posting);
         }
 
@@ -618,6 +616,9 @@ namespace JobPosting.Controllers
             ViewBag.PositionID = new SelectList(db.Positions.OrderBy(p => p.PositionDescription), "ID", "PositionDescription", posting?.PositionID);
             ViewBag.JobGroupID = new SelectList(db.JobGroups.OrderBy(p => p.GroupTitle), "ID", "GroupTitle", posting?.Position.JobGroupID);
             ViewBag.Location = new SelectList(db.Locations.OrderBy(l => l.Address), "ID", "Address");
+            ViewBag.Skill = new SelectList(db.Skills.OrderBy(s => s.SkillDescription), "ID", "SkillDescription");
+            ViewBag.Requirement = new SelectList(db.Qualification.OrderBy(q => q.QlfDescription), "ID", "QlfDescription");
+            ViewBag.Days = new SelectList(db.Days.OrderBy(d => d.dayOrder), "ID", "dayName");
         }
 
         private void PopulateDropdownListTemplate(PostingTemplate postingTemplate = null)
@@ -631,6 +632,32 @@ namespace JobPosting.Controllers
             ViewBag.Qualifications = new MultiSelectList(db.Qualification.OrderBy(q => q.QlfDescription), "ID", "QlfDescription");
             ViewBag.Locations = new MultiSelectList(db.Locations, "ID", "Address");
             ViewBag.Skills = new MultiSelectList(db.Skills, "ID", "SkillDescription");
+           
+        }
+        private void PopulateListBoxByID(int id)
+        {
+            // LINQ Query select Qualification table in order to receive ID and QlfDescription that correspond to PostingID
+            var qJobRequirements = (from jr in db.JobRequirements
+                                    join q in db.Qualification on jr.QualificationID equals q.ID
+                                    where jr.PostingID == id
+                                    select q);
+
+            // LINQ Query select Location table in order to receive ID and Address that correspond to PostingID
+            var qJobLocations = (from jl in db.JobLocations
+                                 join l in db.Locations on jl.LocationID equals l.ID
+                                 where jl.PostingID == id
+                                 select l);
+
+            // LINKQ Query select Skill table in order to receive ID and SkillDescription that correspond to PostingID
+            var qPostingSkills = (from ps in db.PostingSkills
+                                  join s in db.Skills on ps.SkillID equals s.ID
+                                  where ps.PostingID == id
+                                  select s);
+
+            // Create ViewBags with value is MultiSelectList
+            ViewBag.JobRequirements = new MultiSelectList(qJobRequirements, "ID", "QlfDescription");
+            ViewBag.JobLocations = new MultiSelectList(qJobLocations, "ID", "Address");
+            ViewBag.PostingSkills = new MultiSelectList(qPostingSkills, "ID", "SkillDescription");
         }
 
         private void PopulateAssignedDay(Posting posting)
@@ -648,6 +675,7 @@ namespace JobPosting.Controllers
                 });
             }
             ViewBag.Day = new MultiSelectList(viewModel, "DayID", "dayName", pDays.ToArray());
+            ViewBag.SelectedDay = new MultiSelectList(posting.Days.Select(d => new { d.ID, d.dayName }), "ID", "dayName");
         }
 
         private void SavedAsTemplate_fn(string templateName, Posting posting, string selectedRequirements, string selectedSkills, string selectedLocations, string selectedDays)

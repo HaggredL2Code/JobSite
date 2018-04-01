@@ -126,53 +126,6 @@
             <label class="control-label col-md-2">Requirements</label>
             <div class="col-md-offset-2 col-md-10">
                 @Html.ListBox("selectedQualification", (MultiSelectList)ViewBag.Qualifications, new { @class = "form-control"})
-                @*<table>
-                    
-                        @{
-                            int cnt2 = 0;
-                            if (!ViewBag.Flag)
-                            {
-                                @: <tr>
-                                
-                                foreach (var q in ViewBag.Qualifications)
-                                {
-                                    if (cnt2++ % 3 == 0)
-                                    {
-                                    @:</tr><tr>
-                                }
-                                @:<td>
-                                    <input type="checkbox"
-                                           name="selectedQualification"
-                                           id="selectedQualification"
-                                           value="@q.ID"
-                                            />
-                                    @q.QlfDescription @:&nbsp;&nbsp;
-                                    @:</td>
-                                }
-                                @:</tr>
-                            }
-                            else
-                            {
-                                @:<tr>
-                                foreach (var q in ViewBag.Qualifications)
-                                {
-                                    bool Assigned = (ViewBag.RequirementIDs.Contains(q.ID)) ? true : false;
-                                    if (cnt2++ % 3 == 0)
-                                    {
-                                        @:</tr><tr>
-                                    }
-                                    @:<td>
-                                    <input type="checkbox"
-                                           name="selectedQualification"
-                                           id="selectedQualification"
-                                           value="@q.ID"
-                                            @(Html.Raw(Assigned ? "checked=\"checked\"" : "")) />
-                                    @q.QlfDescription @:&nbsp;&nbsp;
-                                    @:</td>
-                                }
-                            }
-                        }
-                    </table>*@
                 </div>
         </div>
         @if (!ViewBag.Flag)
