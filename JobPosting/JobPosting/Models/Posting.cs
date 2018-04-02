@@ -31,7 +31,7 @@ namespace JobPosting.Models
 
         [Display(Name = "Number of Position")]
         [Required(ErrorMessage = "Number of Position is required.")]
-        [Range(1, 9999, ErrorMessage = "Invalid Number of Position.")]
+        [Range(0, 9999, ErrorMessage = "Invalid Number of Position.")]
         public int pstNumPosition { get; set; }
 
         [Display(Name = "FTE")]

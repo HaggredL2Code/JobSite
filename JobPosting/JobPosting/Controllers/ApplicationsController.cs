@@ -26,6 +26,16 @@ namespace JobPosting.Controllers
         public ActionResult Index()
         {
             IQueryable<Application> applications = db.Applications.Include(a => a.Applicant).Include(a => a.Posting).Include(a => a.BinaryFiles).Include(a => a.ApplicationsQualifications).Include(a => a.ApplicationSkills);
+             if (TempData["NumPositionFlag"] != null)
+             {
+                ViewBag.NumPositionFlag = TempData["NumPositionFlag"];
+                ViewBag.ID = TempData["ID"];
+             }
+            else
+            {
+                ViewBag.NumPositionFlag = true;
+                
+            }
             return View(applications.ToList());
         }
 
@@ -263,8 +273,9 @@ namespace JobPosting.Controllers
             ViewBag.PostingID = new SelectList(db.Postings, "ID", "pstJobDescription", application.PostingID);
             return View(application);
         }
+
         [Authorize(Roles = "Admin, Manager, Hiring Team")]
-        public ActionResult Accept(int? id)
+        public ActionResult Accept(int? id, int? numPosition = null)
         {
             var applicant = (from ap in db.Applicants
                              join apl in db.Applications on ap.ID equals apl.ApplicantID
@@ -272,6 +283,7 @@ namespace JobPosting.Controllers
                              select ap).SingleOrDefault();
             var job = db.Applications.Find(id).Posting.Position.PositionDescription;
             var application = db.Applications.Find(id);
+            var posting = db.Applications.Find(id).Posting;
             Archive archive = new Archive
             {
                 EmployeeName = applicant.apFullName,
@@ -280,8 +292,28 @@ namespace JobPosting.Controllers
                 EmployeePosition = job.ToString()
 
             };
-            application.Available = false;
-            db.Entry(application).State = EntityState.Modified;
+            if (numPosition != null)
+            {
+                posting.pstNumPosition = (int)numPosition;
+            }
+            
+            
+
+            if (posting.pstNumPosition != 0)
+            {
+                TempData["NumPositionFlag"] = null;
+                posting.pstNumPosition -= 1;
+                db.Entry(posting).State = EntityState.Modified;
+                application.Available = false;
+                db.Entry(application).State = EntityState.Modified;
+
+            }
+            else {
+                TempData["NumPositionFlag"] = false;
+                TempData["ID"] = id;
+                return RedirectToAction("Index");
+            } 
+            
             db.Archives.Add(archive);
             db.SaveChanges();
             
