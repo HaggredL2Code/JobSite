@@ -646,3 +646,4 @@ C:\Users\pevip\OneDrive\Documents\GitHub\JobSite\JobPosting\JobPosting\bin\NLog.
 C:\Users\pevip\OneDrive\Documents\GitHub\JobSite\JobPosting\JobPosting\bin\NLog.xml
 C:\Users\pevip\OneDrive\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.DAL.JBMigrations.InitialCreate.resources
 C:\Users\jacob\Documents\Community Sponsored Project\Jobsite\JobPosting\JobPosting\obj\Debug\JobPosting.DAL.JBMigrations.InitialCreate1.resources
+C:\Users\Administrator\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.DAL.JBMigrations.InitialCreate1.resources

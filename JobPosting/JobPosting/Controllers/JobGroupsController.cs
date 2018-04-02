@@ -20,11 +20,17 @@ namespace JobPosting.Controllers
         private JBEntities db = new JBEntities();
 
         // GET: JobGroups
-        public ActionResult Index()
+        public ActionResult Index(string SearchString)
         {
-            return View(db.JobGroups.ToList());
-        }
+            var jobGroups = db.JobGroups.Include(a => a.Positions);
 
+            if (!String.IsNullOrEmpty(SearchString))
+            {
+                jobGroups = jobGroups.Where(l => l.GroupTitle.ToUpper().Contains(SearchString.ToUpper()));
+            }
+
+            return View(jobGroups.ToList());
+        }
         // GET: JobGroups/Details/5
         public ActionResult Details(int? id)
         {
