@@ -26,7 +26,8 @@ namespace JobPosting.Controllers
         public ActionResult Index(string SearchPrioity, int? PostingID)
         {
             IQueryable<Application> applications = db.Applications.Include(a => a.Applicant).Include(a => a.Posting).Include(a => a.BinaryFiles).Include(a => a.ApplicationsQualifications).Include(a => a.ApplicationSkills);
-             if (TempData["NumPositionFlag"] != null)
+
+            if (TempData["NumPositionFlag"] != null)
              {
                 ViewBag.NumPositionFlag = TempData["NumPositionFlag"];
                 ViewBag.ID = TempData["ID"];
@@ -36,14 +37,14 @@ namespace JobPosting.Controllers
                 ViewBag.NumPositionFlag = true;
                 
             }
-             /*
+         
             PopulateDropdownList();
 
             if (PostingID.HasValue)
             {
                 applications = applications.Where(a => a.PostingID == PostingID);
             }
-            */
+          
             return View(applications.ToList());
 
         }
