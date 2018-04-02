@@ -365,7 +365,7 @@ namespace JobPosting.Controllers
 
         private void PopulateDropdownList(Application Application = null)
         {
-            ViewBag.PostingID = new SelectList(db.Postings.OrderBy(j => j.PositionID), "ID", "Postings", Application?.PostingID);
+            ViewBag.PostingID = new SelectList(db.Postings.OrderBy(j => j.PositionID), "ID", "pstJobDescription", Application?.PostingID);
         }
 
 
