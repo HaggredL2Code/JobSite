@@ -172,7 +172,7 @@ namespace JobPosting.Controllers
                         {
                             db.Applications.Remove(applicationToCheck);
                         }
-                       
+
 
                         db.Applications.Add(application);
                         db.SaveChanges();
