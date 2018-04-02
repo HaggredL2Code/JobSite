@@ -36,15 +36,16 @@ namespace JobPosting.Controllers
                 ViewBag.NumPositionFlag = true;
                 
             }
-
+             /*
             PopulateDropdownList();
 
             if (PostingID.HasValue)
             {
                 applications = applications.Where(a => a.PostingID == PostingID);
             }
-
+            */
             return View(applications.ToList());
+
         }
 
         // GET: Applications/Details/5
@@ -360,6 +361,12 @@ namespace JobPosting.Controllers
             var resumeFile = db.BinaryFiles.Include(f => f.FileContent).Where(f => f.ID == id).SingleOrDefault();
             return File(resumeFile.FileContent.Content, resumeFile.FileContent.MimeType, resumeFile.FileName);
         }
+
+        private void PopulateDropdownList(Application Application = null)
+        {
+            ViewBag.PostingID = new SelectList(db.Postings.OrderBy(j => j.PositionID), "ID", "Postings", Application?.PostingID);
+        }
+
 
         protected override void Dispose(bool disposing)
         {

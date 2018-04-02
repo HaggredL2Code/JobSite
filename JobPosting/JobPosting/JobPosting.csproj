@@ -216,18 +216,14 @@
     <Compile Include="Controllers\UnionsController.cs" />
     <Compile Include="DAL\ApplicationDbContext.cs" />
     <Compile Include="DAL\JBEntities.cs" />
-    <Compile Include="DAL\JBMigrations\201804010019405_InitialCreate.cs" />
-    <Compile Include="DAL\JBMigrations\201804010019405_InitialCreate.Designer.cs">
-      <DependentUpon>201804010019405_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\JBMigrations\201804021330337_InitialCreate1.cs" />
-    <Compile Include="DAL\JBMigrations\201804021330337_InitialCreate1.Designer.cs">
-      <DependentUpon>201804021330337_InitialCreate1.cs</DependentUpon>
+    <Compile Include="DAL\JBMigrations\201804021446063_InitialCreate.cs" />
+    <Compile Include="DAL\JBMigrations\201804021446063_InitialCreate.Designer.cs">
+      <DependentUpon>201804021446063_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="DAL\JBMigrations\Configuration.cs" />
-    <Compile Include="DAL\SecurityMigrations\201803011756159_InitialCreate.cs" />
-    <Compile Include="DAL\SecurityMigrations\201803011756159_InitialCreate.Designer.cs">
-      <DependentUpon>201803011756159_InitialCreate.cs</DependentUpon>
+    <Compile Include="DAL\SecurityMigrations\201804021447241_InitialCreate.cs" />
+    <Compile Include="DAL\SecurityMigrations\201804021447241_InitialCreate.Designer.cs">
+      <DependentUpon>201804021447241_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="DAL\SecurityMigrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
@@ -480,14 +476,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="DAL\JBMigrations\201804010019405_InitialCreate.resx">
-      <DependentUpon>201804010019405_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="DAL\JBMigrations\201804021446063_InitialCreate.resx">
+      <DependentUpon>201804021446063_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DAL\JBMigrations\201804021330337_InitialCreate1.resx">
-      <DependentUpon>201804021330337_InitialCreate1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DAL\SecurityMigrations\201803011756159_InitialCreate.resx">
-      <DependentUpon>201803011756159_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="DAL\SecurityMigrations\201804021447241_InitialCreate.resx">
+      <DependentUpon>201804021447241_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

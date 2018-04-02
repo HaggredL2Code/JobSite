@@ -231,7 +231,6 @@ C:\Users\Administrator\Documents\GitHub\JobSite\JobPosting\JobPosting\bin\Micros
 C:\Users\Administrator\Documents\GitHub\JobSite\JobPosting\JobPosting\bin\Microsoft.AI.ServerTelemetryChannel.xml
 C:\Users\Administrator\Documents\GitHub\JobSite\JobPosting\JobPosting\bin\Microsoft.AI.WindowsServer.xml
 C:\Users\Administrator\Documents\GitHub\JobSite\JobPosting\JobPosting\bin\Microsoft.AI.Web.xml
-C:\Users\Administrator\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.csproj.GenerateResource.Cache
 C:\Users\Administrator\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.dll
 C:\Users\Administrator\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.pdb
 C:\Users\Jacob\Documents\Community Sponsored Project\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.DAL.JBMigrations.InitialCreate.resources
@@ -357,9 +356,7 @@ C:\Users\Jacob\Documents\Community Sponsored Project\JobSite\JobPosting\JobPosti
 C:\Users\pevip\OneDrive\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.csproj.GenerateResource.Cache
 C:\Users\pevip\OneDrive\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.DAL.Securitymigrations.InitialCreate.resources
 C:\Users\pevip\OneDrive\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.csprojResolveAssemblyReference.cache
-C:\Users\Administrator\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.DAL.Securitymigrations.InitialCreate.resources
 C:\Users\Administrator\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.csprojResolveAssemblyReference.cache
-C:\Users\Administrator\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.DAL.JBMigrations.InitialCreate.resources
 C:\Users\Administrator\Documents\GitHub\JobSite\JobPosting\JobPosting\bin\Microsoft.AspNet.SignalR.Client.dll
 C:\Users\Administrator\Documents\GitHub\JobSite\JobPosting\JobPosting\bin\Microsoft.AspNet.SignalR.Core.dll
 C:\Users\Administrator\Documents\GitHub\JobSite\JobPosting\JobPosting\bin\Microsoft.AspNet.SignalR.SystemWeb.dll
@@ -646,4 +643,6 @@ C:\Users\pevip\OneDrive\Documents\GitHub\JobSite\JobPosting\JobPosting\bin\NLog.
 C:\Users\pevip\OneDrive\Documents\GitHub\JobSite\JobPosting\JobPosting\bin\NLog.xml
 C:\Users\pevip\OneDrive\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.DAL.JBMigrations.InitialCreate.resources
 C:\Users\jacob\Documents\Community Sponsored Project\Jobsite\JobPosting\JobPosting\obj\Debug\JobPosting.DAL.JBMigrations.InitialCreate1.resources
-C:\Users\Administrator\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.DAL.JBMigrations.InitialCreate1.resources
+C:\Users\Administrator\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.DAL.JBMigrations.InitialCreate.resources
+C:\Users\Administrator\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.csproj.GenerateResource.Cache
+C:\Users\Administrator\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.DAL.Securitymigrations.InitialCreate.resources
