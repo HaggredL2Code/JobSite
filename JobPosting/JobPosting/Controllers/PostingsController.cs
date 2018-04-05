@@ -748,6 +748,8 @@ namespace JobPosting.Controllers
                 ViewBag.Days = db.Days;
                 ViewBag.Flag = true;
                 PopulateListBox();
+                PopulateDropdownList(posting);
+                PopulateAssignedDay(posting);
 
 
             return posting;
