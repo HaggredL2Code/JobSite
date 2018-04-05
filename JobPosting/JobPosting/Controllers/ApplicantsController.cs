@@ -104,7 +104,7 @@ namespace JobPosting.Controllers
             }
             Applicant applicantToUpdate = db.Applicants.Find(id);
             if (TryUpdateModel(applicantToUpdate, "",
-                    new string[] { "apFirstName", "apMiddleName", "apLastName", "apPhone", "apSubscripted", "apEMail", "apAddress", "apCity", "apPostalCode", "cityID", "UserRoleID" }))
+                    new string[] { "apFirstName", "apMiddleName", "apLastName", "apPhone", "apSubscripted", "apEMail", "apAddress", "apCity", "apPostalCode" }))
             {
                 try
                 {

@@ -216,9 +216,9 @@
     <Compile Include="Controllers\UnionsController.cs" />
     <Compile Include="DAL\ApplicationDbContext.cs" />
     <Compile Include="DAL\JBEntities.cs" />
-    <Compile Include="DAL\JBMigrations\201804021446063_InitialCreate.cs" />
-    <Compile Include="DAL\JBMigrations\201804021446063_InitialCreate.Designer.cs">
-      <DependentUpon>201804021446063_InitialCreate.cs</DependentUpon>
+    <Compile Include="DAL\JBMigrations\201804051414039_InitialCreate.cs" />
+    <Compile Include="DAL\JBMigrations\201804051414039_InitialCreate.Designer.cs">
+      <DependentUpon>201804051414039_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="DAL\JBMigrations\Configuration.cs" />
     <Compile Include="DAL\SecurityMigrations\201804021447241_InitialCreate.cs" />
@@ -432,11 +432,11 @@
     <Content Include="Views\Applications\Details.cshtml" />
     <Content Include="Views\Applications\Edit.cshtml" />
     <Content Include="Views\Applications\Index.cshtml" />
-    <Content Include="Views\Archieves\Create.cshtml" />
-    <Content Include="Views\Archieves\Delete.cshtml" />
-    <Content Include="Views\Archieves\Details.cshtml" />
-    <Content Include="Views\Archieves\Edit.cshtml" />
-    <Content Include="Views\Archieves\Index.cshtml" />
+    <Content Include="Views\Archives\Create.cshtml" />
+    <Content Include="Views\Archives\Delete.cshtml" />
+    <Content Include="Views\Archives\Details.cshtml" />
+    <Content Include="Views\Archives\Edit.cshtml" />
+    <Content Include="Views\Archives\Index.cshtml" />
     <Content Include="Views\JobGroups\Create.cshtml" />
     <Content Include="Views\JobGroups\Delete.cshtml" />
     <Content Include="Views\JobGroups\Details.cshtml" />
@@ -476,8 +476,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="DAL\JBMigrations\201804021446063_InitialCreate.resx">
-      <DependentUpon>201804021446063_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="DAL\JBMigrations\201804051414039_InitialCreate.resx">
+      <DependentUpon>201804051414039_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DAL\SecurityMigrations\201804021447241_InitialCreate.resx">
       <DependentUpon>201804021447241_InitialCreate.cs</DependentUpon>

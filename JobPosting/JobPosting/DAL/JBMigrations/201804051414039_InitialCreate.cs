@@ -49,7 +49,7 @@ namespace JobPosting.DAL.JBMigrations
                         RowVersion = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
                     })
                 .PrimaryKey(t => t.ID)
-                .ForeignKey("dbo.Posting", t => t.PostingID)
+                .ForeignKey("dbo.Posting", t => t.PostingID, cascadeDelete: true)
                 .ForeignKey("dbo.Applicant", t => t.ApplicantID, cascadeDelete: true)
                 .Index(t => t.PostingID)
                 .Index(t => t.ApplicantID);

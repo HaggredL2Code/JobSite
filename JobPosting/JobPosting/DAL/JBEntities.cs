@@ -71,6 +71,11 @@ namespace JobPosting.DAL
                 .WithRequired(p => p.Posting)
                 .WillCascadeOnDelete(true);
 
+            modelBuilder.Entity<Posting>()
+                .HasMany(ps => ps.Applications)
+                .WithRequired(p => p.Posting)
+                .WillCascadeOnDelete(true);
+
             //modelBuilder.Entity<Posting>()
             //    .HasMany(pos => pos.Applications)
             //    .WithRequired(p => p.Posting)

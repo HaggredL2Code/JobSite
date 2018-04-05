@@ -12,7 +12,6 @@ namespace JobPosting
         public void Configuration(IAppBuilder app)
         {
             logger.Info("Starting application.");
-
             //app.MapSignalR();
             ConfigureAuth(app);
             

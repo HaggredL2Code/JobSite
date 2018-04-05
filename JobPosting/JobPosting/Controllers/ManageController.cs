@@ -19,6 +19,10 @@ namespace JobPosting.Controllers
         public ManageController()
         {
         }
+        public ManageController(int i)
+        {
+            Console.Write(i);
+        }
 
         public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
