@@ -62,33 +62,69 @@ namespace JobPosting.Controllers
 
 
             postings = postings.OrderBy(p => p.pstEndDate);
-                      
-                        if (!String.IsNullOrEmpty(actionButton)) //Form Submitted
-                        {
-                            if (actionButton != "Filter")//Change of sort is requested
-                            {
-                                if (actionButton == sortField) //Reverse order on same field
-                                {
-                                    sortDirection = String.IsNullOrEmpty(sortDirection) ? "desc" : "";
-                                }
-                                sortField = actionButton;//Sort by the button clicked
-                            }
 
-                            if (sortField.Contains(""))
-                            {
-                                if (String.IsNullOrEmpty(sortDirection))
-                                {
-                             //       postings = postings.OrderBy(p => p.);
-                                }
-                                else
-                                {
-                          //          postings = postings.OrderByDescending(p => p.);
-                                }
-                            }
+            if (!String.IsNullOrEmpty(actionButton)) //Form Submitted
+            {
+                if (actionButton != "Filter")//Change of sort is requested
+                {
+                    if (actionButton == sortField) //Reverse order on same field
+                    {
+                        sortDirection = String.IsNullOrEmpty(sortDirection) ? "desc" : "";
+                    }
+                    sortField = actionButton;//Sort by the button clicked
+                }
+            }
 
-                        }
-                        ViewBag.sortField = sortField;
-                        ViewBag.sortDirection = sortDirection;
+            if (sortField == "Job Title")
+            {
+                if (String.IsNullOrEmpty(sortDirection))
+                {
+                    postings = postings.OrderBy(p => p.Position.PositionDescription);
+                }
+                else
+                {
+                    postings = postings.OrderByDescending(p => p.Position.PositionDescription);
+                }
+            }
+            else if (sortField == "Locations")
+            {
+                if (String.IsNullOrEmpty(sortDirection))
+                {
+                    postings = 
+                        (
+                        from jl in db.JobLocations
+                        join p in db.Postings on jl.PostingID equals p.ID
+                        orderby jl.Location.Address
+                        select p
+                        );
+                }
+                else
+                {
+                    postings =
+                    (
+                     from jl in db.JobLocations
+                     join p in db.Postings on jl.PostingID equals p.ID
+                     orderby jl.Location.Address descending
+                     select p
+                   );
+                }
+            }
+            else if (sortField == "Job Code")
+            {
+                if (String.IsNullOrEmpty(sortDirection))
+                {
+                    postings = postings.OrderBy(p => p.Position.PositionCode);
+                }
+                else
+                {
+                    postings = postings.OrderByDescending(p => p.Position.PositionCode);
+                }
+            }
+            
+
+
+            ViewBag.sortField = sortField;
+            ViewBag.sortDirection = sortDirection;
                         
             return View(postings.ToList());
         }
