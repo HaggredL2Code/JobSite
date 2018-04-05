@@ -8,7 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using JobPosting.DAL;
 using JobPosting.Models;
-
+using PagedList;
 using NLog;
 
 
