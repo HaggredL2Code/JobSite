@@ -20,18 +20,18 @@
         <input type="submit" value="Filter" class="btn btn-default" />
         @Html.ActionLink("Clear", "Index")
     </p>
-}
+
 
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.JobGroup.GroupTitle)
+            <input type="submit" name="actionButton" value="Job Type" class="btn btn-link" />
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Union.UnionName)
+            <input type="submit" name="actionButton" value="Unions" class="btn btn-link" />
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.PositionCode)
+            <input type="submit" name="actionButton" value="Job Code" class="btn btn-link" />
         </th>
         <th>
             @Html.DisplayNameFor(model => model.PositionDescription)
@@ -39,7 +39,8 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model)
+{
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.JobGroup.GroupTitle)
@@ -54,11 +55,13 @@
             @Html.DisplayFor(modelItem => item.PositionDescription)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.ID })
         </td>
     </tr>
 }
-
+    <input type="hidden" name="sortDirection" value="@ViewBag.sortDirection" />
+    <input type="hidden" name="sortField" value="@ViewBag.sortField" />
 </table>
+}

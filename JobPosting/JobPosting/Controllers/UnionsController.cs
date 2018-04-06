@@ -43,15 +43,15 @@ namespace JobPosting.Controllers
                     sortField = actionButton;//Sort by the button clicked
                 }
 
-                if (sortField.Contains(""))
+                if (sortField.Contains("Unions"))
                 {
                     if (String.IsNullOrEmpty(sortDirection))
                     {
-                             //  unions = unions.OrderBy(p => p.);
+                               unions = unions.OrderBy(u => u.UnionName);
                     }
                     else
                     {
-                          //     unions = unions.OrderByDescending(p => p.);
+                               unions = unions.OrderByDescending(u => u.UnionName);
                     }
                 }
 

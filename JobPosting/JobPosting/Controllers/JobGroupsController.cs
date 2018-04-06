@@ -20,7 +20,7 @@ namespace JobPosting.Controllers
         private JBEntities db = new JBEntities();
 
         // GET: JobGroups
-        public ActionResult Index(string SearchString)
+        public ActionResult Index(string sortDirection, string sortField, string actionButton, string SearchString)
         {
             var jobGroups = db.JobGroups.Include(a => a.Positions);
 
@@ -28,6 +28,11 @@ namespace JobPosting.Controllers
             {
                 jobGroups = jobGroups.Where(l => l.GroupTitle.ToUpper().Contains(SearchString.ToUpper()));
             }
+
+
+            ViewBag.sortField = sortField;
+            ViewBag.sortDirection = sortDirection;
+
 
             return View(jobGroups.ToList());
         }

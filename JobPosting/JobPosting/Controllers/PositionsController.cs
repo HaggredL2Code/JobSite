@@ -20,7 +20,7 @@ namespace JobPosting.Controllers
         private JBEntities db = new JBEntities();
 
         // GET: Positions
-        public ActionResult Index(int? UnionID, string SearchString, int? JobGroupID)
+        public ActionResult Index(string sortDirection, string sortField, string actionButton, int? UnionID, string SearchString, int? JobGroupID)
         {
 
             PopulateDropdownList();
@@ -42,6 +42,10 @@ namespace JobPosting.Controllers
             {
                 positions = positions.Where(p => p.PositionCode.ToUpper().Contains(SearchString.ToUpper()));
             }
+
+
+            ViewBag.sortField = sortField;
+            ViewBag.sortDirection = sortDirection;
 
 
             return View(positions.ToList());

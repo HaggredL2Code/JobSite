@@ -23,7 +23,7 @@ namespace JobPosting.Controllers
 
         // GET: Applications
         [Authorize(Roles = "Admin, Manager, Hiring Team")]
-        public ActionResult Index(string SearchPrioity, int? PostingID)
+        public ActionResult Index(string sortDirection, string sortField, string actionButton, string SearchPrioity, int? PostingID)
         {
             IQueryable<Application> applications = db.Applications.Include(a => a.Applicant).Include(a => a.Posting).Include(a => a.BinaryFiles).Include(a => a.ApplicationsQualifications).Include(a => a.ApplicationSkills);
 
@@ -44,7 +44,14 @@ namespace JobPosting.Controllers
             {
                 applications = applications.Where(a => a.PostingID == PostingID);
             }
-          
+
+
+
+
+            ViewBag.sortField = sortField;
+            ViewBag.sortDirection = sortDirection;
+
+
             return View(applications.ToList());
 
         }

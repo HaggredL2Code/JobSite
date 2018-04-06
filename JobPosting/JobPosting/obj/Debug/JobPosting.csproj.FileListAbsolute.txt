@@ -779,3 +779,7 @@ C:\Users\Administrator\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\
 C:\Users\Administrator\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.csproj.GenerateResource.Cache
 C:\Users\Administrator\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.dll
 C:\Users\Administrator\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.pdb
+E:\Jobsite1\JobSite\JobPosting\JobPosting\bin\PagedList.dll
+E:\Jobsite1\JobSite\JobPosting\JobPosting\bin\PagedList.Mvc.dll
+E:\Jobsite1\JobSite\JobPosting\JobPosting\bin\PagedList.xml
+E:\Jobsite1\JobSite\JobPosting\JobPosting\bin\PagedList.Mvc.xml

@@ -18,7 +18,7 @@
         @Html.ActionLink("Clear", "Index")
     </p>
 
-}
+
 
 
 <table class="table">
@@ -29,17 +29,20 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model)
+{
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.GroupTitle)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.ID })
         </td>
     </tr>
 }
-
+    <input type="hidden" name="sortDirection" value="@ViewBag.sortDirection" />
+    <input type="hidden" name="sortField" value="@ViewBag.sortField" />
 </table>
+}

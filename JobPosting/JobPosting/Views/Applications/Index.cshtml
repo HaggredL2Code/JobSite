@@ -60,7 +60,6 @@ else {
         @Html.ActionLink("Clear", "Index")
     </p>
 
-}
 
 <table class="table">
     <tr>
@@ -185,6 +184,8 @@ else {
             </tr>
         }
     }
-
+    <input type="hidden" name="sortDirection" value="@ViewBag.sortDirection" />
+    <input type="hidden" name="sortField" value="@ViewBag.sortField" />
 </table>
+}
 
