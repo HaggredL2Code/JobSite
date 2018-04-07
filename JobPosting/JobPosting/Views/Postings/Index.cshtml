@@ -105,18 +105,19 @@
             <div class=" col-md-12 col-lg-9">
                 <table class="table table-hover table-sm">
                     <thead class="thead-dark">
+
                         <tr>
                             <th>
-                                @Html.DisplayNameFor(model => model.Position.PositionCode)
+                                <input type="submit" name="actionButton" value="Job Code" class="btn btn-link" />
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Position.PositionDescription)
+                                <input type="submit" name="actionButton" value="Job Title" class="btn btn-link" />
                             </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.pstNumPosition)
                             </th>
                             <th>
-                                Locations
+                                <input type="submit" name="actionButton" value="Locations" class="btn btn-link" />
                             </th>
                             @if (!User.IsInRole("User"))
                             {
@@ -180,6 +181,9 @@
                     }
 
                 </table>
+                <input type="hidden" name="sortDirection" value="@ViewBag.sortDirection" />
+                <input type="hidden" name="sortField" value="@ViewBag.sortField" />
+
             </div>
         </div>
 }
