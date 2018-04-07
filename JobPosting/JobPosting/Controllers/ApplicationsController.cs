@@ -23,28 +23,80 @@ namespace JobPosting.Controllers
 
         // GET: Applications
         [Authorize(Roles = "Admin, Manager, Hiring Team")]
-        public ActionResult Index(string SearchPrioity, int? PostingID)
+        public ActionResult Index(string sortDirection, string sortField, string actionButton, string SearchPrioity, int? PostingID)
         {
             IQueryable<Application> applications = db.Applications.Include(a => a.Applicant).Include(a => a.Posting).Include(a => a.BinaryFiles).Include(a => a.ApplicationsQualifications).Include(a => a.ApplicationSkills);
 
             if (TempData["NumPositionFlag"] != null)
-             {
+            {
                 ViewBag.NumPositionFlag = TempData["NumPositionFlag"];
                 ViewBag.ID = TempData["ID"];
-             }
+            }
             else
             {
                 ViewBag.NumPositionFlag = true;
-                
+
             }
-         
+
             PopulateDropdownList();
 
             if (PostingID.HasValue)
             {
                 applications = applications.Where(a => a.PostingID == PostingID);
             }
-          
+
+            if (!String.IsNullOrEmpty(actionButton)) //Form Submitted
+            {
+                if (actionButton != "Filter")//Change of sort is requested
+                {
+                    if (actionButton == sortField) //Reverse order on same field
+                    {
+                        sortDirection = String.IsNullOrEmpty(sortDirection) ? "desc" : "";
+                    }
+                    sortField = actionButton;//Sort by the button clicked
+                }
+            }
+
+            if (sortField == "Job Code")
+            {
+                if (String.IsNullOrEmpty(sortDirection))
+                {
+                    applications = applications.OrderBy(p => p.Posting.Position.PositionCode);
+                }
+                else
+                {
+                    applications = applications.OrderByDescending(p => p.Posting.Position.PositionCode);
+                }
+            }
+            else if (sortField == "Applicant Name")
+            {
+                if (String.IsNullOrEmpty(sortDirection))
+                {
+                    applications = applications.OrderBy(p => p.Applicant.apFullName);
+                }
+                else
+                {
+                    applications = applications.OrderByDescending(p => p.Applicant.apFullName);
+                }
+            }
+            else if (sortField == "Priority")
+            {
+                if (String.IsNullOrEmpty(sortDirection))
+                {
+                    applications = applications.OrderBy(p => p.Priority);
+                }
+                else
+                {
+                    applications = applications.OrderByDescending(p => p.Priority);
+                }
+            }
+
+
+
+            ViewBag.sortField = sortField;
+            ViewBag.sortDirection = sortDirection;
+
+
             return View(applications.ToList());
 
         }

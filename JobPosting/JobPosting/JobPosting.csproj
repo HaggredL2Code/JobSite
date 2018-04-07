@@ -216,9 +216,9 @@
     <Compile Include="Controllers\UnionsController.cs" />
     <Compile Include="DAL\ApplicationDbContext.cs" />
     <Compile Include="DAL\JBEntities.cs" />
-    <Compile Include="DAL\JBMigrations\201804051414039_InitialCreate.cs" />
-    <Compile Include="DAL\JBMigrations\201804051414039_InitialCreate.Designer.cs">
-      <DependentUpon>201804051414039_InitialCreate.cs</DependentUpon>
+    <Compile Include="DAL\JBMigrations\201804071943539_InitialCreate.cs" />
+    <Compile Include="DAL\JBMigrations\201804071943539_InitialCreate.Designer.cs">
+      <DependentUpon>201804071943539_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="DAL\JBMigrations\Configuration.cs" />
     <Compile Include="DAL\SecurityMigrations\201804021447241_InitialCreate.cs" />
@@ -476,8 +476,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="DAL\JBMigrations\201804051414039_InitialCreate.resx">
-      <DependentUpon>201804051414039_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="DAL\JBMigrations\201804071943539_InitialCreate.resx">
+      <DependentUpon>201804071943539_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DAL\SecurityMigrations\201804021447241_InitialCreate.resx">
       <DependentUpon>201804021447241_InitialCreate.cs</DependentUpon>

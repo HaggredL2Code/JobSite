@@ -20,7 +20,7 @@ namespace JobPosting.Controllers
         private JBEntities db = new JBEntities();
 
         // GET: JobGroups
-        public ActionResult Index(string SearchString)
+        public ActionResult Index(string sortDirection, string sortField, string actionButton, string SearchString)
         {
             var jobGroups = db.JobGroups.Include(a => a.Positions);
 
@@ -29,8 +29,41 @@ namespace JobPosting.Controllers
                 jobGroups = jobGroups.Where(l => l.GroupTitle.ToUpper().Contains(SearchString.ToUpper()));
             }
 
+
+            if (!String.IsNullOrEmpty(actionButton)) //Form Submitted
+            {
+                if (actionButton != "Filter")//Change of sort is requested
+                {
+                    if (actionButton == sortField) //Reverse order on same field
+                    {
+                        sortDirection = String.IsNullOrEmpty(sortDirection) ? "desc" : "";
+                    }
+                    sortField = actionButton;//Sort by the button clicked
+                }
+            }
+
+            if (sortField == "Job Type")
+            {
+                if (String.IsNullOrEmpty(sortDirection))
+                {
+                    jobGroups = jobGroups.OrderBy(p => p.GroupTitle);
+                }
+                else
+                {
+                    jobGroups = jobGroups.OrderByDescending(p => p.GroupTitle);
+                }
+            }
+
+
+            ViewBag.sortField = sortField;
+            ViewBag.sortDirection = sortDirection;
+
+
             return View(jobGroups.ToList());
         }
+
+
+
         // GET: JobGroups/Details/5
         public ActionResult Details(int? id)
         {
