@@ -31,7 +31,7 @@
                 }
 
             }
-    
+
         })
 
     </script>
@@ -47,7 +47,8 @@
     <input type="hidden" id="NumPositionFlag" value=@ViewBag.NumPositionFlag>
     <input type="hidden" id="ID" value=@ViewBag.ID>
 }
-else {
+else
+{
     <input type="hidden" id="NumPositionFlag" value="true">
 
 }
@@ -60,131 +61,134 @@ else {
         @Html.ActionLink("Clear", "Index")
     </p>
 
-}
 
-<table class="table">
-    <tr>
+    <table class="table">
+        <tr>
 
-        <th>
-            @Html.DisplayNameFor(model => model.Posting.Position.PositionCode)
-        </th>
+            <th>
+                <input type="submit" name="actionButton" value="Job Code" class="btn btn-link" />
+            </th>
 
-        <th>
-            @Html.DisplayNameFor(model => model.Posting.Position.PositionDescription)
-        </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Posting.Position.PositionDescription)
+            </th>
 
-        <th>
-            @Html.DisplayNameFor(model => model.Applicant.apFullName)
-        </th>
-
+            <th>
+                <input type="submit" name="actionButton" value="Applicant Name" class="btn btn-link" />
+            </th>
 
 
-        @*<th>
-                @Html.DisplayNameFor(model => model.Posting.pstJobDescription)
-            </th>*@
-        <th>
-            @Html.DisplayNameFor(model => model.Priority)
-        </th>
-        <th>
-            Applicant's Qualifications
-        </th>
-        <th>
-            Applicant's Skills
-        </th>
-        <th>
-            Resume
-        </th>
-        <th>
-            Comment
-        </th>
-        <th></th>
-    </tr>
 
-    @foreach (var item in Model)
-    {
-        if (item.Available == true)
+            @*<th>
+                    @Html.DisplayNameFor(model => model.Posting.pstJobDescription)
+                </th>*@
+            <th>
+                <input type="submit" name="actionButton" value="Priority" class="btn btn-link" />
+            </th>
+            <th>
+                Applicant's Qualifications
+            </th>
+            <th>
+                Applicant's Skills
+            </th>
+            <th>
+                Resume
+            </th>
+            <th>
+                Comment
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Posting.Position.PositionCode)
-                </td>
+            if (item.Available == true)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Posting.Position.PositionCode)
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.Posting.Position.PositionDescription)
-                </td>
+                    </td>
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.Applicant.apFullName)
-                </td>
-                @*<td>
-                        @Html.DisplayFor(modelItem => item.Posting.pstJobDescription)
-                    </td>*@
-                <td>
-                    @Html.DisplayFor(modelItem => item.Priority)
-                </td>
-                <td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Posting.Position.PositionDescription)
+                    </td>
 
-                    @foreach (var jq in item.Posting.JobRequirements)
-                    {
-                        bool flag = true;
-                        foreach (var aq in item.ApplicationsQualifications)
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Applicant.apFullName)
+
+                    </td>
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.Posting.pstJobDescription)
+                        </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Priority)
+                    </td>
+                    <td>
+
+                        @foreach (var jq in item.Posting.JobRequirements)
                         {
-                            if (jq.QualificationID == aq.QualificationID)
+                            bool flag = true;
+                            foreach (var aq in item.ApplicationsQualifications)
                             {
+                                if (jq.QualificationID == aq.QualificationID)
+                                {
 
-                                <p style="color:green">@jq.Qualification.QlfDescription</p>
-                                flag = false;
-                                break;
+                                    <p style="color:green">@jq.Qualification.QlfDescription</p>
+                                    flag = false;
+                                    break;
+                                }
+
+                            }
+                            if (flag)
+                            {
+                                <p style="color:red">@jq.Qualification.QlfDescription</p>
                             }
 
                         }
-                        if (flag)
-                        {
-                            <p style="color:red">@jq.Qualification.QlfDescription</p>
-                        }
+                    </td>
+                    <td>
 
-                    }
-                </td>
-                <td>
-
-                    @foreach (var ps in item.Posting.PostingSkills)
-                    {
-                        bool flag = true;
-                        foreach (var s in item.ApplicationSkills)
+                        @foreach (var ps in item.Posting.PostingSkills)
                         {
-                            if (ps.SkillID == s.skillID)
+                            bool flag = true;
+                            foreach (var s in item.ApplicationSkills)
                             {
+                                if (ps.SkillID == s.skillID)
+                                {
 
-                                <p style="color:green">@ps.Skill.SkillDescription</p>
-                                flag = false;
-                                break;
+                                    <p style="color:green">@ps.Skill.SkillDescription</p>
+                                    flag = false;
+                                    break;
+                                }
+
+                            }
+                            if (flag)
+                            {
+                                <p style="color:red">@ps.Skill.SkillDescription</p>
                             }
 
                         }
-                        if (flag)
+                    </td>
+                    <td>
+                        @foreach (var f in item.BinaryFiles)
                         {
-                            <p style="color:red">@ps.Skill.SkillDescription</p>
-                        }
-
+                            @: @Html.ActionLink(f.FileName, "Download", new { id = f.ID })
                     }
-                </td>
-                <td>
-                    @foreach (var f in item.BinaryFiles)
-                    {
-                        @: @Html.ActionLink(f.FileName, "Download", new { id = f.ID })
-                    }
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Comment)
-                </td>
-                <td>
-                    @Html.ActionLink("Details", "Details", new { id = item.ID, postingID = item.Posting.ID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.ID }) |
-                    @Html.ActionLink("Accept", "Accept", new { id = item.ID })
-                </td>
-            </tr>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Comment)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Details", "Details", new { id = item.ID, postingID = item.Posting.ID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ID }) |
+                        @Html.ActionLink("Accept", "Accept", new { id = item.ID })
+                    </td>
+                </tr>
+            }
         }
-    }
-
-</table>
+        <input type="hidden" name="sortDirection" value="@ViewBag.sortDirection" />
+        <input type="hidden" name="sortField" value="@ViewBag.sortField" />
+    </table>
+}
 
