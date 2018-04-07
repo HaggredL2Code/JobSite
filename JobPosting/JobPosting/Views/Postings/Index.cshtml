@@ -26,7 +26,9 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            @Html.ActionLink("Create New", "Create", new { @class = "nav-link" })
+                            @Html.ActionLink("Create New", "Create", new { @class = "nav-link" }, new { @class = "btn btn-info" })
+                        </div>
+                        <div class="modal-body">
                             <table class="table">
                                 <thead class="thead-dark">
                                     <tr>
@@ -36,23 +38,26 @@
                                         <th></th>
                                     </tr>
                                     @foreach (var p in Positions)
-                                    {
-                                        string positionName = p.PositionDescription;
-                                        foreach (var pt in ViewBag.postingTemplate)
-                                        {
-                                            if (pt.PositionID == p.ID)
-                                            {
-                                                <tr>
-                                                    <td>
-                                                        @Html.ActionLink("Follow " + (string)pt.templateName + " Template", "Create", new { name = (string)pt.templateName })
-                                                    </td>
-                                                    <td>
-                                                        @Html.ActionLink("Delete", "DeleteTemplate", new { name = (string)pt.templateName })
-                                                    </td>
-                                                </tr>
-                                            }
-                                        }
-                                    }
+                {
+                    string positionName = p.PositionDescription;
+                    foreach (var pt in ViewBag.postingTemplate)
+                    {
+                        if (pt.PositionID == p.ID)
+                        {
+                            string name = pt.templateName;
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(at => name)
+                                </td>
+                                <td>
+                                    @Html.ActionLink(" Use Template", "Create", new { name = (string)pt.templateName }, new { @class = "btn btn-info" })
+                                    @Html.ActionLink("Delete", "DeleteTemplate", new { name = (string)pt.templateName }, new { @class = "btn btn-danger" })
+                                </td>
+
+                            </tr>
+    }
+}
+}
                                 </thead>
                             </table>
                         </div>
@@ -162,8 +167,10 @@
                                 @if (flag)
                                 {
                                     <td>
-                                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                                        <div class="">
+                                            @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class = " badge badge-pill badge-warning" })
+                                            @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @class = " badge badge-pill badge-danger" })
+                                        </div>
                                     </td>
                                 }
                             </tr>
