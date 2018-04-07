@@ -21,28 +21,16 @@ namespace JobPosting.Controllers
         private JBEntities db = new JBEntities();
 
         // GET: Unions
-        public ActionResult Index(string sortDirection, string sortField, string actionButton, int? UnionID, string SearchString, int? JobGroupID)
+        public ActionResult Index(string SearchString, string sortDirection, string sortField, string actionButton)
         {
 
-            PopulateDropdownList();
-
-            var positions = db.Positions.Include(p => p.JobGroup).Include(p => p.Union);
-            if (UnionID.HasValue)
-            {
-                positions = positions.Where(u => u.UnionID == UnionID);
-
-            }
-
-            if (JobGroupID.HasValue)
-            {
-                positions = positions.Where(u => u.JobGroupID == JobGroupID);
-
-            }
+            var unions = db.Unions.Include(a => a.Positions);
 
             if (!String.IsNullOrEmpty(SearchString))
             {
-                positions = positions.Where(p => p.PositionCode.ToUpper().Contains(SearchString.ToUpper()));
+                unions = unions.Where(u => u.UnionName.ToUpper().Contains(SearchString.ToUpper()));
             }
+
 
             if (!String.IsNullOrEmpty(actionButton)) //Form Submitted
             {
@@ -54,51 +42,27 @@ namespace JobPosting.Controllers
                     }
                     sortField = actionButton;//Sort by the button clicked
                 }
-            }
 
-            if (sortField == "Job Type")
-            {
-                if (String.IsNullOrEmpty(sortDirection))
+                if (sortField.Contains("Unions"))
                 {
-                    positions = positions.OrderBy(p => p.JobGroup.GroupTitle);
+                    if (String.IsNullOrEmpty(sortDirection))
+                    {
+                        unions = unions.OrderBy(u => u.UnionName);
+                    }
+                    else
+                    {
+                        unions = unions.OrderByDescending(u => u.UnionName);
+                    }
                 }
-                else
-                {
-                    positions = positions.OrderByDescending(p => p.JobGroup.GroupTitle);
-                }
-            }
-            else if (sortField == "Unions")
-            {
-                if (String.IsNullOrEmpty(sortDirection))
-                {
-                    positions = positions.OrderBy(p => p.Union.UnionName);
-                }
-                else
-                {
-                    positions = positions.OrderByDescending(p => p.Union.UnionName);
-                }
-            }
-            else if (sortField == "Job Code")
-            {
-                if (String.IsNullOrEmpty(sortDirection))
-                {
-                    positions = positions.OrderBy(p => p.PositionCode);
-                }
-                else
-                {
-                    positions = positions.OrderByDescending(p => p.PositionCode);
-                }
-            }
 
-
+            }
 
             ViewBag.sortField = sortField;
             ViewBag.sortDirection = sortDirection;
 
 
-            return View(positions.ToList());
+            return View(unions.ToList());
         }
-
 
 
         // GET: Unions/Details/5
