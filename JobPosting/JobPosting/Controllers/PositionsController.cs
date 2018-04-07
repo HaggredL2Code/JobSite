@@ -20,7 +20,7 @@ namespace JobPosting.Controllers
         private JBEntities db = new JBEntities();
 
         // GET: Positions
-        public ActionResult Index(int? UnionID, string SearchString, int? JobGroupID)
+        public ActionResult Index(string sortDirection, string sortField, string actionButton, int? UnionID, string SearchString, int? JobGroupID)
         {
 
             PopulateDropdownList();
@@ -43,9 +43,61 @@ namespace JobPosting.Controllers
                 positions = positions.Where(p => p.PositionCode.ToUpper().Contains(SearchString.ToUpper()));
             }
 
+            if (!String.IsNullOrEmpty(actionButton)) //Form Submitted
+            {
+                if (actionButton != "Filter")//Change of sort is requested
+                {
+                    if (actionButton == sortField) //Reverse order on same field
+                    {
+                        sortDirection = String.IsNullOrEmpty(sortDirection) ? "desc" : "";
+                    }
+                    sortField = actionButton;//Sort by the button clicked
+                }
+            }
+
+            if (sortField == "Job Type")
+            {
+                if (String.IsNullOrEmpty(sortDirection))
+                {
+                    positions = positions.OrderBy(p => p.JobGroup.GroupTitle);
+                }
+                else
+                {
+                    positions = positions.OrderByDescending(p => p.JobGroup.GroupTitle);
+                }
+            }
+            else if (sortField == "Unions")
+            {
+                if (String.IsNullOrEmpty(sortDirection))
+                {
+                    positions = positions.OrderBy(p => p.Union.UnionName);
+                }
+                else
+                {
+                    positions = positions.OrderByDescending(p => p.Union.UnionName);
+                }
+            }
+            else if (sortField == "Job Code")
+            {
+                if (String.IsNullOrEmpty(sortDirection))
+                {
+                    positions = positions.OrderBy(p => p.PositionCode);
+                }
+                else
+                {
+                    positions = positions.OrderByDescending(p => p.PositionCode);
+                }
+            }
+
+
+
+            ViewBag.sortField = sortField;
+            ViewBag.sortDirection = sortDirection;
+
 
             return View(positions.ToList());
         }
+
 
 
         // GET: Positions/Details/5
