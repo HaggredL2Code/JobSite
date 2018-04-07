@@ -12,36 +12,56 @@
             <h2>Job Postings</h2>
         </div>
         <div class="col-2">
-            <ul class="nav navbar-nav">
-                <li class="dropdown">
-                    <a href="#" data-toggle="dropdown" class="dropdown-toggle">Create New - Menu<b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li>@Html.ActionLink("Create New", "Create")</li>
-                        <li class="divider"></li>
-                        @foreach (var p in Positions)
-                {
-                    string positionName = p.PositionDescription;
+            <button type="button" class="btn btn-info" data-toggle="modal" data-target=".bd-example-modal-lg">Create New Posting</button>
+@*Modal Begin Here*@
+            <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
 
-                    @*<li>@Html.ActionLink("Follow " + positionName, "Create", new { name = p.templateName }) - @Html.ActionLink("Delete", "DeleteTemplate", new { id = p.ID})</li>*@
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Create Job Posting</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            @Html.ActionLink("Create New", "Create", new { @class = "nav-link" })
+                            <table class="table">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>
+                                            Job Template Name
+                                        </th>
+                                        <th></th>
+                                    </tr>
+                                    @foreach (var p in Positions)
+                                    {
+                                        string positionName = p.PositionDescription;
+                                        foreach (var pt in ViewBag.postingTemplate)
+                                        {
+                                            if (pt.PositionID == p.ID)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        @Html.ActionLink("Follow " + (string)pt.templateName + " Template", "Create", new { name = (string)pt.templateName })
+                                                    </td>
+                                                    <td>
+                                                        @Html.ActionLink("Delete", "DeleteTemplate", new { name = (string)pt.templateName })
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                    }
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
 
-                    @*<li>
-                <a href="#" data-toggle="dropdown" class="dropdown-toggle">@postionName<b class="caret"></b></a>
-                <ul class="dropdown-menu">*@
-            foreach (var pt in ViewBag.postingTemplate)
-            {
-                if (pt.PositionID == p.ID)
-                {
-                    //string templateName = pt.templateName;
-                    <li>@Html.ActionLink("Follow " + (string)pt.templateName + " Template", "Create", new { name = (string)pt.templateName }) - @Html.ActionLink("Delete", "DeleteTemplate", new { name = (string)pt.templateName })</li>
-        }
-    }
-        @*</ul>
-    </li>*@
-
-}
-                    </ul>
-                </li>
-            </ul>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         </div>
         <div class="row">

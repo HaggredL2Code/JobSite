@@ -20,22 +20,31 @@
             <span class="navbar-toggler-icon"></span>
 
         </button>
-        <div class="navbar-collapse collapse">
+        <div class="navbar-collapse collapse" id="navbarSupportedContent">
 
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item">@Html.ActionLink("Home", "Index", "Home", null, new { @class= "nav-link" })</li>
+                <li class="nav-item">@Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link" })</li>
                 <li class="nav-item">@Html.ActionLink("About", "About", "Home", null, new { @class = "nav-link" })</li>
                 <li class="nav-item">@Html.ActionLink("Contact", "Contact", "Home", null, new { @class = "nav-link" })</li>
-                @if (!User.IsInRole("User"))
-            {
-                <li class="nav-item">@Html.ActionLink("Job Type", "Index", "JobGroups", null, new { @class = "nav-link" })</li>
-                <li class="nav-item">@Html.ActionLink("Location", "Index", "Locations", null, new { @class = "nav-link" })</li>
-                <li class="nav-item">@Html.ActionLink("Qualification", "Index", "Qualifications", null, new { @class = "nav-link" })</li>
-                <li class="nav-item">@Html.ActionLink("Position", "Index", "Positions", null, new { @class = "nav-link" })</li>
-                <li class="nav-item">@Html.ActionLink("Applications", "Index", "Applications", null, new { @class = "nav-link" })</li>
-                }
                 <li class="nav-item">@Html.ActionLink("Job Posting", "Index", "Postings", null, new { @class = "nav-link" })</li>
+                @if (!User.IsInRole("User"))
+    {
 
+            <li class="nav-item">@Html.ActionLink("Applications", "Index", "Applications", null, new { @class = "nav-link" })</li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Content For Applications
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    @Html.ActionLink("Job Type", "Index", "JobGroups", null, new { @class = "dropdown-item" })
+                    @Html.ActionLink("Location", "Index", "Locations", null, new { @class = "dropdown-item" })
+                    @Html.ActionLink("Qualification", "Index", "Qualifications", null, new { @class = "dropdown-item" })
+                    @Html.ActionLink("Position", "Index", "Positions", null, new { @class = "dropdown-item" })
+                </div>
+            </li>
+
+}
 
             </ul>
 
@@ -50,7 +59,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - NC School Board Job Site</p>
         </footer>
     </div>
 
