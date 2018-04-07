@@ -20,7 +20,8 @@ namespace JobPosting.Controllers
         private JBEntities db = new JBEntities();
 
         // GET: Qualifications
-        public ActionResult Index(string SearchString)
+
+        public ActionResult Index(string sortDirection, string sortField, string actionButton, string SearchString)
         {
 
             var qualifications = db.Qualification.Include(a => a.JobRequirements);
@@ -30,6 +31,32 @@ namespace JobPosting.Controllers
                 qualifications = qualifications.Where(u => u.QlfDescription.ToUpper().Contains(SearchString.ToUpper()));
             }
 
+            if (!String.IsNullOrEmpty(actionButton)) //Form Submitted
+            {
+                if (actionButton != "Filter")//Change of sort is requested
+                {
+                    if (actionButton == sortField) //Reverse order on same field
+                    {
+                        sortDirection = String.IsNullOrEmpty(sortDirection) ? "desc" : "";
+                    }
+                    sortField = actionButton;//Sort by the button clicked
+                }
+            }
+
+            if (sortField == "Qualification")
+            {
+                if (String.IsNullOrEmpty(sortDirection))
+                {
+                    qualifications = qualifications.OrderBy(q => q.QlfDescription);
+                }
+                else
+                {
+                    qualifications = qualifications.OrderByDescending(q => q.QlfDescription);
+                }
+            }
+
+            ViewBag.sortField = sortField;
+            ViewBag.sortDirection = sortDirection;
 
             return View(qualifications.ToList());
         }
