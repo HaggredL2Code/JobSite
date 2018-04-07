@@ -30,6 +30,31 @@ namespace JobPosting.Controllers
             }
 
 
+            if (!String.IsNullOrEmpty(actionButton)) //Form Submitted
+            {
+                if (actionButton != "Filter")//Change of sort is requested
+                {
+                    if (actionButton == sortField) //Reverse order on same field
+                    {
+                        sortDirection = String.IsNullOrEmpty(sortDirection) ? "desc" : "";
+                    }
+                    sortField = actionButton;//Sort by the button clicked
+                }
+            }
+
+            if (sortField == "Job Type")
+            {
+                if (String.IsNullOrEmpty(sortDirection))
+                {
+                    jobGroups = jobGroups.OrderBy(p => p.GroupTitle);
+                }
+                else
+                {
+                    jobGroups = jobGroups.OrderByDescending(p => p.GroupTitle);
+                }
+            }
+
+
             ViewBag.sortField = sortField;
             ViewBag.sortDirection = sortDirection;
 

@@ -30,6 +30,30 @@ namespace JobPosting.Controllers
                 locations = locations.Where(l => l.Address.ToUpper().Contains(SearchString.ToUpper()));
             }
 
+            if (!String.IsNullOrEmpty(actionButton)) //Form Submitted
+            {
+                if (actionButton != "Filter")//Change of sort is requested
+                {
+                    if (actionButton == sortField) //Reverse order on same field
+                    {
+                        sortDirection = String.IsNullOrEmpty(sortDirection) ? "desc" : "";
+                    }
+                    sortField = actionButton;//Sort by the button clicked
+                }
+            }
+
+            if (sortField == "Address")
+            {
+                if (String.IsNullOrEmpty(sortDirection))
+                {
+                   locations = locations.OrderBy(p => p.Address);
+                }
+                else
+                {
+                    locations = locations.OrderByDescending(p => p.Address);
+                }
+            }
+
 
             ViewBag.sortField = sortField;
             ViewBag.sortDirection = sortDirection;

@@ -45,6 +45,51 @@ namespace JobPosting.Controllers
                 applications = applications.Where(a => a.PostingID == PostingID);
             }
 
+            if (!String.IsNullOrEmpty(actionButton)) //Form Submitted
+            {
+                if (actionButton != "Filter")//Change of sort is requested
+                {
+                    if (actionButton == sortField) //Reverse order on same field
+                    {
+                        sortDirection = String.IsNullOrEmpty(sortDirection) ? "desc" : "";
+                    }
+                    sortField = actionButton;//Sort by the button clicked
+                }
+            }
+
+            if (sortField == "Job Code")
+            {
+                if (String.IsNullOrEmpty(sortDirection))
+                {
+                    applications = applications.OrderBy(p => p.Posting.Position.PositionCode);
+                }
+                else
+                {
+                    applications = applications.OrderByDescending(p => p.Posting.Position.PositionCode);
+                }
+            }
+            else if (sortField == "Applicant Name")
+            {
+                if (String.IsNullOrEmpty(sortDirection))
+                {
+                    applications = applications.OrderBy(p => p.Applicant.apFullName);
+                }
+                else
+                {
+                    applications = applications.OrderByDescending(p => p.Applicant.apFullName);
+                }
+            }
+            else if (sortField == "Priority")
+            {
+                if (String.IsNullOrEmpty(sortDirection))
+                {
+                    applications = applications.OrderBy(p => p.Priority);
+                }
+                else
+                {
+                    applications = applications.OrderByDescending(p => p.Priority);
+                }
+            }
 
 
 

@@ -65,7 +65,7 @@ else {
     <tr>
 
         <th>
-            @Html.DisplayNameFor(model => model.Posting.Position.PositionCode)
+            <input type="submit" name="actionButton" value="Job Code" class="btn btn-link" />
         </th>
 
         <th>
@@ -73,7 +73,7 @@ else {
         </th>
 
         <th>
-            @Html.DisplayNameFor(model => model.Applicant.apFullName)
+            <input type="submit" name="actionButton" value="Applicant Name" class="btn btn-link" />
         </th>
 
 
@@ -82,7 +82,7 @@ else {
                 @Html.DisplayNameFor(model => model.Posting.pstJobDescription)
             </th>*@
         <th>
-            @Html.DisplayNameFor(model => model.Priority)
+            <input type="submit" name="actionButton" value="Priority" class="btn btn-link" />
         </th>
         <th>
             Applicant's Qualifications
@@ -106,6 +106,7 @@ else {
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Posting.Position.PositionCode)
+               
                 </td>
 
                 <td>
@@ -114,6 +115,7 @@ else {
 
                 <td>
                     @Html.DisplayFor(modelItem => item.Applicant.apFullName)
+                   
                 </td>
                 @*<td>
                         @Html.DisplayFor(modelItem => item.Posting.pstJobDescription)
