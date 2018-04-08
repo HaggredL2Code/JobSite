@@ -95,7 +95,9 @@
             )
 
 </script>
-<h2>Create</h2>
+
+
+<h2>Apply For Job</h2>
 
 
 @using (Html.BeginForm("Create", "Applications", FormMethod.Post, new { enctype = "multipart/form-data"}))
@@ -105,156 +107,164 @@
 <div class="form-horizontal">
     <h4>Application</h4>
     <hr />
-    <dl class="dl-horizontal">
-        @{
+
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                <dl class="dl-horizontal">
+                    @{
             JobPosting.Models.Posting posting = ViewBag.posting;
 
-                <dt>
-                    @Html.DisplayNameFor(lItem => posting.Position.JobGroup.GroupTitle)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(lItem => posting.Position.JobGroup.GroupTitle)
-                </dd>
-                <dt>
-                    @Html.DisplayNameFor(lItem => posting.Position.PositionCode)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(lItem => posting.Position.PositionCode)
-                </dd>
-                <dt>
-                    Locations
-                </dt>
+            <dt>
+                @Html.DisplayNameFor(lItem => posting.Position.JobGroup.GroupTitle)
+            </dt>
+            <dd>
+                @Html.DisplayFor(lItem => posting.Position.JobGroup.GroupTitle)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(lItem => posting.Position.PositionCode)
+            </dt>
+            <dd>
+                @Html.DisplayFor(lItem => posting.Position.PositionCode)
+            </dd>
+            <dt>
+                Locations
+            </dt>
 
-                foreach (var a in posting.JobLocations)
-                {
-                    <dd>
-                        @Html.DisplayFor(aItem => a.Location.Address)
-                    </dd>
-                }
-                <dt>
-                    Qualifications
-                </dt>
-                foreach (var q in posting.JobRequirements)
-                {
-                    <dd>
-                        @Html.DisplayFor(qItem => q.Qualification.QlfDescription)
-                    </dd>
-                }
-                <dt>
-                    Skills
-                </dt>
-                foreach (var s in posting.PostingSkills)
-                {
-                    <dd>
-                        @Html.DisplayFor(qItem => s.Skill.SkillDescription)
-                    </dd>
-                }
-                <dt>
-                    @Html.DisplayNameFor(lItem => posting.pstCompensationType)
-                </dt>
-                <dd>
-                    @if (posting.pstCompensationType == 1)
-                    {
-                        @: Hourly
+foreach (var a in posting.JobLocations)
+{
+            <dd>
+                @Html.DisplayFor(aItem => a.Location.Address)
+            </dd>
+}
+            <dt>
+                Qualifications
+            </dt>
+foreach (var q in posting.JobRequirements)
+{
+            <dd>
+                @Html.DisplayFor(qItem => q.Qualification.QlfDescription)
+            </dd>
+}
+            <dt>
+                Skills
+            </dt>
+foreach (var s in posting.PostingSkills)
+{
+            <dd>
+                @Html.DisplayFor(qItem => s.Skill.SkillDescription)
+            </dd>
+}
+            <dt>
+                @Html.DisplayNameFor(lItem => posting.pstCompensationType)
+            </dt>
+            <dd>
+                @if (posting.pstCompensationType == 1)
+    {
+            @: Hourly
+}
+else if (posting.pstCompensationType == 2)
+{
+            @: Monthly
+}
+else
+{
+            @: Yearly
+}
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(lItem => posting.pstJobDescription)
+            </dt>
+            <dd>
+                @Html.DisplayFor(lItem => posting.pstJobDescription)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(lItem => posting.pstNumPosition)
+            </dt>
+            <dd>
+                @Html.DisplayFor(lItem => posting.pstNumPosition)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(lItem => posting.pstFTE)
+            </dt>
+            <dd>
+                @Html.DisplayFor(lItem => posting.pstFTE)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(lItem => posting.pstSalary)
+            </dt>
+            <dd>
+                @Html.DisplayFor(lItem => posting.pstSalary)
+            </dd>
+
+
+
                     }
-                    else if (posting.pstCompensationType == 2)
-                    {
-                        @: Monthly
-                    }
-                    else
-                    {
-                        @: Yearly
-                    }
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(lItem => posting.pstJobDescription)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(lItem => posting.pstJobDescription)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(lItem => posting.pstNumPosition)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(lItem => posting.pstNumPosition)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(lItem => posting.pstFTE)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(lItem => posting.pstFTE)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(lItem => posting.pstSalary)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(lItem => posting.pstSalary)
-                </dd>
+                </dl>
 
 
-            
-        }
-    </dl>
+
+
+            </div>
+            <div class="col-6">
+                <input type="hidden" name="PostingID" id="PostingID" value="@postingID">
+                <input type="hidden" name="ApplicantID" id="ApplicantID" value="@applicantID">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="form-group">
+                    <label class="control-label">
+                        Upload Resumes/Letters:
+                    </label>
+                    <div>
+                        <input type="file" class="" name="theFiles" id="theFiles" multiple="multiple" /><br />
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Priority, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.Priority, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Priority, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Comment, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.Comment, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">Requirements</label>
+                        @Html.ListBox("selectedQualification", (MultiSelectList)ViewBag.jobRequirements, new { @class = "form-control" })
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">Skills</label>
+                        @Html.ListBox("selectedSkill", (MultiSelectList)ViewBag.postingSkills, new { @class = "form-control" })
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Apply" class="btn btn-default" />
+                    <input type="button" value="Add to Cart" class="btn btn-default" id="btnAddToCart" />
+                </div>
+
+
+
+
+
+            </div>
+
+        </div>
+
+
+    </div>
 
     <hr />
-    <input type="hidden" name="PostingID" id="PostingID" value="@postingID">
-    <input type="hidden" name="ApplicantID" id="ApplicantID" value="@applicantID">
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-    <div class="form-group">
-        <label class="control-label col-md-2">
-            Upload Resumes/Letters:
-        </label>
-        <div class="col-md-10">
-            <input type="file" class="" name="theFiles" id="theFiles" multiple="multiple" /><br />
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Priority, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Priority, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Priority, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Comment, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Comment, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-            <label class="control-label col-md-2">Requirements</label>
-            <div class="col-md-offset-2 col-md-10">
-                @Html.ListBox("selectedQualification", (MultiSelectList)ViewBag.jobRequirements, new { @class = "form-control"})
-                
-                </div>
-            </div>
-
-    <div class="form-group">
-            <label class="control-label col-md-2">Skills</label>
-            <div class="col-md-offset-2 col-md-10">
-                @Html.ListBox("selectedSkill", (MultiSelectList)ViewBag.postingSkills, new { @class = "form-control"})
-                </div>
-            </div>
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
-        </div>
-        <div class="col-md-offset-2 col-md-10">
-            <input type="button" value="Add to Cart" class="btn btn-default" id="btnAddToCart" />
-        </div>
-
-        
-    </div>
 
 
 </div>

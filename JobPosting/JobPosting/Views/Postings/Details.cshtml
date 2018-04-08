@@ -7,163 +7,171 @@
 <h2>Details</h2>
 
 <div>
-    <h4>Posting</h4>
+    <h4>Job Posting</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Position.PositionCode)
-        </dt>
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Position.PositionCode)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Position.PositionCode)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.Position.PositionCode)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Position.PositionDescription)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Position.PositionDescription)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Position.PositionDescription)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.Position.PositionDescription)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.pstNumPosition)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.pstNumPosition)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.pstNumPosition)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.pstNumPosition)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.pstFTE)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.pstFTE)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.pstFTE)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.pstFTE)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.pstSalary)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.pstSalary)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.pstSalary)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.pstSalary)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.pstCompensationType)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.pstCompensationType)
+                    </dt>
 
-        <dd>
-            @if (Model.pstCompensationType == 1)
-            {
+                    <dd>
+                        @if (Model.pstCompensationType == 1)
+        {
                 @: Hourly
-            }
-            else if (Model.pstCompensationType == 2)
-            {
+}
+else if (Model.pstCompensationType == 2)
+{
                 @:Monthly
-            }
-            else if (Model.pstCompensationType == 3)
-            {
+}
+else if (Model.pstCompensationType == 3)
+{
                 @:Yearly
-            }
-        </dd>
-
-        
-
-         <dt>
-            Location
-        </dt>
-
-        <dd>
-            @{
-                IEnumerable<JobPosting.Models.JobLocation> jobLocations = ViewBag.JobLocations;
-                foreach (var l in jobLocations)
-                {
-                @: @Html.DisplayFor(lModel => l.Location.Address) <br />
-            }
-            }
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.pstJobDescription)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.pstJobDescription)
-        </dd>
+}
+                    </dd>
 
 
-        <dt>
-            Day of Work
-        </dt>
 
-        <dd>
-            @foreach (var d in Model.Days)
+                    <dt>
+                        Location
+                    </dt>
+
+                    <dd>
+                        @{
+            IEnumerable<JobPosting.Models.JobLocation> jobLocations = ViewBag.JobLocations;
+            foreach (var l in jobLocations)
             {
-            @: @Html.DisplayFor(dModel => d.dayName) <br />
-            }
-        </dd>
+                @: @Html.DisplayFor(lModel => l.Location.Address) <br />
+}
+                        }
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.pstJobDescription)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.pstJobDescription)
+                    </dd>
 
 
-        <dt>
-            Requirements
-        </dt>
+                    <dt>
+                        Day of Work
+                    </dt>
 
-        <dd>
-            @{
-                IEnumerable<JobPosting.Models.JobRequirement> jobRequirements = ViewBag.JobRequirements;
-                foreach (var r in jobRequirements)
-                {
+                    <dd>
+                        @foreach (var d in Model.Days)
+        {
+                @: @Html.DisplayFor(dModel => d.dayName) <br />
+}
+                    </dd>
+
+
+                    <dt>
+                        Requirements
+                    </dt>
+
+                    <dd>
+                        @{
+            IEnumerable<JobPosting.Models.JobRequirement> jobRequirements = ViewBag.JobRequirements;
+            foreach (var r in jobRequirements)
+            {
                 @: @Html.DisplayFor(rModel => r.Qualification.QlfDescription) <br />
-        }
-            }
-        </dd>
+}
+                        }
+                    </dd>
 
-        <dt>
-            Skills
-        </dt>
+                    <dt>
+                        Skills
+                    </dt>
 
-        <dd>
-            @{ 
-                IEnumerable<JobPosting.Models.PostingSkill> postingSkills = ViewBag.PostingSkills;
-                foreach (var s in postingSkills)
-                {
-                    @: @Html.DisplayFor(sModel => s.Skill.SkillDescription) <br />
-                }
-            }
-        </dd>
+                    <dd>
+                        @{
+            IEnumerable<JobPosting.Models.PostingSkill> postingSkills = ViewBag.PostingSkills;
+            foreach (var s in postingSkills)
+            {
+                @: @Html.DisplayFor(sModel => s.Skill.SkillDescription) <br />
+}
+                        }
+                    </dd>
+                </div>
+                <div class="col-6">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.pstOpenDate)
+                    </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.pstOpenDate)
-        </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.pstOpenDate)
+                    </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.pstOpenDate)
-        </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.pstEndDate)
+                    </dt>
 
-        @*<dt>
-            @Html.DisplayNameFor(model => model.pstEndDate)
-        </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.pstEndDate)
+                    </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.pstEndDate)
-        </dd>*@
+                    <dt>
+                        @Html.DisplayNameFor(model => model.pstJobStartDate)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.pstJobStartDate)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.pstJobStartDate)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.pstJobStartDate)
-        </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.pstJobEndDate)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.pstJobEndDate)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.pstJobEndDate)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.pstJobEndDate)
-        </dd>
+                </div>
+            </div>
 
+        </div>
     </dl>
 </div>
 <p>
