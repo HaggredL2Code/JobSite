@@ -640,7 +640,6 @@ E:\Users\haggr\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosti
 E:\Users\haggr\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.pdb
 C:\Users\pevip\OneDrive\Documents\GitHub\JobSite\JobPosting\JobPosting\bin\NLog.dll
 C:\Users\pevip\OneDrive\Documents\GitHub\JobSite\JobPosting\JobPosting\bin\NLog.xml
-C:\Users\pevip\OneDrive\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.DAL.JBMigrations.InitialCreate.resources
 C:\Users\Administrator\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.DAL.JBMigrations.InitialCreate.resources
 C:\Users\Administrator\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.csproj.GenerateResource.Cache
 C:\Users\Administrator\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.DAL.Securitymigrations.InitialCreate.resources
@@ -774,3 +773,4 @@ E:\Jobsite1\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.csproj.GenerateRe
 E:\Jobsite1\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.dll
 E:\Jobsite1\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.pdb
 E:\Jobsite1\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.DAL.JBMigrations.InitialCreate.resources
+C:\Users\pevip\OneDrive\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.DAL.JBMigrations.InitialCreate.resources

@@ -67,34 +67,26 @@ new SelectListItem { Value = "3", Text = "Yearly"}
 
                 <div class="form-group">
                     <label class="control-label">Current Locations</label>
-                    @Html.ListBox("selectedLocation", (MultiSelectList)ViewBag.JobLocations, htmlAttributes: new { @class = "form-control listBox", @id = "locationListBox" })
-                    @Html.DropDownList("JobLocationID", (SelectList)ViewBag.Location, htmlAttributes: new { @class = "form-control", @id = "jobLocationID" })
-                    <input type="button" value="Add" id="addLocation">
-                    <input type="button" value="Remove" id="removeLocation">
+                    @Html.ListBox("selectedLocation", (MultiSelectList)ViewBag.JobLocations, htmlAttributes: new { @class = "form-control listBox custom-select2", @id = "locationListBox" })
+                    
                 </div>
 
                 <div class="form-group">
                     <label class="control-label">Current Days of Work</label>
-                    @Html.ListBox("selectedDay", (MultiSelectList)ViewBag.SelectedDay, htmlAttributes: new { @class = "form-control listBox", @id = "dayListBox" })
-                    @Html.DropDownList("DayID", (SelectList)ViewBag.Days, htmlAttributes: new { @class = "form-control", @id = "dayID" })
-                    <input type="button" value="Add" id="addDay" />
-                    <input type="button" value="Remove" id="removeDay">
+                    @Html.ListBox("selectedDay", (MultiSelectList)ViewBag.pDays, htmlAttributes: new { @class = "form-control listBox custom-select2", @id = "dayListBox" })
+                    
                 </div>
 
                 <div class="form-group">
                     <label class="control-label">Current Requirements</label>
-                    @Html.ListBox("selectedQualification", (MultiSelectList)ViewBag.JobRequirements, htmlAttributes: new { @class = "form-control listBox", @id = "qualificationListBox" })
-                    @Html.DropDownList("JobRequirementID", (SelectList)ViewBag.Requirement, htmlAttributes: new { @class = "form-control", @id = "jobRequirementID" })
-                    <input type="button" value="Add" id="addRequirement">
-                    <input type="button" value="Remove" id="removeRequirement">
+                    @Html.ListBox("selectedQualification", (MultiSelectList)ViewBag.JobRequirements, htmlAttributes: new { @class = "form-control listBox custom-select2", @id = "qualificationListBox" })
+                    
                 </div>
 
                 <div class="form-group">
                     <label class="control-label">Current Skills</label>
-                    @Html.ListBox("selectedSkill", (MultiSelectList)ViewBag.PostingSkills, htmlAttributes: new { @class = "form-control listBox", @id = "skillListBox" })
-                    @Html.DropDownList("PostingSkillID", (SelectList)ViewBag.Skill, htmlAttributes: new { @class = "form-control", @id = "postingSkillID" })
-                    <input type="button" value="Add" id="addSkill">
-                    <input type="button" value="Remove" id="removeSkill">
+                    @Html.ListBox("selectedSkill", (MultiSelectList)ViewBag.PostingSkills, htmlAttributes: new { @class = "form-control listBox custom-select2", @id = "skillListBox" })
+                    
                 </div>
             </div>
 
