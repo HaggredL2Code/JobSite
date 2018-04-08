@@ -177,7 +177,7 @@ namespace JobPosting.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin, Manager, Hiring Team")]
-        public ActionResult Create([Bind(Include = "ID,pstNumPosition,pstFTE,pstSalary,pstCompensationType,pstJobDescription,pstOpenDate,pstEndDate,pstJobStartDate,pstJobEndDate,PositionID"/*,CreatedBy,CreatedOn,UpdatedBy,UpdatedOn,RowVersion*/)] Posting posting, string[] selectedQualification, string[] selectedDay, string[] selectedLocation, string[] selectedSkill, bool? SavedAsTemplate, string templateName)
+        public ActionResult Create([Bind(Include = "ID,pstNumPosition,pstFTE,pstSalary,pstCompensationType,pstJobDescription,pstOpenDate,pstEndDate,pstJobStartDate,pstJobEndDate,Enabled,PositionID"/*,CreatedBy,CreatedOn,UpdatedBy,UpdatedOn,RowVersion"*/)] Posting posting, string[] selectedQualification, string[] selectedDay, string[] selectedLocation, string[] selectedSkill, bool? SavedAsTemplate, string templateName)
         {
             try
             {
@@ -320,10 +320,10 @@ namespace JobPosting.Controllers
             }
             PopulateDropdownList(posting);
             PopulateListBox();
-            PopulateAssignedDay(posting);
+
 
             int realID = id.Value;
-            PopulateListBoxByID(realID);
+            PopulateListBoxByID(realID, posting);
             return View(posting);
         }
 
@@ -669,30 +669,34 @@ namespace JobPosting.Controllers
             ViewBag.Skills = new MultiSelectList(db.Skills, "ID", "SkillDescription");
            
         }
-        private void PopulateListBoxByID(int id)
+        private void PopulateListBoxByID(int id, Posting posting)
         {
             // LINQ Query select Qualification table in order to receive ID and QlfDescription that correspond to PostingID
             var qJobRequirements = (from jr in db.JobRequirements
                                     join q in db.Qualification on jr.QualificationID equals q.ID
                                     where jr.PostingID == id
-                                    select q);
-
+                                    select q.ID);
+            var Qualifications = db.Qualification.OrderBy(q => q.QlfDescription);
             // LINQ Query select Location table in order to receive ID and Address that correspond to PostingID
             var qJobLocations = (from jl in db.JobLocations
                                  join l in db.Locations on jl.LocationID equals l.ID
                                  where jl.PostingID == id
-                                 select l);
-
+                                 select l.ID);
+            var Locations = db.Locations.OrderBy(l => l.Address);
             // LINKQ Query select Skill table in order to receive ID and SkillDescription that correspond to PostingID
             var qPostingSkills = (from ps in db.PostingSkills
                                   join s in db.Skills on ps.SkillID equals s.ID
                                   where ps.PostingID == id
-                                  select s);
+                                  select s.ID);
+            var Skills = db.Skills.OrderBy(s => s.SkillDescription);
 
+            var Days = db.Days.OrderBy(d => d.dayOrder);
+            var qDays = posting.Days.OrderBy(d => d.dayOrder).Select(d => d.ID);
             // Create ViewBags with value is MultiSelectList
-            ViewBag.JobRequirements = new MultiSelectList(qJobRequirements, "ID", "QlfDescription");
-            ViewBag.JobLocations = new MultiSelectList(qJobLocations, "ID", "Address");
-            ViewBag.PostingSkills = new MultiSelectList(qPostingSkills, "ID", "SkillDescription");
+            ViewBag.JobRequirements = new MultiSelectList(Qualifications, "ID", "QlfDescription", qJobRequirements.ToArray());
+            ViewBag.JobLocations = new MultiSelectList(Locations, "ID", "Address", qJobLocations.ToArray());
+            ViewBag.PostingSkills = new MultiSelectList(Skills, "ID", "SkillDescription", qPostingSkills.ToArray());
+            ViewBag.pDays = new MultiSelectList(Days, "ID", "dayName", qDays.ToArray());
         }
 
         private void PopulateAssignedDay(Posting posting)
@@ -776,15 +780,18 @@ namespace JobPosting.Controllers
                 PopulateDropdownList(posting);
 
                 // Passing values to View/Create and Convert IDs string to List ( to be able to use Contains function)
-                ViewBag.LocationIDs = ConvertStringToList.ConvertToInt(postingTemplate.LocationIDs);
-                ViewBag.SkillIDs = ConvertStringToList.ConvertToInt(postingTemplate.SkillIDs);
-                ViewBag.RequirementIDs = ConvertStringToList.ConvertToInt(postingTemplate.RequirementIDs);
-                ViewBag.DayIDs = ConvertStringToList.ConvertToInt(postingTemplate.dayIDs);
-                ViewBag.Days = db.Days;
+                var tempLocationIDs = ConvertStringToList.ConvertToInt(postingTemplate.LocationIDs);
+                var tempSkillIDs = ConvertStringToList.ConvertToInt(postingTemplate.SkillIDs);
+                var tempRequirementIDs = ConvertStringToList.ConvertToInt(postingTemplate.RequirementIDs);
+                var tempDayIDs = ConvertStringToList.ConvertToInt(postingTemplate.dayIDs);
+                
+                ViewBag.Qualifications = new MultiSelectList(db.Qualification.OrderBy(q => q.QlfDescription), "ID", "QlfDescription", tempRequirementIDs.ToArray());
+                ViewBag.Locations = new MultiSelectList(db.Locations, "ID", "Address", tempLocationIDs.ToArray());
+                ViewBag.Skills = new MultiSelectList(db.Skills.OrderBy(s => s.SkillDescription), "ID", "SkillDescription", tempSkillIDs.ToArray());
+                ViewBag.Day = new MultiSelectList(db.Days, "ID", "dayName",tempDayIDs.ToArray());
                 ViewBag.Flag = true;
-                PopulateListBox();
                 PopulateDropdownList(posting);
-                PopulateAssignedDay(posting);
+                //PopulateListBoxByID(id, posting);
 
 
             return posting;

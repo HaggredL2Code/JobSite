@@ -6,9 +6,12 @@
     var applicantID = ViewBag.applicantID;
     
 }
+<link href="~/Content/css/select2.min.css" rel="stylesheet" />
 <script src="~/Scripts/jquery-1.10.2.js"></script>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+<script src="~/Scripts/select2.min.js"></script>
+<script src="~/Scripts/Code.js"></script>
 <script type="text/javascript">
             $(document).ready(function () {
                 var ApplicationsCart = [];
@@ -239,12 +242,12 @@ else
 
                 <div class="form-group">
                     <label class="control-label">Requirements</label>
-                        @Html.ListBox("selectedQualification", (MultiSelectList)ViewBag.jobRequirements, new { @class = "form-control" })
+                        @Html.ListBox("selectedQualification", (MultiSelectList)ViewBag.jobRequirements, new { @class = "form-control custom-select2" })
                 </div>
 
                 <div class="form-group">
                     <label class="control-label">Skills</label>
-                        @Html.ListBox("selectedSkill", (MultiSelectList)ViewBag.postingSkills, new { @class = "form-control" })
+                        @Html.ListBox("selectedSkill", (MultiSelectList)ViewBag.postingSkills, new { @class = "form-control custom-select2" })
                 </div>
 
                 <div class="form-group">
