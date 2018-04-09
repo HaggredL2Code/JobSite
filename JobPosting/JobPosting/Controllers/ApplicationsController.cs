@@ -25,7 +25,7 @@ namespace JobPosting.Controllers
         [Authorize(Roles = "Admin, Manager, Hiring Team")]
         public ActionResult Index(string sortDirection, string sortField, string actionButton, string SearchPrioity, int? PostingID)
         {
-            IQueryable<Application> applications = db.Applications.Include(a => a.Applicant).Include(a => a.Posting).Include(a => a.BinaryFiles).Include(a => a.ApplicationsQualifications).Include(a => a.ApplicationSkills);
+            IQueryable<Application> applications = db.Applications.Include(a => a.Applicant).Include(a => a.Posting).Include(a => a.BinaryFiles).Include(a => a.ApplicationsQualifications).Include(a => a.ApplicationSkills).Include(i => i.Posting.Position);
 
             if (TempData["NumPositionFlag"] != null)
             {
@@ -42,7 +42,7 @@ namespace JobPosting.Controllers
 
             if (PostingID.HasValue)
             {
-                applications = applications.Where(a => a.PostingID == PostingID);
+                applications = applications.Where(a => a.Posting.Position.ID == PostingID);
             }
 
             if (!String.IsNullOrEmpty(actionButton)) //Form Submitted
@@ -417,7 +417,7 @@ namespace JobPosting.Controllers
 
         private void PopulateDropdownList(Application Application = null)
         {
-            ViewBag.PostingID = new SelectList(db.Postings.OrderBy(j => j.PositionID), "ID", "pstJobDescription", Application?.PostingID);
+            ViewBag.PostingID = new SelectList(db.Positions.OrderBy(j => j.ID), "ID", "PositionDescription", Application?.Posting.PositionID);
         }
 
 
