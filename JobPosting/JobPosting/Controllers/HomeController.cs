@@ -10,7 +10,8 @@ namespace JobPosting.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            return Redirect("/Postings");
+            //return View();
         }
 
         public ActionResult About()
