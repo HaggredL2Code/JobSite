@@ -129,7 +129,7 @@ namespace JobPosting.Controllers
         }
 
         // GET: Applications/Create
-        public ActionResult Create(int? id)
+        public ActionResult Create(int? id, bool UserFlag = false)
         {
 
             if (id == null)
@@ -137,6 +137,7 @@ namespace JobPosting.Controllers
                 logger.Info("Create/ HTTP Bad Request With ID {0}", id);
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            
             var posting = (from p in db.Postings
                            where p.ID == id
                            select p).ToList().SingleOrDefault();
@@ -149,7 +150,10 @@ namespace JobPosting.Controllers
             ViewBag.postingId = id;
             PopulateJobRequirements(posting.ID);
             PopulatePostingSkills(posting.ID);
-
+            if (UserFlag)
+            {
+                ModelState.AddModelError("","You have to update your profile before apply for a job");
+            }
             return View();
         }
 
@@ -243,10 +247,17 @@ namespace JobPosting.Controllers
                     ModelState.AddModelError("", "You only be able to submit PDF or MS Word files.");
                 }
             }
-            catch (DataException)
+            catch (DataException dex)
             {
                 ModelState.AddModelError("", "Unable to save changes.");
+                if (dex.InnerException.InnerException.Message.Contains("ApplicantID"))
+                {
+                   
+                    return RedirectToAction("Create", new { UserFlag = true });
+                    
+                }
             }
+            
 
             var posting = (from p in db.Postings
                            where p.ID == id
