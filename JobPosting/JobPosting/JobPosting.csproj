@@ -276,8 +276,8 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\css\select2.css" />
-    <Content Include="Content\css\select2.min.css" />
+    <Content Include="Content\select2.css" />
+    <Content Include="Content\select2.min.css" />
     <Content Include="Content\jquery-ui-timepicker-addon.css" />
     <Content Include="Content\jquery-ui-timepicker-addon.min.css" />
     <Content Include="Content\themes\base\accordion.css" />

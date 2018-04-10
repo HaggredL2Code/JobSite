@@ -23,8 +23,11 @@ namespace JobPosting
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
 
-            bundles.Add(new StyleBundle("~/Content/css").Include(
+            bundles.Add(new StyleBundle("~/Content").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/bootstrap-*",
+                      "~/Content/jquery-ui-timepicker-addon.css",
+                      "~/Content/select2.min.css",
                       "~/Content/site.css")); 
         }
     }
