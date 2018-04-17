@@ -903,4 +903,3 @@ C:\Users\chris\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosti
 C:\Users\chris\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.csproj.CoreCompileInputs.cache
 C:\Users\chris\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.dll
 C:\Users\chris\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.pdb
-C:\Users\pevip\OneDrive\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.csprojResolveAssemblyReference.cache
