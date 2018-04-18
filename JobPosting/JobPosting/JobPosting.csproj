@@ -335,6 +335,13 @@
     <Content Include="Content\bootstrap-reboot.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="AI\RecommenderSystem\all_users.csv" />
+    <Content Include="AI\RecommenderSystem\data.csv" />
+    <Content Include="AI\RecommenderSystem\predict.py" />
+    <Content Include="AI\RecommenderSystem\Train.py" />
+    <Content Include="AI\RecommenderSystem\utils.py" />
+    <Content Include="AI\RecommenderSystem\__pycache__\Train.cpython-36.pyc" />
+    <Content Include="AI\RecommenderSystem\__pycache__\utils.cpython-36.pyc" />
     <None Include="Properties\PublishProfiles\L2JobPosting - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\L2JobPosting - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\vpham2CollegeStrike - FTP.pubxml" />
@@ -582,6 +589,7 @@
     <Content Include="Scripts\umd\popper.min.js.map" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="AI\RecommenderSystem\users\" />
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
