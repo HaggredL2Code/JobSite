@@ -9,13 +9,13 @@ namespace JobPosting.AI
 {
     public static class recommenderSystem
     {
-        static void FavoriteJobType_train(int user, int prev1, int prev2, int Y, int n_y, string userName)
+        public static void FavoriteJobType_train(int user, int prev1, int prev2, int Y, int n_y, string userName)
         {
             // full path of python interpreter 
             string python = @"C:\Users\pevip\Anaconda3\python.exe";
 
             // python app to call 
-            string myPythonApp = @"C:\Users\pevip\OneDrive\Documents\GitHub\master\RecommenderSystem\train.py";
+            string myPythonApp = @"C:\Users\pevip\OneDrive\Documents\GitHub\JobSite\JobPosting\JobPosting\AI\RecommenderSystem\train.py";
 
 
             // Create new process start info 
@@ -56,13 +56,13 @@ namespace JobPosting.AI
 
         }
 
-        static int FavoriteJobType_predict(int user, int prev1, int prev2, string userName)
+        public static int FavoriteJobType_predict(int user, int prev1, int prev2, string userName)
         {
             // full path of python interpreter 
             string python = @"C:\Users\pevip\Anaconda3\python.exe";
 
             // python app to call 
-            string myPythonApp = @"C:\Users\pevip\OneDrive\Documents\GitHub\master\RecommenderSystem\predict.py";
+            string myPythonApp = @"C:\Users\pevip\OneDrive\Documents\GitHub\JobSite\JobPosting\JobPosting\AI\RecommenderSystem\predict.py";
 
 
             // Create new process start info 

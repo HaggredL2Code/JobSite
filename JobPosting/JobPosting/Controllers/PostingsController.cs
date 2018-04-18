@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JobPosting.AI;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -11,6 +12,7 @@ using JobPosting.DAL;
 using JobPosting.Models;
 using JobPosting.ViewModels;
 using JobPosting.Code;
+using Microsoft.AspNet.Identity;
 
 using NLog;
 
@@ -124,8 +126,24 @@ namespace JobPosting.Controllers
 
             ViewBag.sortField = sortField;
             ViewBag.sortDirection = sortDirection;
-                        
+
+            string userEmail = User.Identity.Name;
+            int userID = db.Applicants.Where(a => a.apEMail == userEmail).Select(a => a.ID).SingleOrDefault();
+            string userName = db.Applicants.Where(a => a.ID == userID).Select(a => a.apFirstName).SingleOrDefault();
+            if (userID > 0)
+            {
+                recommenderSystem_fn(userID, prev1, prev2, userName);
+            }
+
+
             return View(postings.ToList());
+        }
+
+        private void recommenderSystem_fn(int userID, int prev1, int prev2, string userName)
+        {
+            int jobTypeID = recommenderSystem.FavoriteJobType_predict(userID, prev1, prev2, userName);
+            var postings = db.Postings.Where(p => p.Position.JobGroupID == jobTypeID).OrderBy(p => p.pstOpenDate);
+            ViewBag.PostingsAI = postings;
         }
 
         // GET: Postings/Details/5
