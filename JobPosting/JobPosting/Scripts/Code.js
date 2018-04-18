@@ -1,5 +1,7 @@
 ﻿$(document).ready(function () {
     $(".custom-select2").select2()
+
+    
     //$("#submit").click(function () {
     //    $(".listBox option").prop("selected", true)
     //});

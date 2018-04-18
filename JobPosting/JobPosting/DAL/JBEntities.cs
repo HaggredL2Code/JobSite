@@ -35,6 +35,7 @@ namespace JobPosting.DAL
         public DbSet<ApplicationSkill> ApplicationSkills { get; set; }
         public DbSet<PostingSkill> PostingSkills { get; set; }
         public DbSet<PostingTemplate> PostingTemplates { get; set; }
+        public DbSet<Picked> Pickeds { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -85,6 +86,7 @@ namespace JobPosting.DAL
                 .HasMany(a => a.Applications)
                 .WithRequired(p => p.Applicant)
                 .WillCascadeOnDelete(true);
+
 
             modelBuilder.Entity<Application>()
                 .HasMany(a => a.BinaryFiles)

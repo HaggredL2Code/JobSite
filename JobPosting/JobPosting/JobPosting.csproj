@@ -198,6 +198,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AI\recommenderSystem.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -218,9 +219,9 @@
     <Compile Include="Controllers\UnionsController.cs" />
     <Compile Include="DAL\ApplicationDbContext.cs" />
     <Compile Include="DAL\JBEntities.cs" />
-    <Compile Include="DAL\JBMigrations\201804082035305_InitialCreate.cs" />
-    <Compile Include="DAL\JBMigrations\201804082035305_InitialCreate.Designer.cs">
-      <DependentUpon>201804082035305_InitialCreate.cs</DependentUpon>
+    <Compile Include="DAL\JBMigrations\201804182028474_InitialCreate.cs" />
+    <Compile Include="DAL\JBMigrations\201804182028474_InitialCreate.Designer.cs">
+      <DependentUpon>201804182028474_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="DAL\JBMigrations\Configuration.cs" />
     <Compile Include="DAL\SecurityMigrations\201804021447241_InitialCreate.cs" />
@@ -243,6 +244,7 @@
     <Compile Include="Models\Day.cs" />
     <Compile Include="Models\FileContent.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Picked.cs" />
     <Compile Include="Models\Position.cs" />
     <Compile Include="Models\JobGroup.cs" />
     <Compile Include="Models\JobLocation.cs" />
@@ -334,6 +336,13 @@
     <Content Include="Content\bootstrap-reboot.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="AI\RecommenderSystem\all_users.csv" />
+    <Content Include="AI\RecommenderSystem\data.csv" />
+    <Content Include="AI\RecommenderSystem\predict.py" />
+    <Content Include="AI\RecommenderSystem\Train.py" />
+    <Content Include="AI\RecommenderSystem\utils.py" />
+    <Content Include="AI\RecommenderSystem\__pycache__\Train.cpython-36.pyc" />
+    <Content Include="AI\RecommenderSystem\__pycache__\utils.cpython-36.pyc" />
     <None Include="Properties\PublishProfiles\L2JobPosting - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\L2JobPosting - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\vpham2CollegeStrike - FTP.pubxml" />
@@ -477,6 +486,8 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\js-cookie\js.cookie-2.2.0.min.js" />
+    <Content Include="Scripts\js-cookie\js.cookie.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\popper-utils.js" />
     <Content Include="Scripts\popper-utils.min.js" />
@@ -581,14 +592,15 @@
     <Content Include="Scripts\umd\popper.min.js.map" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="AI\RecommenderSystem\users\" />
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="DAL\JBMigrations\201804082035305_InitialCreate.resx">
-      <DependentUpon>201804082035305_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="DAL\JBMigrations\201804182028474_InitialCreate.resx">
+      <DependentUpon>201804182028474_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DAL\SecurityMigrations\201804021447241_InitialCreate.resx">
       <DependentUpon>201804021447241_InitialCreate.cs</DependentUpon>
