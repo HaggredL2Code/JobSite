@@ -6,6 +6,7 @@
 }
 
 <script src="https://unpkg.com/popper.js/dist/umd/popper.min.js"></script>
+
 <div class="container">
     <div class="row">
         <div class="col-10">
@@ -13,97 +14,97 @@
         </div>
         @if (!User.IsInRole("User"))
         {
-        <div class="col-2">
-            <button type="button" class="btn btn-info" data-toggle="modal" data-target=".bd-example-modal-lg">Create New Posting</button>
+            <div class="col-2">
+                <button type="button" class="btn btn-info" data-toggle="modal" data-target=".bd-example-modal-lg">Create New Posting</button>
 
-            @*Modal Begin Here*@
-            <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
+                @*Modal Begin Here*@
+                <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
 
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">Create Job Posting</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Create Job Posting</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
 
-                            @Html.ActionLink("Create New", "Create", new { @class = "nav-link" }, new { @class = "btn btn-info" })
+                                @Html.ActionLink("Create New", "Create", new { @class = "nav-link" }, new { @class = "btn btn-info" })
 
-                        </div>
-                        <div class="modal-body">
-                            <table class="table">
-                                <thead class="thead-dark">
-                                    <tr>
-                                        <th>
-                                            Job Template Name
-                                        </th>
-                                        <th></th>
-                                    </tr>
-                                    @foreach (var p in Positions)
-                                    {
-                                        string positionName = p.PositionDescription;
-                                        foreach (var pt in ViewBag.postingTemplate)
+                            </div>
+                            <div class="modal-body">
+                                <table class="table">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>
+                                                Job Template Name
+                                            </th>
+                                            <th></th>
+                                        </tr>
+                                        @foreach (var p in Positions)
                                         {
-                                            if (pt.PositionID == p.ID)
+                                            string positionName = p.PositionDescription;
+                                            foreach (var pt in ViewBag.postingTemplate)
                                             {
-                                                string name = pt.templateName;
-                                            <tr>
-                                                <td>
-                                                    @Html.DisplayFor(at => name)
-                                                </td>
-                                                <td>
-                                                    @Html.ActionLink(" Use Template", "Create", new { name = (string)pt.templateName }, new { @class = "btn btn-info" })
-                                                    @Html.ActionLink("Delete", "DeleteTemplate", new { name = (string)pt.templateName }, new { @class = "btn btn-danger" })
-                                                </td>
+                                                if (pt.PositionID == p.ID)
+                                                {
+                                                    string name = pt.templateName;
+                                                    <tr>
+                                                        <td>
+                                                            @Html.DisplayFor(at => name)
+                                                        </td>
+                                                        <td>
+                                                            @Html.ActionLink(" Use Template", "Create", new { name = (string)pt.templateName }, new { @class = "btn btn-info" })
+                                                            @Html.ActionLink("Delete", "DeleteTemplate", new { name = (string)pt.templateName }, new { @class = "btn btn-danger" })
+                                                        </td>
 
-                                            </tr>
+                                                    </tr>
+                                                }
                                             }
                                         }
-                                    }
-                                </thead>
-                            </table>
-                        </div>
-                        <div class="modal-footer">
+                                    </thead>
+                                </table>
+                            </div>
+                            <div class="modal-footer">
 
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            @*Modal Ends Here*@
+                @*Modal Ends Here*@
 
-        </div>
+            </div>
         }
     </div>
-@using (Html.BeginForm())
-{
+    @using (Html.BeginForm())
+    {
 
         <div class="row">
             <div class="col-lg-3 col-md-12">
                 <div class="card">
                     <div class="card-body">
-                       
-                            <p>
-                                Select By Job Group:
-                                @Html.DropDownList("JobGroupID", null, "All Job Groups", htmlAttributes: new { @class = "form-control custom-select2" }) <br>
-                                Select By Position:
-                                @Html.DropDownList("PositionID", null, "All Positions", htmlAttributes: new { @class = "form-control custom-select2" }) <br>
-                                Select By Location:
-                                @Html.DropDownList("Location", null, "All Locations", htmlAttributes: new { @class = "form-control custom-select2" }) <br>
-                                Select By Payment Type:
-                                @Html.DropDownList("PaymentTypeID", new SelectListItem[]
-         {
-                                    new SelectListItem{Value = "1", Text = "Hourly"},
-                                    new SelectListItem{Value = "2", Text = "Monthly"},
-                                    new SelectListItem{Value = "3", Text = "Yearly"}
-         },
-     "All Types", htmlAttributes: new { @class = "form-control" }) <br />
-                                <input type="submit" value="Filter" class="btn btn-default" />
-                                @Html.ActionLink("Clear", "Index")
-                            </p>
-                        
+
+                        <p>
+                            Select By Job Group:
+                            @Html.DropDownList("JobGroupID", null, "All Job Groups", htmlAttributes: new { @class = "form-control custom-select2" }) <br>
+                            Select By Position:
+                            @Html.DropDownList("PositionID", null, "All Positions", htmlAttributes: new { @class = "form-control custom-select2" }) <br>
+                            Select By Location:
+                            @Html.DropDownList("Location", null, "All Locations", htmlAttributes: new { @class = "form-control custom-select2" }) <br>
+                            Select By Payment Type:
+                            @Html.DropDownList("PaymentTypeID", new SelectListItem[]
+{
+                                                            new SelectListItem{Value = "1", Text = "Hourly"},
+                                                            new SelectListItem{Value = "2", Text = "Monthly"},
+                                                            new SelectListItem{Value = "3", Text = "Yearly"}
+},
+"All Types", htmlAttributes: new { @class = "form-control" }) <br />
+                            <input type="submit" value="Filter" class="btn btn-default" />
+                            @Html.ActionLink("Clear", "Index")
+                        </p>
+
                     </div>
                 </div>
             </div>
@@ -150,7 +151,7 @@
                                     @Html.DisplayFor(modelItem => item.Position.PositionCode)
                                 </td>
                                 <td>
-                                    @Html.ActionLink(item.Position.PositionDescription.ToString(), "Details", new { id = item.ID })
+                                    @Html.ActionLink(item.Position.PositionDescription.ToString(), "Details", new { id = item.ID, userID = ViewBag.userID })
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.pstNumPosition)
@@ -191,5 +192,5 @@
 
             </div>
         </div>
-}
-    </div>
+    }
+</div>

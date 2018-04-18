@@ -219,9 +219,9 @@
     <Compile Include="Controllers\UnionsController.cs" />
     <Compile Include="DAL\ApplicationDbContext.cs" />
     <Compile Include="DAL\JBEntities.cs" />
-    <Compile Include="DAL\JBMigrations\201804082035305_InitialCreate.cs" />
-    <Compile Include="DAL\JBMigrations\201804082035305_InitialCreate.Designer.cs">
-      <DependentUpon>201804082035305_InitialCreate.cs</DependentUpon>
+    <Compile Include="DAL\JBMigrations\201804182028474_InitialCreate.cs" />
+    <Compile Include="DAL\JBMigrations\201804182028474_InitialCreate.Designer.cs">
+      <DependentUpon>201804182028474_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="DAL\JBMigrations\Configuration.cs" />
     <Compile Include="DAL\SecurityMigrations\201804021447241_InitialCreate.cs" />
@@ -244,6 +244,7 @@
     <Compile Include="Models\Day.cs" />
     <Compile Include="Models\FileContent.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Picked.cs" />
     <Compile Include="Models\Position.cs" />
     <Compile Include="Models\JobGroup.cs" />
     <Compile Include="Models\JobLocation.cs" />
@@ -485,6 +486,8 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\js-cookie\js.cookie-2.2.0.min.js" />
+    <Content Include="Scripts\js-cookie\js.cookie.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\popper-utils.js" />
     <Content Include="Scripts\popper-utils.min.js" />
@@ -596,8 +599,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="DAL\JBMigrations\201804082035305_InitialCreate.resx">
-      <DependentUpon>201804082035305_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="DAL\JBMigrations\201804182028474_InitialCreate.resx">
+      <DependentUpon>201804182028474_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DAL\SecurityMigrations\201804021447241_InitialCreate.resx">
       <DependentUpon>201804021447241_InitialCreate.cs</DependentUpon>

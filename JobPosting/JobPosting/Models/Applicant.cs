@@ -94,6 +94,8 @@ namespace JobPosting.Models
         public int UserRoleID { get; set; }
 
         public virtual UserRole UserRole { get; set;  }
+
+        public virtual Picked Picked { get; set; }
        
         public virtual ICollection<Application> Applications { get; set; }
     }

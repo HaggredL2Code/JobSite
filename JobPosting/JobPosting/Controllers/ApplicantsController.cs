@@ -54,6 +54,13 @@ namespace JobPosting.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    applicant.Picked = new Picked
+                    {
+                        jobTypePrevPicked1 = 0,
+                        jobTypePrevPicked2 = 0,
+                        jobTypeJustPicked = 0,
+                        firstTimeAccess = true
+                    };
                     db.Applicants.Add(applicant);
                     db.SaveChanges();
                     return RedirectToAction("Details");

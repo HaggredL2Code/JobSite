@@ -772,7 +772,6 @@ E:\Jobsite1\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.csproj.GenerateRe
 E:\Jobsite1\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.dll
 E:\Jobsite1\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.pdb
 E:\Jobsite1\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.DAL.JBMigrations.InitialCreate.resources
-C:\Users\pevip\OneDrive\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.DAL.JBMigrations.InitialCreate.resources
 C:\Users\chris\Documents\GitHub\JobSite\JobPosting\JobPosting\bin\ApplicationInsights.config
 C:\Users\chris\Documents\GitHub\JobSite\JobPosting\JobPosting\bin\JobPosting.dll.config
 C:\Users\chris\Documents\GitHub\JobSite\JobPosting\JobPosting\bin\JobPosting.dll
@@ -903,3 +902,5 @@ C:\Users\chris\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosti
 C:\Users\chris\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.csproj.CoreCompileInputs.cache
 C:\Users\chris\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.dll
 C:\Users\chris\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.pdb
+C:\Users\pevip\OneDrive\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.csprojResolveAssemblyReference.cache
+C:\Users\pevip\OneDrive\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.DAL.JBMigrations.InitialCreate.resources

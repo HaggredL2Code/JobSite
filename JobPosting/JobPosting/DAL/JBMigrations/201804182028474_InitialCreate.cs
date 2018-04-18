@@ -255,6 +255,20 @@ namespace JobPosting.DAL.JBMigrations
                 .Index(t => t.FileContentID);
             
             CreateTable(
+                "dbo.Picked",
+                c => new
+                    {
+                        PickedID = c.Int(nullable: false),
+                        jobTypePrevPicked1 = c.Int(nullable: false),
+                        jobTypePrevPicked2 = c.Int(nullable: false),
+                        jobTypeJustPicked = c.Int(nullable: false),
+                        firstTimeAccess = c.Boolean(nullable: false),
+                    })
+                .PrimaryKey(t => t.PickedID)
+                .ForeignKey("dbo.Applicant", t => t.PickedID)
+                .Index(t => t.PickedID);
+            
+            CreateTable(
                 "dbo.UserRole",
                 c => new
                     {
@@ -318,6 +332,7 @@ namespace JobPosting.DAL.JBMigrations
         public override void Down()
         {
             DropForeignKey("dbo.Applicant", "UserRoleID", "dbo.UserRole");
+            DropForeignKey("dbo.Picked", "PickedID", "dbo.Applicant");
             DropForeignKey("dbo.Application", "ApplicantID", "dbo.Applicant");
             DropForeignKey("dbo.BinaryFile", "ApplicationID", "dbo.Application");
             DropForeignKey("dbo.FileContent", "FileContentID", "dbo.BinaryFile");
@@ -341,6 +356,7 @@ namespace JobPosting.DAL.JBMigrations
             DropIndex("dbo.DayPosting", new[] { "Day_ID" });
             DropIndex("dbo.PostingTemplate", "IX_Unique_Name");
             DropIndex("dbo.UserRole", "IX_Unique_Role");
+            DropIndex("dbo.Picked", new[] { "PickedID" });
             DropIndex("dbo.FileContent", new[] { "FileContentID" });
             DropIndex("dbo.BinaryFile", new[] { "ApplicationID" });
             DropIndex("dbo.Union", "IX_Unique_Name");
@@ -371,6 +387,7 @@ namespace JobPosting.DAL.JBMigrations
             DropTable("dbo.PostingTemplate");
             DropTable("dbo.Archive");
             DropTable("dbo.UserRole");
+            DropTable("dbo.Picked");
             DropTable("dbo.FileContent");
             DropTable("dbo.BinaryFile");
             DropTable("dbo.Union");

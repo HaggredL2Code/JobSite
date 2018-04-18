@@ -127,35 +127,51 @@ namespace JobPosting.Controllers
             ViewBag.sortField = sortField;
             ViewBag.sortDirection = sortDirection;
 
+            
             string userEmail = User.Identity.Name;
             int userID = db.Applicants.Where(a => a.apEMail == userEmail).Select(a => a.ID).SingleOrDefault();
+            int prev1 = db.Pickeds.Where(p => p.PickedID == userID).Select(p => p.jobTypePrevPicked1).SingleOrDefault();
+            int prev2 = db.Pickeds.Where(p => p.PickedID == userID).Select(p => p.jobTypePrevPicked2).SingleOrDefault();
+            bool firstTime = db.Pickeds.Where(p => p.PickedID == userID).Select(p => p.firstTimeAccess).SingleOrDefault();
             string userName = db.Applicants.Where(a => a.ID == userID).Select(a => a.apFirstName).SingleOrDefault();
-            if (userID > 0)
+            if (userID > 0 && !firstTime)
             {
-                recommenderSystem_fn(userID, prev1, prev2, userName);
+                recommenderSystem_predict_fn(userID, prev1, prev2, userName);
             }
 
-
+            ViewBag.userID = userID;
             return View(postings.ToList());
         }
 
-        private void recommenderSystem_fn(int userID, int prev1, int prev2, string userName)
+        private void recommenderSystem_predict_fn(int userID, int prev1, int prev2, string userName)
         {
             int jobTypeID = recommenderSystem.FavoriteJobType_predict(userID, prev1, prev2, userName);
-            var postings = db.Postings.Where(p => p.Position.JobGroupID == jobTypeID).OrderBy(p => p.pstOpenDate);
+            var postings = db.Postings.Where(p => p.Position.JobGroup.ID == jobTypeID).OrderBy(p => p.pstOpenDate).Take(5);
             ViewBag.PostingsAI = postings;
         }
 
         // GET: Postings/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int? id, int userID)
         {
             if (id == null)
             {
                 logger.Info("Details/ Bad HTTP Request with ID {0}", id);
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
+            string userName = db.Applicants.Where(a => a.ID == userID).Select(a => a.apFirstName).SingleOrDefault();
+            int n_y = db.JobGroups.Max(jg => jg.ID);
             Posting posting = db.Postings.Find(id);
+            int jobTypeID = posting.Position.JobGroupID;
+            Picked pickedToEdit = db.Pickeds.Where(p => p.PickedID == userID).SingleOrDefault();
+            if (pickedToEdit != null)
+            {
+                pickedToEdit.jobTypePrevPicked2 = pickedToEdit.jobTypePrevPicked1;
+                pickedToEdit.jobTypePrevPicked1 = pickedToEdit.jobTypeJustPicked;
+                pickedToEdit.jobTypeJustPicked = jobTypeID;
+                pickedToEdit.firstTimeAccess = false;
+                recommenderSystem.FavoriteJobType_train(userID, pickedToEdit.jobTypePrevPicked1, pickedToEdit.jobTypePrevPicked2, pickedToEdit.jobTypeJustPicked, n_y, userName);
+                db.SaveChanges();
+            }
             if (posting == null)
             {
                 logger.Info("Details/ Failed to find Posting with ID {0}", id);
@@ -167,6 +183,7 @@ namespace JobPosting.Controllers
             return View(posting);
         }
 
+        
         // GET: Postings/Create
         [Authorize(Roles = "Admin, Manager, Hiring Team")]
         public ActionResult Create(string name)
