@@ -113,11 +113,13 @@ def predict(X, user, parameters, layers_dim):
     return Y
 
 if __name__ == "__main__":
-    # training_input = input("please enter input (user, prev1, prev2, Y): ")
-    # training_input = training_input.split(",")
-    # user = int(training_input[0])
-    # X_train = np.array(training_input[1:3], dtype=np.int).reshape((2,1))
-    # Y_train = np.array(training_input[-1], dtype=np.int)
+    #training_input = input("please enter input (user, prev1, prev2, Y): ")
+    #training_input = training_input.split(",")
+    #user = int(training_input[0])
+    #X_train = np.array(training_input[1:3], dtype=np.int).reshape((2,1))
+    #Y_train = np.array(training_input[-1], dtype=np.int)
+    #n_y = 5
+    #userName = "Long"
     user = int(sys.argv[1])
     prev1 = int(sys.argv[2])
     prev2 = int(sys.argv[3])

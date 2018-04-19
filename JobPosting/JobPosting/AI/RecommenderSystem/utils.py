@@ -32,7 +32,7 @@ def get_parameters(layers_dim, userName, user, C):
                 break
         if not flag:
             parameters = initialize_parameters(L, layers_dim)
-            f.write(str(user) + "\n")
+            f.write("\n" + str(user))
 
     return parameters
 

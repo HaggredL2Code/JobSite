@@ -15,7 +15,7 @@ namespace JobPosting.AI
             string python = @"C:\Users\pevip\Anaconda3\python.exe";
 
             // python app to call 
-            string myPythonApp = @"C:\Users\pevip\OneDrive\Documents\GitHub\JobSite\JobPosting\JobPosting\AI\RecommenderSystem\train.py";
+            string myPythonApp = @"C:\Users\pevip\OneDrive\Documents\GitHub\JobSite\JobPosting\JobPosting\AI\RecommenderSystem\Train.py";
 
 
             // Create new process start info 

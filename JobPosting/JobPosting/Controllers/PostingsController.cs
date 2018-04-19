@@ -169,7 +169,7 @@ namespace JobPosting.Controllers
                 pickedToEdit.jobTypePrevPicked1 = pickedToEdit.jobTypeJustPicked;
                 pickedToEdit.jobTypeJustPicked = jobTypeID;
                 pickedToEdit.firstTimeAccess = false;
-                recommenderSystem.FavoriteJobType_train(userID, pickedToEdit.jobTypePrevPicked1, pickedToEdit.jobTypePrevPicked2, pickedToEdit.jobTypeJustPicked, n_y, userName);
+                recommenderSystem.FavoriteJobType_train(userID, pickedToEdit.jobTypePrevPicked1, pickedToEdit.jobTypePrevPicked2, pickedToEdit.jobTypeJustPicked, n_y+1, userName);
                 db.SaveChanges();
             }
             if (posting == null)
