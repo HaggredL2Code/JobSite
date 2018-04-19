@@ -9,8 +9,11 @@ namespace JobPosting.DAL.JBMigrations
     using System.Linq;
     using System.Text;
 
+    using NLog;
+
     internal sealed class Configuration : DbMigrationsConfiguration<JobPosting.DAL.JBEntities>
     {
+        private Logger logger = LogManager.GetCurrentClassLogger();
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
@@ -35,6 +38,7 @@ namespace JobPosting.DAL.JBMigrations
                         sb.AppendFormat("- {0} : {1}", error.PropertyName, error.ErrorMessage);
                         sb.AppendLine();
                     }
+                    logger.Warn("JBEntities: Failed to save changes. Error message:\n{0}", sb.ToString());
                 }
 
                 throw new DbEntityValidationException(

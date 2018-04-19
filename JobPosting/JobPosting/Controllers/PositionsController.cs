@@ -147,9 +147,10 @@ namespace JobPosting.Controllers
             }
             catch (DataException dex)
             {
-                logger.Error("Create/ Data Exception Error {0}", dex.ToString());
+                logger.Error("Create/ Data Exception Error:\n {0}", dex.ToString());
                 if (dex.InnerException.InnerException.Message.Contains("IX_Unique_Code"))
                 {
+                    logger.Warn("Create/ Position code {0} already exists.");
                     ModelState.AddModelError("PositionCode", "Unable to save changes. The Position Code is already existed.");
                 }
                 else if (dex.InnerException.InnerException.Message.Contains("IX_Unique_Desc"))
