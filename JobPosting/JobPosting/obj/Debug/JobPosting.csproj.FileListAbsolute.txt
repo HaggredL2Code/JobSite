@@ -904,3 +904,4 @@ C:\Users\chris\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosti
 C:\Users\chris\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.pdb
 C:\Users\pevip\OneDrive\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.csprojResolveAssemblyReference.cache
 C:\Users\pevip\OneDrive\Documents\GitHub\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.DAL.JBMigrations.InitialCreate.resources
+C:\Users\Jacob\Documents\Community Sponsored Project\JobSite\JobPosting\JobPosting\obj\Debug\JobPosting.csproj.CopyComplete

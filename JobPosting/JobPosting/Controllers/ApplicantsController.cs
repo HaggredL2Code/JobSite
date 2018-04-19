@@ -10,11 +10,14 @@ using System.Web.Mvc;
 using JobPosting.DAL;
 using JobPosting.Models;
 
+using NLog;
+
 namespace JobPosting.Controllers
 {
     [Authorize]
     public class ApplicantsController : Controller
     {
+        private Logger logger = LogManager.GetCurrentClassLogger();
         private JBEntities db = new JBEntities();
 
         // GET: Applicants
@@ -31,6 +34,7 @@ namespace JobPosting.Controllers
 
             if (applicant == null)
             {
+                logger.Info("Applicant ID is null. Redirecting to Create/");
                 return RedirectToAction("Create");
             }
             return View(applicant);
@@ -70,10 +74,12 @@ namespace JobPosting.Controllers
             {
                 if (dex.InnerException.InnerException.Message.Contains("IX_Unique"))
                 {
+                    logger.Warn("Create/ ID is already in the database.");
                     ModelState.AddModelError("apEmail", "Email is already existed.");
                 }
                 else
                 {
+                    logger.Warn("Create/ Unable to save changes. Canceling..");
                     ModelState.AddModelError("", "Unables to save changes. Try Again!");
                 }
             }
@@ -87,11 +93,13 @@ namespace JobPosting.Controllers
         {
             if (id == null)
             {
+                logger.Warn("Edit/ ID is null. Bad Request.");
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Applicant applicant = db.Applicants.Find(id);
             if (applicant == null)
             {
+                logger.Info("Edit/ Applicant with ID {0} couldn't be found.", id);
                 return HttpNotFound();
             }
 
@@ -107,6 +115,7 @@ namespace JobPosting.Controllers
         {
             if (id == null)
             {
+                logger.Warn("EditPost/ ID is null. Bad Request.");
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Applicant applicantToUpdate = db.Applicants.Find(id);
@@ -121,6 +130,7 @@ namespace JobPosting.Controllers
                 }
                 catch (DbUpdateConcurrencyException ex)
                 {
+                    logger.Error("EditPost/ Database concurrency error. Trace:\n {0}\n", ex.ToString());
                     var entry = ex.Entries.Single();
                     var clientValues = (Applicant)entry.Entity;
                     var databaseEntry = entry.GetDatabaseValues();
@@ -157,6 +167,7 @@ namespace JobPosting.Controllers
                 {
                     if (dex.InnerException.InnerException.Message.Contains("IX_Unique"))
                     {
+                        logger.Warn("EditPost/ ID already exists.");
                         ModelState.AddModelError("apEmail", "Email is already existed.");
                     }
                     else
