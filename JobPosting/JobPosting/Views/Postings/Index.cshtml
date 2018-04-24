@@ -80,7 +80,16 @@
     </div>
     @using (Html.BeginForm())
     {
-
+        ICollection<JobPosting.Models.Posting> postingsAITop1 = ViewBag.PostingsAITop1;
+        ICollection<JobPosting.Models.Posting> postingsAITop2 = ViewBag.PostingsAITop2;
+        foreach (var item in postingsAITop1)
+        {
+            <p> @Html.ActionLink(item.Position.PositionDescription, "Details", new { id = item.ID, userID = ViewBag.userID }) Group ID: @Html.DisplayFor(modelItem => item.Position.JobGroupID)</p>
+        }
+        foreach (var item in postingsAITop2)
+        {
+            <p> @Html.ActionLink(item.Position.PositionDescription, "Details", new { id = item.ID, userID = ViewBag.userID }) Group ID: @Html.DisplayFor(modelItem => item.Position.JobGroupID)</p>
+        }
         <div class="row">
             <div class="col-lg-3 col-md-12">
                 <div class="card">
@@ -96,9 +105,9 @@
                             Select By Payment Type:
                             @Html.DropDownList("PaymentTypeID", new SelectListItem[]
 {
-                                                            new SelectListItem{Value = "1", Text = "Hourly"},
-                                                            new SelectListItem{Value = "2", Text = "Monthly"},
-                                                            new SelectListItem{Value = "3", Text = "Yearly"}
+                                                                        new SelectListItem{Value = "1", Text = "Hourly"},
+                                                                        new SelectListItem{Value = "2", Text = "Monthly"},
+                                                                        new SelectListItem{Value = "3", Text = "Yearly"}
 },
 "All Types", htmlAttributes: new { @class = "form-control" }) <br />
                             <input type="submit" value="Filter" class="btn btn-default" />

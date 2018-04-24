@@ -109,7 +109,8 @@ def predict(X, user, parameters, layers_dim):
 
     ZL = np.dot(parameters["W" + str(L-1)], A_prev) + parameters["b" + str(L-1)]
     AL = softmax(ZL)
-    Y = np.argmax(AL)
+    n_y = AL.shape[0]
+    Y = np.argsort(AL, axis=0).reshape((n_y,))[-2:][::-1]
     return Y
 
 if __name__ == "__main__":

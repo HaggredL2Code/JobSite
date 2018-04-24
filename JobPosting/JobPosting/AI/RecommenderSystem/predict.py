@@ -9,6 +9,12 @@ from Train import model, predict
 if __name__ == "__main__":
     n_y = pck.load(open(r"C:\Users\pevip\OneDrive\Documents\GitHub\JobSite\JobPosting\JobPosting\AI\RecommenderSystem\prevlayer.p", "rb"))
     n_y = int(n_y)
+    #training_input = input("please enter input (user, prev1, prev2, Y): ")
+    #training_input = training_input.split(",")
+    #user = int(training_input[0])
+    #X = np.array(training_input[1:3], dtype=np.int).reshape((2,1))
+    #n_y = 6
+    #userName = "Long"
     layers_dim = [2,6,10,n_y]
     user = int(sys.argv[1])
     prev1 = int(sys.argv[2])
@@ -17,4 +23,5 @@ if __name__ == "__main__":
     X = np.array([prev1, prev2], dtype=np.int).reshape((2,1))
     parameters = get_parameters(layers_dim, userName, user, C = n_y)
     Y = predict(X, user, parameters, layers_dim)
-    print (Y)
+    print(Y[0])
+    print(Y[1])

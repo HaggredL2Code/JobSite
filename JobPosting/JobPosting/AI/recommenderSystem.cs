@@ -56,7 +56,7 @@ namespace JobPosting.AI
 
         }
 
-        public static int FavoriteJobType_predict(int user, int prev1, int prev2, string userName)
+        public static int[] FavoriteJobType_predict(int user, int prev1, int prev2, string userName)
         {
             // full path of python interpreter 
             string python = @"C:\Users\pevip\Anaconda3\python.exe";
@@ -89,16 +89,26 @@ namespace JobPosting.AI
             // in order to avoid deadlock we will read output first 
             // and then wait for process terminate: 
             StreamReader myStreamReader = myProcess.StandardOutput;
-            string myString = myStreamReader.ReadLine();
+            string myString = myStreamReader.ReadToEnd();
+            var array = myString.Split("\r\n".ToCharArray());
+            int[] jobTypeIDs = new int[2];
+            int count = 0;
+            foreach (string a in array)
+            {
+                if (a != "")
+                {
+                    jobTypeIDs[count] = Convert.ToInt32(a);
+                    count += 1;
+                }
+            }
 
             /*if you need to read multiple lines, you might use: 
                 string myString = myStreamReader.ReadToEnd() */
-            int jobTypeID = Convert.ToInt32(myString);
             // wait exit signal from the app we called and then close it. 
             myProcess.WaitForExit();
             myProcess.Close();
 
-            return jobTypeID;
+            return jobTypeIDs;
 
 
         }

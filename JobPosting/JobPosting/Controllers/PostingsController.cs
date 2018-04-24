@@ -127,13 +127,20 @@ namespace JobPosting.Controllers
             ViewBag.sortField = sortField;
             ViewBag.sortDirection = sortDirection;
 
-            
+            //get user Email
             string userEmail = User.Identity.Name;
+
+            //get userID from Applicant table using userEmail
             int userID = db.Applicants.Where(a => a.apEMail == userEmail).Select(a => a.ID).SingleOrDefault();
+
+            //get user previous pick 1 and 2
             int prev1 = db.Pickeds.Where(p => p.PickedID == userID).Select(p => p.jobTypePrevPicked1).SingleOrDefault();
             int prev2 = db.Pickeds.Where(p => p.PickedID == userID).Select(p => p.jobTypePrevPicked2).SingleOrDefault();
+            //user first time access the website
             bool firstTime = db.Pickeds.Where(p => p.PickedID == userID).Select(p => p.firstTimeAccess).SingleOrDefault();
+            //get user first to create file contains user parameters
             string userName = db.Applicants.Where(a => a.ID == userID).Select(a => a.apFirstName).SingleOrDefault();
+            //only predict if user have ID in applicant table( user have updated profile ) and not user first time
             if (userID > 0 && !firstTime)
             {
                 recommenderSystem_predict_fn(userID, prev1, prev2, userName);
@@ -145,9 +152,27 @@ namespace JobPosting.Controllers
 
         private void recommenderSystem_predict_fn(int userID, int prev1, int prev2, string userName)
         {
-            int jobTypeID = recommenderSystem.FavoriteJobType_predict(userID, prev1, prev2, userName);
-            var postings = db.Postings.Where(p => p.Position.JobGroup.ID == jobTypeID).OrderBy(p => p.pstOpenDate).Take(5);
-            ViewBag.PostingsAI = postings;
+            
+            int[] jobTypeIDs = recommenderSystem.FavoriteJobType_predict(userID, prev1, prev2, userName);
+            int temp1 = jobTypeIDs[0];
+            int temp2 = jobTypeIDs[1];
+            var postingsTop1 = db.Postings.Where(p => p.Position.JobGroup.ID == temp1).OrderBy(p => p.pstOpenDate).Take(5).ToList();
+            var postingsTop2 = db.Postings.Where(p => p.Position.JobGroup.ID == temp2).OrderBy(p => p.pstOpenDate).Take(3).ToList();
+            Random rnd = new Random();
+            int n_y = db.JobGroups.Max(jg => jg.ID);
+            int rnumber;
+            while (true)
+            {
+                rnumber = rnd.Next(0, n_y + 1);
+                if (!jobTypeIDs.Contains(rnumber))
+                {
+                    break;
+                }
+            }
+            var postingsRandom = db.Postings.Where(p => p.Position.JobGroup.ID == rnumber).OrderBy(p => p.pstOpenDate).Take(3).ToList();
+            ViewBag.PostingsAITop1 = postingsTop1;
+            ViewBag.PostingsAITop2 = postingsTop2;
+            ViewBag.PostingsAIRandom = postingsRandom;
         }
 
         // GET: Postings/Details/5
