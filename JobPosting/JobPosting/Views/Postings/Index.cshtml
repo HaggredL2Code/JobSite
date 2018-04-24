@@ -82,14 +82,21 @@
     {
         ICollection<JobPosting.Models.Posting> postingsAITop1 = ViewBag.PostingsAITop1;
         ICollection<JobPosting.Models.Posting> postingsAITop2 = ViewBag.PostingsAITop2;
-        foreach (var item in postingsAITop1)
+        if (postingsAITop1 != null)
         {
-            <p> @Html.ActionLink(item.Position.PositionDescription, "Details", new { id = item.ID, userID = ViewBag.userID }) Group ID: @Html.DisplayFor(modelItem => item.Position.JobGroupID)</p>
+            foreach (var item in postingsAITop1)
+            {
+                <p> @Html.ActionLink(item.Position.PositionDescription, "Details", new { id = item.ID, userID = ViewBag.userID }) Group ID: @Html.DisplayFor(modelItem => item.Position.JobGroupID)</p>
+            }
         }
-        foreach (var item in postingsAITop2)
+        if (postingsAITop2 != null)
         {
-            <p> @Html.ActionLink(item.Position.PositionDescription, "Details", new { id = item.ID, userID = ViewBag.userID }) Group ID: @Html.DisplayFor(modelItem => item.Position.JobGroupID)</p>
+            foreach (var item in postingsAITop2)
+            {
+                <p> @Html.ActionLink(item.Position.PositionDescription, "Details", new { id = item.ID, userID = ViewBag.userID }) Group ID: @Html.DisplayFor(modelItem => item.Position.JobGroupID)</p>
+            }
         }
+    
         <div class="row">
             <div class="col-lg-3 col-md-12">
                 <div class="card">
