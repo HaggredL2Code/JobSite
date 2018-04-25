@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Index";
+    bool first = true;
     var Positions = ViewBag.Positions;
 }
 
@@ -83,44 +84,89 @@
         ICollection<JobPosting.Models.Posting> postingsAITop1 = ViewBag.PostingsAITop1;
         ICollection<JobPosting.Models.Posting> postingsAITop2 = ViewBag.PostingsAITop2;
         ICollection<JobPosting.Models.Posting> postingsAIRandom = ViewBag.PostingsAIRandom;
-        <div class="row">
+      
+        
+        
+        
+    <div class="row">
+        <div class="col-12">
+            <div id="carouselAiPostingsControl" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+
+
+                    
+
                     @if (postingsAITop1 != null)
-                    {
-                        foreach (var item in postingsAITop1)
-                        {
-                          <div class="card" style="width:12rem;">
-                            <div class="card-body">
-                                <h5 class="card-title">@Html.ActionLink(item.Position.PositionDescription, "Details", new { id = item.ID, userID = ViewBag.userID })</h5>
-                                <div class="card-body">Job Type: @Html.DisplayFor(ModelItem => item.Position.JobGroup.GroupTitle)</div>
-                            </div>
-                           </div>
-                        }
-                    }
+    {
+        foreach (var item in postingsAITop1)
+        {
+            if (first)
+            {
+                <div class="carousel-item active">
+                    <div class="card w-100" style="width:12rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">@Html.ActionLink(item.Position.PositionDescription, "Details", new { id = item.ID, userID = ViewBag.userID })</h5>
+                            <div class="card-body">Job Type: @Html.DisplayFor(ModelItem => item.Position.JobGroup.GroupTitle)</div>
+                        </div>
+                    </div>
+                </div>
+                                first = false;
+                            }
+                <div class="carousel-item">
+                    <div class="card w-100" style="width:12rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">@Html.ActionLink(item.Position.PositionDescription, "Details", new { id = item.ID, userID = ViewBag.userID })</h5>
+                            <div class="card-body">Job Type: @Html.DisplayFor(ModelItem => item.Position.JobGroup.GroupTitle)</div>
+                        </div>
+                    </div>
+                </div>
+}
+}
+
+
                     @if (postingsAITop2 != null)
-                    {
-                        foreach (var item in postingsAITop2)
-                        {
-                          <div class="card" style="width:12rem;">
-                              <div class="card-body">
-                                  <h5 class="card-title">@Html.ActionLink(item.Position.PositionDescription, "Details", new { id = item.ID, userID = ViewBag.userID })</h5>
-                                  <div class="card-body">Job Type: @Html.DisplayFor(ModelItem => item.Position.JobGroup.GroupTitle)</div>
-                              </div>
-                          </div>
-                        }
-                    }
+    {
+        foreach (var item in postingsAITop2)
+        {
+                <div class="carousel-item">
+                    <div class="card w-100" style="width:12rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">@Html.ActionLink(item.Position.PositionDescription, "Details", new { id = item.ID, userID = ViewBag.userID })</h5>
+                            <div class="card-body">Job Type: @Html.DisplayFor(ModelItem => item.Position.JobGroup.GroupTitle)</div>
+                        </div>
+                    </div>
+                </div>
+}
+}
+
+
                     @if (postingsAIRandom != null)
-                    {
-                        foreach (var item in postingsAIRandom)
-                        {
-                          <div class="card" style="width:12rem;">
-                              <div class="card-body">
-                                  <h5 class="card-title">@Html.ActionLink(item.Position.PositionDescription, "Details", new { id = item.ID, userID = ViewBag.userID })</h5>
-                                  <div class="card-body">Job Type: @Html.DisplayFor(ModelItem => item.Position.JobGroup.GroupTitle)</div>
-                              </div>
-                          </div>
-                        }
-                    }
-         </div>
+    {
+        foreach (var item in postingsAIRandom)
+        {
+                <div class="carousel-item">
+                    <div class="card w-100 h-25" style="width:12rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">@Html.ActionLink(item.Position.PositionDescription, "Details", new { id = item.ID, userID = ViewBag.userID })</h5>
+                            <div class="card-body">Job Type: @Html.DisplayFor(ModelItem => item.Position.JobGroup.GroupTitle)</div>
+                        </div>
+                    </div>
+                </div>
+}
+}
+                </div>
+                <a class="carousel-control-prev" href="#carouselAiPostingsControl" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselAiPostingsControl" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+    </div>
+        </div>
+        <br />
 
         <div class="row">
             <div class="col-lg-3 col-md-12">
@@ -137,9 +183,9 @@
                             Select By Payment Type:
                             @Html.DropDownList("PaymentTypeID", new SelectListItem[]
 {
-                                                                                    new SelectListItem{Value = "1", Text = "Hourly"},
-                                                                                    new SelectListItem{Value = "2", Text = "Monthly"},
-                                                                                    new SelectListItem{Value = "3", Text = "Yearly"}
+                                                                                            new SelectListItem{Value = "1", Text = "Hourly"},
+                                                                                            new SelectListItem{Value = "2", Text = "Monthly"},
+                                                                                            new SelectListItem{Value = "3", Text = "Yearly"}
 },
 "All Types", htmlAttributes: new { @class = "form-control" }) <br />
                             <input type="submit" value="Filter" class="btn btn-default" />
@@ -167,28 +213,28 @@
                                 <input type="submit" name="actionButton" value="Locations" class="btn btn-link" />
                             </th>
                             @if (!User.IsInRole("User"))
-                            {
-                                <th>
-                                    @Html.DisplayNameFor(model => model.pstOpenDate)
-                                </th>
-                            }
+                        {
+                            <th>
+                                @Html.DisplayNameFor(model => model.pstOpenDate)
+                            </th>
+                    }
                             <th></th>
                         </tr>
                     </thead>
                     @foreach (var item in Model)
+                {
+                    if (item.pstNumPosition != 0)
                     {
-                        if (item.pstNumPosition != 0)
+                        if (item.Enabled)
                         {
-                            if (item.Enabled)
+                            bool flag = true;
+                            if (User.IsInRole("Hiring Team") || User.IsInRole("User"))
                             {
-                                bool flag = true;
-                                if (User.IsInRole("Hiring Team") || User.IsInRole("User"))
+                                if (item.CreatedBy != User.Identity.Name)
                                 {
-                                    if (item.CreatedBy != User.Identity.Name)
-                                    {
-                                        flag = false;
-                                    }
+                                    flag = false;
                                 }
+                            }
                             <tr>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Position.PositionCode)
@@ -201,34 +247,34 @@
                                 </td>
                                 <td>
                                     @foreach (var l in ViewBag.JobLocations)
+                                {
+                                    if (l.PostingID == item.ID)
                                     {
-                                        if (l.PostingID == item.ID)
-                                        {
-                                            <p>@l.Location.Address</p>
-                                        }
-                                    }
+                                        <p>@l.Location.Address</p>
+                                }
+                            }
                                 </td>
 
                                 @if (!User.IsInRole("User"))
-                                {
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.pstOpenDate)
-                                    </td>
-                                }
+                            {
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.pstOpenDate)
+                                </td>
+                        }
 
                                 @if (flag)
-                                {
-                                    <td>
-                                        <div class="">
-                                            @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class = " badge badge-pill badge-warning" })
-                                            @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @class = " badge badge-pill badge-danger" })
-                                        </div>
-                                    </td>
-                                }
-                            </tr>
-                            }
+                            {
+                                <td>
+                                    <div class="">
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class = " badge badge-pill badge-warning" })
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @class = " badge badge-pill badge-danger" })
+                                    </div>
+                                </td>
                         }
+                            </tr>
                     }
+                }
+            }
 
                 </table>
                 <input type="hidden" name="sortDirection" value="@ViewBag.sortDirection" />
@@ -236,5 +282,5 @@
 
             </div>
         </div>
-    }
-</div>
+        }
+    </div>

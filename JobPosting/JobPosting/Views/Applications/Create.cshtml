@@ -242,14 +242,16 @@ else
 
                 <div class="form-group">
                     <label class="control-label">Requirements</label>
+                    <div>
                         @Html.ListBox("selectedQualification", (MultiSelectList)ViewBag.jobRequirements, new { @class = "form-control custom-select2" })
+                    </div>
                 </div>
-
                 <div class="form-group">
                     <label class="control-label">Skills</label>
+                    <div>
                         @Html.ListBox("selectedSkill", (MultiSelectList)ViewBag.postingSkills, new { @class = "form-control custom-select2" })
+                    </div>
                 </div>
-
                 <div class="form-group">
                     <input type="submit" value="Apply" class="btn btn-default" />
                     <input type="button" value="Add to Cart" class="btn btn-default" id="btnAddToCart" />
