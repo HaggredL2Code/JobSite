@@ -75,7 +75,7 @@ def update_parameters(parameters, grads, layers_dim, alpha = 0.01):
 
     return parameters
 
-def model(X_train, Y_train, user, userName, layers_dim, C = 4, lr = 0.03):
+def model(X_train, Y_train, user, userName, layers_dim, C = 4, lr = 0.05):
     L = len(layers_dim)
     parameters = get_parameters(layers_dim, userName, user, C)
     # global_cost = {}
