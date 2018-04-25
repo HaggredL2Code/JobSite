@@ -177,16 +177,18 @@
                     </thead>
                     @foreach (var item in Model)
                     {
-                        if (item.Enabled)
+                        if (item.pstNumPosition != 0)
                         {
-                            bool flag = true;
-                            if (User.IsInRole("Hiring Team") || User.IsInRole("User"))
+                            if (item.Enabled)
                             {
-                                if (item.CreatedBy != User.Identity.Name)
+                                bool flag = true;
+                                if (User.IsInRole("Hiring Team") || User.IsInRole("User"))
                                 {
-                                    flag = false;
+                                    if (item.CreatedBy != User.Identity.Name)
+                                    {
+                                        flag = false;
+                                    }
                                 }
-                            }
                             <tr>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Position.PositionCode)
@@ -224,6 +226,7 @@
                                     </td>
                                 }
                             </tr>
+                            }
                         }
                     }
 
