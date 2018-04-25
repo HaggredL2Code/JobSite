@@ -156,8 +156,8 @@ namespace JobPosting.Controllers
             int[] jobTypeIDs = recommenderSystem.FavoriteJobType_predict(userID, prev1, prev2, userName);
             int temp1 = jobTypeIDs[0];
             int temp2 = jobTypeIDs[1];
-            var postingsTop1 = db.Postings.Where(p => p.Position.JobGroup.ID == temp1).OrderBy(p => p.pstOpenDate).Take(5).ToList();
-            var postingsTop2 = db.Postings.Where(p => p.Position.JobGroup.ID == temp2).OrderBy(p => p.pstOpenDate).Take(3).ToList();
+            var postingsTop1 = db.Postings.Where(p => p.Position.JobGroup.ID == temp1).OrderBy(p => p.CreatedOn).Take(5).ToList();
+            var postingsTop2 = db.Postings.Where(p => p.Position.JobGroup.ID == temp2).OrderBy(p => p.CreatedOn).Take(3).ToList();
             Random rnd = new Random();
             int n_y = db.JobGroups.Max(jg => jg.ID);
             int rnumber;
@@ -169,7 +169,7 @@ namespace JobPosting.Controllers
                     break;
                 }
             }
-            var postingsRandom = db.Postings.Where(p => p.Position.JobGroup.ID == rnumber).OrderBy(p => p.pstOpenDate).Take(3).ToList();
+            var postingsRandom = db.Postings.Where(p => p.Position.JobGroup.ID == rnumber).OrderBy(p => p.CreatedOn).Take(3).ToList();
             ViewBag.PostingsAITop1 = postingsTop1;
             ViewBag.PostingsAITop2 = postingsTop2;
             ViewBag.PostingsAIRandom = postingsRandom;

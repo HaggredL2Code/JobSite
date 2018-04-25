@@ -234,11 +234,21 @@ namespace JobPosting.DAL.JBMigrations
     */
             var Locations = new List<Location>
                         {
-                            new Location { Address = "24 placeholder street, St.Catharines, ON"},
-                            new Location { Address = "13 placeholder lane, Wellend, ON"},
-                            new Location { Address = "1000 Sunny lane, Toronto, ON"},
-                            new Location { Address = "13 Sunny Street, Newmarket, ON"},
-                            new Location { Address = "204 placeholder lane, Wellend, ON"}
+                            new Location { Address = "Alexander Kuska, Welland"},
+                            new Location { Address = "Assumption, St. Catharines"},
+                            new Location { Address = "Canadian Martyrs, St. Catharines"},
+                            new Location { Address = "Holy Name, Welland"},
+                            new Location { Address = "Loretto Catholic, Niagara Falls"},
+                            new Location { Address = "St. Augustine, Welland"},
+                            new Location { Address = "St. Christopher, St. Catharines"},
+                            new Location { Address = "St. Denis, St. Catharines"},
+                            new Location { Address = "St. Andrew, Welland"},
+                            new Location { Address = "St. Gabriel Lalemant, Niagara Falls"},
+                            new Location { Address = "St. Mary, Welland"},
+                            new Location { Address = "St. Peter, St. Catharines"},
+                            new Location { Address = "St. Theresa, St. Catharines"},
+                            new Location { Address = "St. Therese, Port Colborne"},
+                            new Location { Address = "St. Vincent de Paul, Niagara Falls"}
                         };
             Locations.ForEach(a => context.Locations.AddOrUpdate(n => n.ID, a));
             SaveChanges(context);

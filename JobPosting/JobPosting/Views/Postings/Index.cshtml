@@ -82,21 +82,46 @@
     {
         ICollection<JobPosting.Models.Posting> postingsAITop1 = ViewBag.PostingsAITop1;
         ICollection<JobPosting.Models.Posting> postingsAITop2 = ViewBag.PostingsAITop2;
-        if (postingsAITop1 != null)
-        {
-            foreach (var item in postingsAITop1)
-            {
-                <p> @Html.ActionLink(item.Position.PositionDescription, "Details", new { id = item.ID, userID = ViewBag.userID }) Group ID: @Html.DisplayFor(modelItem => item.Position.JobGroupID)</p>
-            }
-        }
-        if (postingsAITop2 != null)
-        {
-            foreach (var item in postingsAITop2)
-            {
-                <p> @Html.ActionLink(item.Position.PositionDescription, "Details", new { id = item.ID, userID = ViewBag.userID }) Group ID: @Html.DisplayFor(modelItem => item.Position.JobGroupID)</p>
-            }
-        }
-    
+        ICollection<JobPosting.Models.Posting> postingsAIRandom = ViewBag.PostingsAIRandom;
+        <div class="row">
+                    @if (postingsAITop1 != null)
+                    {
+                        foreach (var item in postingsAITop1)
+                        {
+                          <div class="card" style="width:12rem;">
+                            <div class="card-body">
+                                <h5 class="card-title">@Html.ActionLink(item.Position.PositionDescription, "Details", new { id = item.ID, userID = ViewBag.userID })</h5>
+                                <div class="card-body">Job Type: @Html.DisplayFor(ModelItem => item.Position.JobGroup.GroupTitle)</div>
+                            </div>
+                           </div>
+                        }
+                    }
+                    @if (postingsAITop2 != null)
+                    {
+                        foreach (var item in postingsAITop2)
+                        {
+                          <div class="card" style="width:12rem;">
+                              <div class="card-body">
+                                  <h5 class="card-title">@Html.ActionLink(item.Position.PositionDescription, "Details", new { id = item.ID, userID = ViewBag.userID })</h5>
+                                  <div class="card-body">Job Type: @Html.DisplayFor(ModelItem => item.Position.JobGroup.GroupTitle)</div>
+                              </div>
+                          </div>
+                        }
+                    }
+                    @if (postingsAIRandom != null)
+                    {
+                        foreach (var item in postingsAIRandom)
+                        {
+                          <div class="card" style="width:12rem;">
+                              <div class="card-body">
+                                  <h5 class="card-title">@Html.ActionLink(item.Position.PositionDescription, "Details", new { id = item.ID, userID = ViewBag.userID })</h5>
+                                  <div class="card-body">Job Type: @Html.DisplayFor(ModelItem => item.Position.JobGroup.GroupTitle)</div>
+                              </div>
+                          </div>
+                        }
+                    }
+         </div>
+
         <div class="row">
             <div class="col-lg-3 col-md-12">
                 <div class="card">
@@ -112,9 +137,9 @@
                             Select By Payment Type:
                             @Html.DropDownList("PaymentTypeID", new SelectListItem[]
 {
-                                                                        new SelectListItem{Value = "1", Text = "Hourly"},
-                                                                        new SelectListItem{Value = "2", Text = "Monthly"},
-                                                                        new SelectListItem{Value = "3", Text = "Yearly"}
+                                                                                    new SelectListItem{Value = "1", Text = "Hourly"},
+                                                                                    new SelectListItem{Value = "2", Text = "Monthly"},
+                                                                                    new SelectListItem{Value = "3", Text = "Yearly"}
 },
 "All Types", htmlAttributes: new { @class = "form-control" }) <br />
                             <input type="submit" value="Filter" class="btn btn-default" />
